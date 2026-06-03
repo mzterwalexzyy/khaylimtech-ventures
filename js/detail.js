@@ -4,19 +4,17 @@
 
 let _firebaseReady = false;
 
-function showLoadingState() {
-  const layout = document.querySelector(".detail-layout");
-  if (layout) layout.innerHTML = `
-    <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
-      <div style="font-size:2.5rem;margin-bottom:16px">⏳</div>
-      <h3 style="color:var(--text-heading);margin-bottom:8px">Loading product...</h3>
-      <p style="color:var(--text-muted);font-size:.875rem">Fetching from store database</p>
-    </div>`;
+function setLoading(on) {
+  const overlay = document.getElementById("detail-loading");
+  const wrap    = document.getElementById("detail-layout-wrap");
+  if (overlay) overlay.style.display = on ? "block" : "none";
+  if (wrap)    wrap.style.display    = on ? "none"  : "";
 }
 
 function showNotFound() {
-  const layout = document.querySelector(".detail-layout");
-  if (layout) layout.innerHTML = `
+  setLoading(false);
+  const wrap = document.getElementById("detail-layout-wrap");
+  if (wrap) wrap.innerHTML = `
     <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
       <div style="font-size:3rem;margin-bottom:12px">😕</div>
       <h2 style="color:var(--text-heading);margin-bottom:8px">Product not found</h2>
@@ -30,13 +28,12 @@ function initDetailPage() {
   const product = id ? getProductById(id) : null;
 
   if (!product) {
-    // If Firebase hasn't loaded yet, show loading — not error
-    if (!_firebaseReady) { showLoadingState(); return; }
-    // Firebase is done and product genuinely not found
+    if (!_firebaseReady) { setLoading(true); return; }
     showNotFound();
     return;
   }
 
+  setLoading(false);
   renderDetail(product);
   renderRelated(product);
 }
@@ -47,16 +44,15 @@ window.onFirebaseReady = () => {
   initDetailPage();
 };
 
-// On page load show loading spinner immediately (Firebase is async)
+// On page load — try local data first, otherwise show loading overlay
 document.addEventListener("DOMContentLoaded", () => {
   const id = new URLSearchParams(window.location.search).get("id");
   const product = id ? getProductById(id) : null;
   if (product) {
-    // Local product found immediately — render it
+    setLoading(false);
     initDetailPage();
   } else {
-    // Firebase product — show loading until Firebase arrives
-    showLoadingState();
+    setLoading(true); // hide layout, show spinner — Firebase will fill it
   }
 });
 
