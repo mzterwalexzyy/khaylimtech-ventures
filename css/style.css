@@ -1028,6 +1028,10 @@ input, select { font-family: inherit; }
   border-radius: 14px;
   padding: 20px;
   margin-bottom: 16px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .sidebar-title {
@@ -1070,20 +1074,24 @@ input, select { font-family: inherit; }
 
 /* Price range */
 .price-inputs {
-  display: flex;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
   margin-top: 10px;
+  width: 100%;
 }
 
 .price-inputs input {
-  flex: 1;
-  padding: 8px 10px;
+  width: 100%;
+  min-width: 0;
+  padding: 8px 8px;
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
   font-size: 0.8rem;
   outline: none;
+  box-sizing: border-box;
 }
 
 .price-inputs input:focus { border-color: var(--gold); }

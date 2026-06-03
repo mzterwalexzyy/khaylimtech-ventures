@@ -46,17 +46,19 @@
 
   /* Products page layout — sidebar stacks below */
   .products-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    display: block;       /* block instead of grid — fully prevents overflow */
     width: 100%;
+    padding: 0;
   }
   .sidebar {
     order: 2;
     position: static;
     max-height: none;
-    overflow-y: visible;
+    overflow: hidden;
     width: 100%;
+    margin-top: 24px;
   }
+  .sidebar-card { padding: 16px; }
   .products-main {
     order: 1;
     width: 100%;
@@ -66,8 +68,10 @@
   .sidebar-filters-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
   }
+  /* Stack price inputs vertically on mobile */
+  .price-inputs { grid-template-columns: 1fr; }
 
   /* Detail page */
   .detail-layout { grid-template-columns: 1fr; gap: 24px; padding: 28px 0; }
