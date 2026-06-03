@@ -44,23 +44,23 @@
     width: 100%;
   }
 
-  /* Products page layout — sidebar stacks below */
+  /* Products page layout — flex column so order works */
   .products-layout {
-    display: block;       /* block instead of grid — fully prevents overflow */
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    padding: 0;
+    gap: 20px;
   }
   .sidebar {
-    order: 2;
+    order: 2;           /* filters go BELOW products */
     position: static;
     max-height: none;
     overflow: hidden;
     width: 100%;
-    margin-top: 24px;
   }
   .sidebar-card { padding: 16px; }
   .products-main {
-    order: 1;
+    order: 1;           /* products go FIRST */
     width: 100%;
     overflow: hidden;
     min-width: 0;
