@@ -30,11 +30,17 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ─── Config ─────────────────────────────────────────────
-BOT_TOKEN     = os.getenv("BOT_TOKEN")      # Set in Railway environment variables
+BOT_TOKEN     = os.getenv("BOT_TOKEN")       # Set in Railway environment variables
 ADMIN_CHAT_ID = int(os.getenv("ADMIN_ID", "0"))  # Your Telegram user ID
 
 # ─── Firebase Init ───────────────────────────────────────
-cred = credentials.Certificate("firebase-key.json")  # See README for setup
+# Loads from FIREBASE_KEY_JSON env var (Railway) or local file (development)
+firebase_key_json = os.getenv("FIREBASE_KEY_JSON")
+if firebase_key_json:
+    cred = credentials.Certificate(json.loads(firebase_key_json))
+else:
+    # Local development — place firebase-key.json in bot/ folder
+    cred = credentials.Certificate("firebase-key.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 COLLECTION = "products"

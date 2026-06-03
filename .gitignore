@@ -1,5 +1,6 @@
 # Firebase private key — NEVER commit this!
 bot/firebase-key.json
+bot/*.json
 
 # Environment files
 .env
