@@ -19,8 +19,7 @@ const db = firebase.firestore();
 // Real-time listener — fires instantly when bot adds/updates/deletes a product
 db.collection("products").onSnapshot((snapshot) => {
   if (!snapshot.empty) {
-    // Override the local PRODUCTS array with live Firestore data
-    window.PRODUCTS = snapshot.docs.map(doc => {
+    const firestoreProducts = snapshot.docs.map(doc => {
       const d = doc.data();
       return {
         id:          doc.id,
@@ -38,9 +37,13 @@ db.collection("products").onSnapshot((snapshot) => {
       };
     });
 
+    // Mutate the existing PRODUCTS array in-place (works with const declaration)
+    PRODUCTS.length = 0;
+    firestoreProducts.forEach(p => PRODUCTS.push(p));
+
     // Refresh category counts
-    window.CATEGORIES.forEach(cat => {
-      cat.count = window.PRODUCTS.filter(p => p.category === cat.id).length;
+    CATEGORIES.forEach(cat => {
+      cat.count = PRODUCTS.filter(p => p.category === cat.id).length;
     });
   }
 

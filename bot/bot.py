@@ -202,9 +202,10 @@ async def add_description(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.photo:
-        # Get highest resolution photo
+        # Get highest resolution photo and build permanent URL
         file = await update.message.photo[-1].get_file()
-        ctx.user_data["image"] = file.file_path  # Telegram CDN URL
+        # Use full Telegram file URL (permanent as long as bot token is valid)
+        ctx.user_data["image"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
     elif update.message.text and update.message.text.startswith("http"):
         ctx.user_data["image"] = update.message.text.strip()
     else:
