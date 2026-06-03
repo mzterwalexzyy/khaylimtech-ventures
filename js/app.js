@@ -34,10 +34,17 @@ function updateThemeIcon(theme) {
 
 // ─── Nav Active State & Hamburger ───────
 function initNav() {
-  const path = window.location.pathname;
+  const path     = window.location.pathname;
+  const pageName = path.split("/").pop();                        // e.g. "products.html"
+  const cat      = new URLSearchParams(window.location.search).get("cat"); // e.g. "phones"
+  const fullHref = pageName + (cat ? `?cat=${cat}` : "");       // e.g. "products.html?cat=phones"
+
   document.querySelectorAll(".nav-links a, .mobile-nav a").forEach(a => {
-    if (a.getAttribute("href") === path.split("/").pop() ||
-        (path.endsWith("/") && a.getAttribute("href") === "index.html")) {
+    a.classList.remove("active");
+    const href = a.getAttribute("href");
+    const isHome = (path.endsWith("/") || pageName === "" || pageName === "index.html") && href === "index.html";
+    // Match exact href including query string
+    if (href === fullHref || isHome || (!cat && href === pageName)) {
       a.classList.add("active");
     }
   });
