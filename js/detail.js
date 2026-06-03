@@ -2,7 +2,7 @@
 //  KhaylimTech — Product Detail Page
 // =========================================
 
-document.addEventListener("DOMContentLoaded", () => {
+function initDetailPage() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
   const product = id ? getProductById(id) : null;
@@ -19,6 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderDetail(product);
   renderRelated(product);
+}
+
+// Called by firebase-db.js when live data is ready
+window.onFirebaseReady = initDetailPage;
+
+// Also run on DOMContentLoaded as fallback (uses local data.js)
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.firebaseLoaded) initDetailPage();
 });
 
 function renderDetail(p) {
