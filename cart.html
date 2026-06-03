@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart — KhaylimTech Ventures</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+      <div class="nav-logo-text"><span>KhaylimTech</span><span>Ventures</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="products.html?cat=phones">Phones</a></li>
+      <li><a href="products.html?cat=laptops">Laptops</a></li>
+      <li><a href="products.html?cat=gaming">Gaming</a></li>
+      <li><a href="products.html?cat=accessories">Accessories</a></li>
+    </ul>
+    <div class="nav-search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Search gadgets...">
+      <div class="search-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn theme-toggle"><i class="fa-solid fa-sun"></i></button>
+      <a href="cart.html" class="nav-btn">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-badge">0</span>
+      </a>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="products.html?cat=phones">📱 Phones</a>
+    <a href="products.html?cat=laptops">💻 Laptops</a>
+    <a href="products.html?cat=gaming">🎮 Gaming</a>
+    <a href="products.html?cat=accessories">🔌 Accessories</a>
+  </nav>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1>Shopping Cart</h1>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <i class="fa-solid fa-chevron-right" style="font-size:.65rem"></i>
+      <span>Cart</span>
+    </div>
+  </div>
+</div>
+
+<!-- CART LAYOUT -->
+<div class="container">
+  <div class="cart-layout" id="cart-layout">
+    <!-- Filled by JS -->
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+          <div class="footer-logo-text"><span>KhaylimTech</span><br><span>Ventures</span></div>
+        </div>
+        <p>Your one-stop tech destination in Ibadan.</p>
+        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>No 19, Omoola Plaza, Iwo Road, Ibadan</span></div>
+        <div class="footer-contact-item"><i class="fa-brands fa-whatsapp"></i><span>08083873316</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">All Products</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <ul>
+          <li><a href="#">How to Order</a></li>
+          <li><a href="#">Delivery Info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/2348083873316" class="social-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const VAT_RATE = 0.075;
+
+  function renderCart() {
+    const items = Cart.getAll();
+    const layout = document.getElementById("cart-layout");
+
+    if (!items.length) {
+      layout.innerHTML = `
+        <div class="empty-cart" style="grid-column:1/-1">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <h3>Your cart is empty</h3>
+          <p>Add some amazing gadgets to your cart!</p>
+          <a href="products.html" class="btn-gold" style="display:inline-flex;gap:8px">
+            <i class="fa-solid fa-bag-shopping"></i> Continue Shopping
+          </a>
+        </div>`;
+      return;
+    }
+
+    const subtotal = Cart.subtotal();
+    const vat = Math.round(subtotal * VAT_RATE);
+    const total = subtotal + vat;
+
+    // Build WhatsApp message
+    const waMsg = items.map(i => `• ${i.name} x${i.qty} = ${formatNGN(i.price * i.qty)}`).join("\n");
+    const waText = encodeURIComponent(`Hello KhaylimTech! I'd like to order:\n\n${waMsg}\n\nTotal: ${formatNGN(total)}`);
+    const waLink = `https://wa.me/2348083873316?text=${waText}`;
+
+    layout.innerHTML = `
+      <!-- Items -->
+      <div>
+        <div class="cart-items-list">
+          ${items.map(item => `
+            <div class="cart-item" data-id="${item.id}">
+              <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+              <div class="cart-item-info">
+                <div class="cart-item-cat">${CATEGORIES.find(c=>c.id===item.category)?.label || item.category}</div>
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${formatNGN(item.price)}</div>
+              </div>
+              <div class="cart-item-controls">
+                <button class="cart-remove" onclick="removeItem('${item.id}')" title="Remove">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+                <div class="qty-stepper">
+                  <button onclick="changeQty('${item.id}', ${item.qty - 1})"><i class="fa-solid fa-minus"></i></button>
+                  <input type="number" value="${item.qty}" min="1"
+                    onchange="changeQty('${item.id}', parseInt(this.value))"
+                    style="width:44px;height:36px;background:var(--bg-card);border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);color:var(--text);font-size:.88rem;font-weight:700;text-align:center;outline:none">
+                  <button onclick="changeQty('${item.id}', ${item.qty + 1})"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div style="font-size:.88rem;font-weight:700;color:var(--gold)">${formatNGN(item.price * item.qty)}</div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <a href="products.html" class="btn-outline" style="font-size:.83rem;padding:10px 18px">
+            <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+          </a>
+          <button onclick="clearCart()" style="font-size:.83rem;padding:10px 18px;border:1px solid #ef4444;border-radius:8px;color:#ef4444;background:transparent;font-family:inherit;font-weight:600;cursor:pointer">
+            <i class="fa-solid fa-trash-can"></i> Clear Cart
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <div class="summary-row"><span>Subtotal (${Cart.count()} items)</span><span>${formatNGN(subtotal)}</span></div>
+        <div class="summary-row"><span>VAT (7.5%)</span><span>${formatNGN(vat)}</span></div>
+        <div class="summary-row"><span>Delivery</span><span style="color:#22c55e">To be confirmed</span></div>
+        <div class="summary-row total"><span>Total</span><span>${formatNGN(total)}</span></div>
+
+        <a href="${waLink}" target="_blank" class="checkout-btn">
+          <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
+        </a>
+
+        <p style="font-size:.72rem;color:var(--text-muted);text-align:center;margin-top:12px;line-height:1.5">
+          Your order will be sent directly to KhaylimTech on WhatsApp for confirmation and delivery arrangement.
+        </p>
+
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:7px">
+          <div style="display:flex;gap:8px;align-items:center;font-size:.78rem;color:var(--text-muted)">
+            <i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> 100% Authentic Products
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:.78rem;color:var(--text-muted)">
+            <i class="fa-solid fa-truck-fast" style="color:var(--gold)"></i> Fast Delivery Available
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function removeItem(id) {
+    Cart.remove(id);
+    showToast('<i class="fa-solid fa-trash-can"></i> <span>Item removed from cart</span>');
+    renderCart();
+  }
+
+  function changeQty(id, qty) {
+    Cart.updateQty(id, qty);
+    renderCart();
+  }
+
+  function clearCart() {
+    if (confirm("Clear all items from your cart?")) {
+      Cart.clear();
+      renderCart();
+    }
+  }
+
+  renderCart();
+</script>
+</body>
+</html>

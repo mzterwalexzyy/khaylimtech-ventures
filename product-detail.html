@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — KhaylimTech Ventures</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+      <div class="nav-logo-text"><span>KhaylimTech</span><span>Ventures</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="products.html?cat=phones">Phones</a></li>
+      <li><a href="products.html?cat=laptops">Laptops</a></li>
+      <li><a href="products.html?cat=gaming">Gaming</a></li>
+      <li><a href="products.html?cat=accessories">Accessories</a></li>
+    </ul>
+    <div class="nav-search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Search gadgets...">
+      <div class="search-dropdown"></div>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn theme-toggle"><i class="fa-solid fa-sun"></i></button>
+      <a href="cart.html" class="nav-btn">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-badge">0</span>
+      </a>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="products.html?cat=phones">📱 Phones</a>
+    <a href="products.html?cat=laptops">💻 Laptops</a>
+    <a href="products.html?cat=gaming">🎮 Gaming</a>
+    <a href="products.html?cat=accessories">🔌 Accessories</a>
+  </nav>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="container">
+    <h1 id="breadcrumb-name">Product Detail</h1>
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <i class="fa-solid fa-chevron-right" style="font-size:.65rem"></i>
+      <a href="products.html">Products</a>
+      <i class="fa-solid fa-chevron-right" style="font-size:.65rem"></i>
+      <span id="breadcrumb-name2">...</span>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL LAYOUT -->
+<div class="container">
+  <div class="detail-layout">
+
+    <!-- Image Column -->
+    <div>
+      <img id="detail-main-img" src="" alt="" class="detail-img-main">
+      <div id="detail-thumb-row" class="detail-thumb-row"></div>
+    </div>
+
+    <!-- Info Column -->
+    <div>
+      <div id="detail-cat" class="detail-cat"></div>
+      <h1 id="detail-name" class="detail-name"></h1>
+      <div id="detail-rating" class="detail-rating"></div>
+
+      <div class="detail-price-row">
+        <span id="detail-price" class="detail-price"></span>
+        <span id="detail-old-price" class="detail-price-old"></span>
+      </div>
+
+      <div id="detail-stock" class="detail-stock in-stock">
+        <i class="fa-solid fa-circle-check"></i> In Stock
+      </div>
+
+      <p id="detail-desc" class="detail-desc"></p>
+
+      <!-- Qty -->
+      <div class="qty-row">
+        <span class="qty-label">Quantity:</span>
+        <div class="qty-stepper">
+          <button id="qty-minus"><i class="fa-solid fa-minus"></i></button>
+          <input id="qty-input" type="number" value="1" min="1" max="99">
+          <button id="qty-plus"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="detail-actions">
+        <button id="detail-add-btn" class="btn-add-cart">
+          <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+        </button>
+        <a href="https://wa.me/2348083873316" target="_blank" class="btn-outline" style="padding:14px 20px">
+          <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
+        </a>
+      </div>
+
+      <!-- Meta -->
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;gap:10px;align-items:center;font-size:.82rem;color:var(--text-muted)">
+          <i class="fa-solid fa-truck-fast" style="color:var(--gold)"></i>
+          <span>Fast delivery across Ibadan & nationwide</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:.82rem;color:var(--text-muted)">
+          <i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i>
+          <span>100% Authentic — warranty included</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:.82rem;color:var(--text-muted)">
+          <i class="fa-solid fa-rotate-left" style="color:var(--gold)"></i>
+          <span>7-day return policy on defective items</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED PRODUCTS -->
+  <section class="section" style="padding-top:0">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Related <span>Products</span></h2>
+        <span class="section-line"></span>
+      </div>
+    </div>
+    <div class="product-grid" id="related-grid"></div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+          <div class="footer-logo-text"><span>KhaylimTech</span><br><span>Ventures</span></div>
+        </div>
+        <p>Your one-stop tech destination in Ibadan.</p>
+        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>No 19, Omoola Plaza, Iwo Road, Ibadan</span></div>
+        <div class="footer-contact-item"><i class="fa-brands fa-whatsapp"></i><span>08083873316</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?cat=phones">Phones</a></li>
+          <li><a href="products.html?cat=laptops">Laptops</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <ul>
+          <li><a href="#">How to Order</a></li>
+          <li><a href="#">Delivery Info</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/2348083873316" class="social-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+<script src="js/detail.js"></script>
+<script>
+  // sync breadcrumb
+  document.addEventListener("DOMContentLoaded", () => {
+    const name = document.getElementById("detail-name");
+    const b2 = document.getElementById("breadcrumb-name2");
+    if (name && b2) {
+      const obs = new MutationObserver(() => { b2.textContent = name.textContent; });
+      obs.observe(name, { childList: true, subtree: true });
+    }
+  });
+</script>
+</body>
+</html>
