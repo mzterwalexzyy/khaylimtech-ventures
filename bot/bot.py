@@ -50,9 +50,9 @@ COLLECTION = "products"
 # ─── Conversation states ─────────────────────────────────
 (
     ADD_NAME, ADD_CATEGORY, ADD_PRICE, ADD_OLD_PRICE,
-    ADD_DESCRIPTION, ADD_IMAGE, ADD_CONFIRM,
+    ADD_DESCRIPTION, ADD_IMAGE, ADD_VIDEO, ADD_CONFIRM,
     UPDATE_FIELD, UPDATE_VALUE,
-) = range(9)
+) = range(10)
 
 CATEGORIES = {
     "1": "phones",
@@ -193,33 +193,55 @@ async def add_old_price(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 async def add_description(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     ctx.user_data["description"] = update.message.text.strip()
+    ctx.user_data["image"] = None
+    ctx.user_data["video"] = None
     await update.message.reply_text(
-        "Step 6/6 — Send the *product image* 📸\n"
-        "_(Send as a photo, or paste an image URL)_",
+        "Step 6/7 — Send the *product image* 📸\n"
+        "_(Send as a photo, or paste a direct image URL)_",
         parse_mode="Markdown"
     )
     return ADD_IMAGE
 
 async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.photo:
-        # Get highest resolution photo and build permanent URL
         file = await update.message.photo[-1].get_file()
-        # Use full Telegram file URL (permanent as long as bot token is valid)
         ctx.user_data["image"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
     elif update.message.text and update.message.text.startswith("http"):
         ctx.user_data["image"] = update.message.text.strip()
     else:
-        await update.message.reply_text("❌ Please send a photo or image URL.")
+        await update.message.reply_text("❌ Please send a photo or a direct image URL.")
         return ADD_IMAGE
 
+    await update.message.reply_text(
+        "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
+        "Send a video file, or type `skip` to skip.",
+        parse_mode="Markdown"
+    )
+    return ADD_VIDEO
+
+async def add_video(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    if update.message.video:
+        file = await update.message.video.get_file()
+        ctx.user_data["video"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
+    elif update.message.text and update.message.text.lower() == "skip":
+        ctx.user_data["video"] = None
+    elif update.message.text and update.message.text.startswith("http"):
+        ctx.user_data["video"] = update.message.text.strip()
+    else:
+        await update.message.reply_text("❌ Send a video file, a video URL, or type `skip`.", parse_mode="Markdown")
+        return ADD_VIDEO
+
     d = ctx.user_data
+    has_video = "🎬 Video: Yes" if d.get("video") else "🎬 Video: No"
     summary = (
         f"✅ *Review your product:*\n\n"
         f"📦 Name: {d['name']}\n"
         f"🏷️ Category: {d['category']}\n"
         f"💰 Price: ₦{d['price']:,}\n"
         f"🔖 Old Price: {'₦'+str(d['oldPrice']) if d['oldPrice'] else 'N/A'}\n"
-        f"📝 Description: {d['description'][:80]}...\n\n"
+        f"📝 Description: {d['description'][:80]}...\n"
+        f"📸 Image: Yes\n"
+        f"{has_video}\n\n"
         "Confirm and add to website?"
     )
     await update.message.reply_text(
@@ -252,6 +274,7 @@ async def add_confirm(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         "description": d["description"],
         "image": d["image"],
         "images": [d["image"]],
+        "video": d.get("video"),        # None if skipped
         "rating": 5.0,
         "reviews": 0,
         "badge": "new",
@@ -388,6 +411,7 @@ def main():
             ADD_OLD_PRICE:   [MessageHandler(filters.TEXT & ~filters.COMMAND, add_old_price)],
             ADD_DESCRIPTION: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_description)],
             ADD_IMAGE:       [MessageHandler(filters.PHOTO | filters.TEXT, add_image)],
+            ADD_VIDEO:       [MessageHandler(filters.VIDEO | filters.TEXT, add_video)],
             ADD_CONFIRM:     [CallbackQueryHandler(add_confirm)],
         },
         fallbacks=[CommandHandler("cancel", cancel)],

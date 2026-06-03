@@ -20,6 +20,11 @@
 
 /* Tablet Portrait */
 @media (max-width: 768px) {
+  /* Prevent horizontal overflow */
+  .container { max-width: 100%; }
+  .product-grid { width: 100%; }
+  .products-layout { width: 100%; }
+
   /* Navbar */
   .nav-links { display: none; }
   .hamburger { display: flex; }
@@ -36,9 +41,9 @@
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 
   /* Products page */
-  .products-layout { grid-template-columns: 1fr; }
-  .sidebar { order: 2; }
-  .products-main { order: 1; }
+  .products-layout { grid-template-columns: 1fr; width: 100%; }
+  .sidebar { order: 2; position: static; max-height: none; overflow-y: visible; }
+  .products-main { order: 1; width: 100%; overflow-x: hidden; }
   .sidebar-filters-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;

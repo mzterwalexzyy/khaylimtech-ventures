@@ -4,8 +4,8 @@
 //  or Firebase Storage URLs via the bot.
 // =========================================
 
+// Sample products — shown immediately, then Firebase products are merged in on top
 const PRODUCTS = [
-  // ─── PHONES ───────────────────────────
   {
     id: "ph001",
     name: "iPhone 15 Pro Max",
@@ -255,12 +255,12 @@ const PRODUCTS = [
   }
 ];
 
-// Category metadata
+// Category metadata — counts updated dynamically by firebase-db.js
 const CATEGORIES = [
-  { id: "phones",     label: "Phones",          icon: "📱", count: PRODUCTS.filter(p => p.category === "phones").length },
-  { id: "laptops",    label: "Laptops",          icon: "💻", count: PRODUCTS.filter(p => p.category === "laptops").length },
-  { id: "gaming",     label: "Gaming Consoles",  icon: "🎮", count: PRODUCTS.filter(p => p.category === "gaming").length },
-  { id: "accessories",label: "Accessories",      icon: "🔌", count: PRODUCTS.filter(p => p.category === "accessories").length }
+  { id: "phones",      label: "Phones",          icon: "📱", count: 0 },
+  { id: "laptops",     label: "Laptops",          icon: "💻", count: 0 },
+  { id: "gaming",      label: "Gaming Consoles",  icon: "🎮", count: 0 },
+  { id: "accessories", label: "Accessories",      icon: "🔌", count: 0 }
 ];
 
 // Helpers

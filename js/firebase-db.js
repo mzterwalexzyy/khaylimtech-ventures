@@ -30,16 +30,20 @@ db.collection("products").onSnapshot((snapshot) => {
         description: d.description || "",
         image:       d.image       || "https://placehold.co/400x400/1a1a24/c9a227?text=No+Image",
         images:      d.images      || [d.image],
+        video:       d.video       || null,
         rating:      Number(d.rating)  || 5.0,
         reviews:     Number(d.reviews) || 0,
-        badge:       d.badge       || null,
+        badge:       d.badge       || "new",
         inStock:     d.inStock !== false,
       };
     });
 
-    // Mutate the existing PRODUCTS array in-place (works with const declaration)
-    PRODUCTS.length = 0;
-    firestoreProducts.forEach(p => PRODUCTS.push(p));
+    // Merge: Firebase products override sample ones with same id, rest are added
+    firestoreProducts.forEach(fp => {
+      const idx = PRODUCTS.findIndex(p => p.id === fp.id);
+      if (idx > -1) PRODUCTS[idx] = fp;   // update existing
+      else PRODUCTS.unshift(fp);           // add new at top
+    });
 
     // Refresh category counts
     CATEGORIES.forEach(cat => {

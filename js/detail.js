@@ -34,13 +34,17 @@ function renderDetail(p) {
   const mainImg = document.querySelector("#detail-main-img");
   if (mainImg) { mainImg.src = p.image; mainImg.alt = p.name; }
 
-  // Thumbnails
+  // Thumbnails + video thumb if present
   const thumbRow = document.querySelector("#detail-thumb-row");
-  if (thumbRow && p.images) {
-    thumbRow.innerHTML = p.images.map((src, i) => `
+  if (thumbRow) {
+    const imgThumbs = (p.images || [p.image]).map((src, i) => `
       <img src="${src}" alt="${p.name}" class="detail-thumb ${i===0?'active':''}"
         onclick="switchMainImg(this, '${src}')" loading="lazy">
     `).join("");
+    const videoThumb = p.video ? `
+      <div class="detail-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--bg-input);font-size:1.6rem;cursor:pointer"
+        onclick="showVideo('${p.video}')">🎬</div>` : "";
+    thumbRow.innerHTML = imgThumbs + videoThumb;
   }
 
   // Text
@@ -104,9 +108,28 @@ function renderDetail(p) {
 }
 
 function switchMainImg(thumb, src) {
-  document.querySelector("#detail-main-img").src = src;
+  // Hide video, show image
+  const videoEl = document.querySelector("#detail-video-player");
+  if (videoEl) videoEl.remove();
+  const mainImg = document.querySelector("#detail-main-img");
+  if (mainImg) { mainImg.style.display = "block"; mainImg.src = src; }
   document.querySelectorAll(".detail-thumb").forEach(t => t.classList.remove("active"));
   thumb.classList.add("active");
+}
+
+function showVideo(url) {
+  const mainImg = document.querySelector("#detail-main-img");
+  if (mainImg) mainImg.style.display = "none";
+  let videoEl = document.querySelector("#detail-video-player");
+  if (!videoEl) {
+    videoEl = document.createElement("video");
+    videoEl.id = "detail-video-player";
+    videoEl.controls = true;
+    videoEl.style.cssText = "width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:16px;background:#000;";
+    mainImg?.parentNode.insertBefore(videoEl, mainImg);
+  }
+  videoEl.src = url;
+  videoEl.play();
 }
 
 function renderRelated(p) {
