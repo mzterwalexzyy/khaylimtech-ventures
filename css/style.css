@@ -994,6 +994,15 @@ input, select { font-family: inherit; }
   grid-template-columns: 260px 1fr;
   gap: 28px;
   padding: 40px 0;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 /* Sidebar */
