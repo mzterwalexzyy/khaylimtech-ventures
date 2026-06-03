@@ -297,6 +297,11 @@
   // Called by firebase-db.js when data is ready (or on fallback)
   window.onFirebaseReady = renderHomePage;
 
+  // Fallback: render local data immediately, Firebase will re-render with live data
+  document.addEventListener("DOMContentLoaded", () => {
+    if (!window.firebaseLoaded) renderHomePage();
+  });
+
   // Newsletter handler
   function handleNewsletter(e) {
     e.preventDefault();

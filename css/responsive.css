@@ -109,6 +109,9 @@
 
   /* Nav actions */
   .nav-logo img { width: 36px; height: 36px; }
+  .nav-logo-text { display: flex !important; }
+  .nav-logo-text span:first-child { font-size: 0.78rem; }
+  .nav-logo-text span:last-child { font-size: 0.52rem; }
 }
 
 /* Mobile Small */

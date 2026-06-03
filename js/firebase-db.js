@@ -44,15 +44,26 @@ db.collection("products").onSnapshot((snapshot) => {
     });
   }
 
-  // Signal the page that data is ready
+  window.firebaseLoaded = true;
+
+  // Signal the page — wait for DOM if needed
   if (typeof window.onFirebaseReady === "function") {
     window.onFirebaseReady();
+  } else {
+    // Page script hasn't defined onFirebaseReady yet — wait for it
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof window.onFirebaseReady === "function") window.onFirebaseReady();
+    });
   }
 
 }, (error) => {
   console.warn("Firebase unavailable, using local sample data.", error);
-  // Fall back to local data.js products
+  window.firebaseLoaded = true;
   if (typeof window.onFirebaseReady === "function") {
     window.onFirebaseReady();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof window.onFirebaseReady === "function") window.onFirebaseReady();
+    });
   }
 });
