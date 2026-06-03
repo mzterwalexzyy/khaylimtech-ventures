@@ -2,18 +2,38 @@
 //  KhaylimTech — Product Detail Page
 // =========================================
 
+let _firebaseReady = false;
+
+function showLoadingState() {
+  const layout = document.querySelector(".detail-layout");
+  if (layout) layout.innerHTML = `
+    <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
+      <div style="font-size:2.5rem;margin-bottom:16px">⏳</div>
+      <h3 style="color:var(--text-heading);margin-bottom:8px">Loading product...</h3>
+      <p style="color:var(--text-muted);font-size:.875rem">Fetching from store database</p>
+    </div>`;
+}
+
+function showNotFound() {
+  const layout = document.querySelector(".detail-layout");
+  if (layout) layout.innerHTML = `
+    <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
+      <div style="font-size:3rem;margin-bottom:12px">😕</div>
+      <h2 style="color:var(--text-heading);margin-bottom:8px">Product not found</h2>
+      <a href="products.html" class="btn-gold" style="display:inline-flex;margin-top:16px">Browse Products</a>
+    </div>`;
+}
+
 function initDetailPage() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
   const product = id ? getProductById(id) : null;
 
   if (!product) {
-    document.querySelector(".detail-layout").innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:80px 20px">
-        <div style="font-size:3rem;margin-bottom:12px">😕</div>
-        <h2 style="color:var(--text-heading);margin-bottom:8px">Product not found</h2>
-        <a href="products.html" class="btn-gold" style="display:inline-flex;margin-top:16px">Browse Products</a>
-      </div>`;
+    // If Firebase hasn't loaded yet, show loading — not error
+    if (!_firebaseReady) { showLoadingState(); return; }
+    // Firebase is done and product genuinely not found
+    showNotFound();
     return;
   }
 
@@ -21,12 +41,23 @@ function initDetailPage() {
   renderRelated(product);
 }
 
-// Called by firebase-db.js when live data is ready
-window.onFirebaseReady = initDetailPage;
+// Called by firebase-db.js when live Firestore data is ready
+window.onFirebaseReady = () => {
+  _firebaseReady = true;
+  initDetailPage();
+};
 
-// Also run on DOMContentLoaded as fallback (uses local data.js)
+// On page load show loading spinner immediately (Firebase is async)
 document.addEventListener("DOMContentLoaded", () => {
-  if (!window.firebaseLoaded) initDetailPage();
+  const id = new URLSearchParams(window.location.search).get("id");
+  const product = id ? getProductById(id) : null;
+  if (product) {
+    // Local product found immediately — render it
+    initDetailPage();
+  } else {
+    // Firebase product — show loading until Firebase arrives
+    showLoadingState();
+  }
 });
 
 function renderDetail(p) {
