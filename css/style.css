@@ -83,8 +83,11 @@ input, select { font-family: inherit; }
    NAVBAR
    ========================================= */
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
   background: var(--bg-nav);
   backdrop-filter: blur(12px);
@@ -92,6 +95,9 @@ input, select { font-family: inherit; }
   border-bottom: 1px solid var(--border);
   transition: background 0.3s ease;
 }
+
+/* Push page content down so it doesn't hide behind fixed navbar */
+body { padding-top: 70px; }
 
 .nav-inner {
   display: flex;
