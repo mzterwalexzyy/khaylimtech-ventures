@@ -40,7 +40,9 @@ if firebase_key_json:
     cred = credentials.Certificate(json.loads(firebase_key_json))
 else:
     # Local development — place firebase-key.json in bot/ folder
-    cred = credentials.Certificate("firebase-key.json")
+    import os as _os
+    key_path = _os.path.join(_os.path.dirname(__file__), "firebase-key.json")
+    cred = credentials.Certificate(key_path)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 COLLECTION = "products"
