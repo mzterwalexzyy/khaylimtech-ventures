@@ -595,8 +595,14 @@ input, select { font-family: inherit; }
    ========================================= */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.product-card {
+  min-width: 0; /* prevent grid blowout */
 }
 
 .product-card {
