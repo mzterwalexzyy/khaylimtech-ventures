@@ -56,20 +56,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-function renderDetail(p) {
-  // Main image
-  const mainImg = document.querySelector("#detail-main-img");
-  if (mainImg) { mainImg.src = p.image; mainImg.alt = p.name; }
+const PLACEHOLDER = "placehold.co";
 
-  // Thumbnails + video thumb if present
+function renderDetail(p) {
+  const mainImg = document.querySelector("#detail-main-img");
+  const isPlaceholder = !p.image || p.image.includes(PLACEHOLDER);
+
+  // If product only has video (no real image), show video player immediately
+  if (p.video && isPlaceholder) {
+    if (mainImg) mainImg.style.display = "none";
+    showVideo(p.video);
+  } else if (mainImg) {
+    mainImg.src = p.image;
+    mainImg.alt = p.name;
+    mainImg.style.display = "block";
+  }
+
+  // Thumbnails + video thumb
   const thumbRow = document.querySelector("#detail-thumb-row");
   if (thumbRow) {
-    const imgThumbs = (p.images || [p.image]).map((src, i) => `
+    const imgThumbs = isPlaceholder ? "" : (p.images || [p.image]).map((src, i) => `
       <img src="${src}" alt="${p.name}" class="detail-thumb ${i===0?'active':''}"
         onclick="switchMainImg(this, '${src}')" loading="lazy">
     `).join("");
     const videoThumb = p.video ? `
-      <div class="detail-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--bg-input);font-size:1.6rem;cursor:pointer"
+      <div class="detail-thumb ${isPlaceholder ? 'active' : ''}"
+        style="display:flex;align-items:center;justify-content:center;background:var(--bg-input);font-size:1.6rem;cursor:pointer;border:2px solid ${isPlaceholder ? 'var(--gold)' : 'var(--border)'}"
         onclick="showVideo('${p.video}')">🎬</div>` : "";
     thumbRow.innerHTML = imgThumbs + videoThumb;
   }
@@ -145,18 +157,25 @@ function switchMainImg(thumb, src) {
 }
 
 function showVideo(url) {
+  // Hide image
   const mainImg = document.querySelector("#detail-main-img");
   if (mainImg) mainImg.style.display = "none";
-  let videoEl = document.querySelector("#detail-video-player");
-  if (!videoEl) {
-    videoEl = document.createElement("video");
-    videoEl.id = "detail-video-player";
-    videoEl.controls = true;
-    videoEl.style.cssText = "width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:16px;background:#000;";
-    mainImg?.parentNode.insertBefore(videoEl, mainImg);
-  }
-  videoEl.src = url;
-  videoEl.play();
+
+  // Remove old player if exists
+  const old = document.querySelector("#detail-video-player");
+  if (old) old.remove();
+
+  // Create new video player
+  const videoEl = document.createElement("video");
+  videoEl.id = "detail-video-player";
+  videoEl.controls = true;
+  videoEl.autoplay = false;
+  videoEl.style.cssText = "width:100%;aspect-ratio:9/16;max-height:520px;object-fit:contain;border-radius:16px;background:#000;display:block;";
+  videoEl.innerHTML = `<source src="${url}" type="video/mp4">Your browser does not support video.`;
+
+  // Insert before or after image in the same container
+  const container = mainImg?.parentNode || document.querySelector(".detail-layout > div");
+  if (container) container.insertBefore(videoEl, mainImg || container.firstChild);
 }
 
 function renderRelated(p) {
