@@ -169,9 +169,10 @@ function showVideo(url) {
   const videoEl = document.createElement("video");
   videoEl.id = "detail-video-player";
   videoEl.controls = true;
-  videoEl.autoplay = false;
+  videoEl.playsInline = true;
+  videoEl.preload = "metadata";
+  videoEl.src = url;
   videoEl.style.cssText = "width:100%;aspect-ratio:9/16;max-height:520px;object-fit:contain;border-radius:16px;background:#000;display:block;";
-  videoEl.innerHTML = `<source src="${url}" type="video/mp4">Your browser does not support video.`;
 
   // Insert before or after image in the same container
   const container = mainImg?.parentNode || document.querySelector(".detail-layout > div");
