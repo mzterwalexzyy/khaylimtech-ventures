@@ -14,13 +14,15 @@ Commands:
 import os
 import json
 import logging
+import uuid
+import tempfile
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler,
     ConversationHandler, CallbackQueryHandler, ContextTypes, filters
 )
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, storage
 
 # ─── Logging ────────────────────────────────────────────
 logging.basicConfig(
@@ -43,9 +45,22 @@ else:
     import os as _os
     key_path = _os.path.join(_os.path.dirname(__file__), "firebase-key.json")
     cred = credentials.Certificate(key_path)
-firebase_admin.initialize_app(cred)
-db = firestore.client()
+firebase_admin.initialize_app(cred, {
+    "storageBucket": "khaylimtech-9ed75.firebasestorage.app"
+})
+db     = firestore.client()
+bucket = storage.bucket()
 COLLECTION = "products"
+
+# ─── Upload file to Firebase Storage ────────────────────
+async def upload_to_storage(tg_file, filename: str, content_type: str) -> str:
+    """Download file from Telegram, upload to Firebase Storage, return public URL."""
+    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
+        await tg_file.download_to_drive(tmp.name)
+        blob = bucket.blob(f"products/{filename}")
+        blob.upload_from_filename(tmp.name, content_type=content_type)
+        blob.make_public()
+        return blob.public_url
 
 # ─── Conversation states ─────────────────────────────────
 (
@@ -203,53 +218,60 @@ async def add_description(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     return ADD_IMAGE
 
 async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    msg = await update.message.reply_text("⏳ Uploading to storage, please wait...")
+
     if update.message.photo:
-        # Photo sent — save as image, then ask for optional video
-        file = await update.message.photo[-1].get_file()
-        ctx.user_data["image"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
-        ctx.user_data["video"] = None
-        await update.message.reply_text(
-            "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
-            "Send a video file, or type `skip` to skip.",
-            parse_mode="Markdown"
-        )
-        return ADD_VIDEO
+        try:
+            file = await update.message.photo[-1].get_file()
+            filename = f"{uuid.uuid4()}.jpg"
+            url = await upload_to_storage(file, filename, "image/jpeg")
+            ctx.user_data["image"] = url
+            ctx.user_data["video"] = None
+            await msg.edit_text("✅ Image uploaded!")
+            await update.message.reply_text(
+                "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
+                "Send a video file, or type `skip` to skip.",
+                parse_mode="Markdown"
+            )
+            return ADD_VIDEO
+        except Exception as e:
+            await msg.edit_text(f"❌ Upload failed: {e}\nPlease try again.")
+            return ADD_IMAGE
 
     elif update.message.video:
-        # Video sent in image step — use as video, use placeholder image, skip video step
-        file = await update.message.video.get_file()
-        ctx.user_data["video"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
-        ctx.user_data["image"] = "https://placehold.co/400x400/1a1a24/c9a227?text=Video+Product"
-        await update.message.reply_text(
-            "✅ Video received! Since you sent a video, no separate image needed.\n\n"
-            "💡 *Tip:* Next time send a photo first for a proper thumbnail.\n\n"
-            "Preparing summary...",
-            parse_mode="Markdown"
-        )
-        # Jump straight to confirm
-        d = ctx.user_data
-        summary = (
-            f"✅ *Review your product:*\n\n"
-            f"📦 Name: {d['name']}\n"
-            f"🏷️ Category: {d['category']}\n"
-            f"💰 Price: ₦{d['price']:,}\n"
-            f"🔖 Old Price: {'₦'+str(d['oldPrice']) if d['oldPrice'] else 'N/A'}\n"
-            f"📝 Description: {d['description'][:80]}...\n"
-            f"📸 Image: Placeholder\n"
-            f"🎬 Video: Yes\n\n"
-            "Confirm and add to website?"
-        )
-        await update.message.reply_text(
-            summary,
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton("✅ Yes, Add!", callback_data="confirm_yes"),
-                InlineKeyboardButton("❌ Cancel", callback_data="confirm_no"),
-            ]]),
-            parse_mode="Markdown"
-        )
-        return ADD_CONFIRM
+        try:
+            file = await update.message.video.get_file()
+            filename = f"{uuid.uuid4()}.mp4"
+            url = await upload_to_storage(file, filename, "video/mp4")
+            ctx.user_data["video"] = url
+            ctx.user_data["image"] = "https://placehold.co/400x400/1a1a24/c9a227?text=Video+Product"
+            await msg.edit_text("✅ Video uploaded!")
+            d = ctx.user_data
+            summary = (
+                f"✅ *Review your product:*\n\n"
+                f"📦 Name: {d['name']}\n"
+                f"🏷️ Category: {d['category']}\n"
+                f"💰 Price: ₦{d['price']:,}\n"
+                f"🔖 Old Price: {'₦'+str(d['oldPrice']) if d['oldPrice'] else 'N/A'}\n"
+                f"📝 Description: {d['description'][:80]}...\n"
+                f"🎬 Video: Yes\n\n"
+                "Confirm and add to website?"
+            )
+            await update.message.reply_text(
+                summary,
+                reply_markup=InlineKeyboardMarkup([[
+                    InlineKeyboardButton("✅ Yes, Add!", callback_data="confirm_yes"),
+                    InlineKeyboardButton("❌ Cancel", callback_data="confirm_no"),
+                ]]),
+                parse_mode="Markdown"
+            )
+            return ADD_CONFIRM
+        except Exception as e:
+            await msg.edit_text(f"❌ Upload failed: {e}\nPlease try again.")
+            return ADD_IMAGE
 
     elif update.message.text and update.message.text.startswith("http"):
+        await msg.edit_text("✅ URL saved!")
         ctx.user_data["image"] = update.message.text.strip()
         ctx.user_data["video"] = None
         await update.message.reply_text(
@@ -260,16 +282,21 @@ async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         return ADD_VIDEO
 
     else:
-        await update.message.reply_text(
-            "❌ Please send a *photo*, a *video*, or a direct image URL.",
-            parse_mode="Markdown"
-        )
+        await msg.edit_text("❌ Please send a *photo*, a *video*, or a direct image URL.", parse_mode="Markdown")
         return ADD_IMAGE
 
 async def add_video(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.video:
-        file = await update.message.video.get_file()
-        ctx.user_data["video"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
+        msg = await update.message.reply_text("⏳ Uploading video to storage...")
+        try:
+            file = await update.message.video.get_file()
+            filename = f"{uuid.uuid4()}.mp4"
+            url = await upload_to_storage(file, filename, "video/mp4")
+            ctx.user_data["video"] = url
+            await msg.edit_text("✅ Video uploaded!")
+        except Exception as e:
+            await msg.edit_text(f"❌ Video upload failed: {e}")
+            ctx.user_data["video"] = None
     elif update.message.text and update.message.text.lower() == "skip":
         ctx.user_data["video"] = None
     elif update.message.text and update.message.text.startswith("http"):
