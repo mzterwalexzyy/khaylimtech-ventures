@@ -204,20 +204,67 @@ async def add_description(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.photo:
+        # Photo sent — save as image, then ask for optional video
         file = await update.message.photo[-1].get_file()
         ctx.user_data["image"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
+        ctx.user_data["video"] = None
+        await update.message.reply_text(
+            "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
+            "Send a video file, or type `skip` to skip.",
+            parse_mode="Markdown"
+        )
+        return ADD_VIDEO
+
+    elif update.message.video:
+        # Video sent in image step — use as video, use placeholder image, skip video step
+        file = await update.message.video.get_file()
+        ctx.user_data["video"] = f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file.file_path}"
+        ctx.user_data["image"] = "https://placehold.co/400x400/1a1a24/c9a227?text=Video+Product"
+        await update.message.reply_text(
+            "✅ Video received! Since you sent a video, no separate image needed.\n\n"
+            "💡 *Tip:* Next time send a photo first for a proper thumbnail.\n\n"
+            "Preparing summary...",
+            parse_mode="Markdown"
+        )
+        # Jump straight to confirm
+        d = ctx.user_data
+        summary = (
+            f"✅ *Review your product:*\n\n"
+            f"📦 Name: {d['name']}\n"
+            f"🏷️ Category: {d['category']}\n"
+            f"💰 Price: ₦{d['price']:,}\n"
+            f"🔖 Old Price: {'₦'+str(d['oldPrice']) if d['oldPrice'] else 'N/A'}\n"
+            f"📝 Description: {d['description'][:80]}...\n"
+            f"📸 Image: Placeholder\n"
+            f"🎬 Video: Yes\n\n"
+            "Confirm and add to website?"
+        )
+        await update.message.reply_text(
+            summary,
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("✅ Yes, Add!", callback_data="confirm_yes"),
+                InlineKeyboardButton("❌ Cancel", callback_data="confirm_no"),
+            ]]),
+            parse_mode="Markdown"
+        )
+        return ADD_CONFIRM
+
     elif update.message.text and update.message.text.startswith("http"):
         ctx.user_data["image"] = update.message.text.strip()
-    else:
-        await update.message.reply_text("❌ Please send a photo or a direct image URL.")
-        return ADD_IMAGE
+        ctx.user_data["video"] = None
+        await update.message.reply_text(
+            "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
+            "Send a video file, or type `skip` to skip.",
+            parse_mode="Markdown"
+        )
+        return ADD_VIDEO
 
-    await update.message.reply_text(
-        "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
-        "Send a video file, or type `skip` to skip.",
-        parse_mode="Markdown"
-    )
-    return ADD_VIDEO
+    else:
+        await update.message.reply_text(
+            "❌ Please send a *photo*, a *video*, or a direct image URL.",
+            parse_mode="Markdown"
+        )
+        return ADD_IMAGE
 
 async def add_video(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.video:
@@ -410,7 +457,7 @@ def main():
             ADD_PRICE:       [MessageHandler(filters.TEXT & ~filters.COMMAND, add_price)],
             ADD_OLD_PRICE:   [MessageHandler(filters.TEXT & ~filters.COMMAND, add_old_price)],
             ADD_DESCRIPTION: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_description)],
-            ADD_IMAGE:       [MessageHandler(filters.PHOTO | filters.TEXT, add_image)],
+            ADD_IMAGE:       [MessageHandler(filters.PHOTO | filters.VIDEO | filters.TEXT, add_image)],
             ADD_VIDEO:       [MessageHandler(filters.VIDEO | filters.TEXT, add_video)],
             ADD_CONFIRM:     [CallbackQueryHandler(add_confirm)],
         },
