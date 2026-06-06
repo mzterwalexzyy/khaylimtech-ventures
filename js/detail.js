@@ -169,8 +169,9 @@ function showVideo(url) {
   const videoEl = document.createElement("video");
   videoEl.id = "detail-video-player";
   videoEl.controls = true;
+  videoEl.autoplay = true;
   videoEl.playsInline = true;
-  videoEl.preload = "metadata";
+  videoEl.preload = "auto";
   videoEl.src = url;
   videoEl.style.cssText = "width:100%;aspect-ratio:9/16;max-height:520px;object-fit:contain;border-radius:16px;background:#000;display:block;";
 

@@ -94,17 +94,26 @@ function initSearch() {
   });
 }
 
+const PLACEHOLDER_IMG = "placehold.co";
+
 // ─── Render Product Card ─────────────────
 function renderProductCard(p) {
   const badgeHtml = p.badge
     ? `<span class="product-badge badge-${p.badge}">${p.badge === "hot" ? "🔥 Hot" : p.badge === "new" ? "✨ New" : p.badge}</span>`
     : (p.inStock ? "" : '<span class="product-badge badge-out">Out of Stock</span>');
 
+  const isPlaceholder = !p.image || p.image.includes(PLACEHOLDER_IMG);
+  const mediaHtml = (p.video && isPlaceholder)
+    ? `<video src="${p.video}" autoplay muted loop playsinline
+         style="width:100%;height:100%;object-fit:cover;display:block;"
+         onerror="this.style.display='none'"></video>`
+    : `<img src="${p.image}" alt="${p.name}" loading="lazy">`;
+
   return `
     <div class="product-card">
       <div class="product-img-wrap">
         <a href="product-detail.html?id=${p.id}">
-          <img src="${p.image}" alt="${p.name}" loading="lazy">
+          ${mediaHtml}
         </a>
         ${badgeHtml}
         <button class="product-wishlist" onclick="toggleWishlist(this)" title="Wishlist">
