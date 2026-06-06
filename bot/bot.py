@@ -51,11 +51,11 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 COLLECTION = "products"
 
-# ─── Cloudinary Config ───────────────────────────────────
+# ─── Cloudinary Config (values set as Railway environment variables) ─────────
 cloudinary.config(
-    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME", "dbk335o1t"),
-    api_key    = os.getenv("CLOUDINARY_API_KEY",    "852839918889525"),
-    api_secret = os.getenv("CLOUDINARY_API_SECRET", "e0jmUbtzbpgn5tl8itOGKW5sryo"),
+    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key    = os.getenv("CLOUDINARY_API_KEY"),
+    api_secret = os.getenv("CLOUDINARY_API_SECRET"),
     secure     = True
 )
 
