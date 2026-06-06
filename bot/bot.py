@@ -16,13 +16,15 @@ import json
 import logging
 import uuid
 import tempfile
+import cloudinary
+import cloudinary.uploader
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler,
     ConversationHandler, CallbackQueryHandler, ContextTypes, filters
 )
 import firebase_admin
-from firebase_admin import credentials, firestore, storage
+from firebase_admin import credentials, firestore
 
 # ─── Logging ────────────────────────────────────────────
 logging.basicConfig(
@@ -45,22 +47,30 @@ else:
     import os as _os
     key_path = _os.path.join(_os.path.dirname(__file__), "firebase-key.json")
     cred = credentials.Certificate(key_path)
-firebase_admin.initialize_app(cred, {
-    "storageBucket": "khaylimtech-9ed75.firebasestorage.app"
-})
-db     = firestore.client()
-bucket = storage.bucket()
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 COLLECTION = "products"
 
-# ─── Upload file to Firebase Storage ────────────────────
-async def upload_to_storage(tg_file, filename: str, content_type: str) -> str:
-    """Download file from Telegram, upload to Firebase Storage, return public URL."""
-    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as tmp:
+# ─── Cloudinary Config ───────────────────────────────────
+cloudinary.config(
+    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME", "dbk335o1t"),
+    api_key    = os.getenv("CLOUDINARY_API_KEY",    "852839918889525"),
+    api_secret = os.getenv("CLOUDINARY_API_SECRET", "e0jmUbtzbpgn5tl8itOGKW5sryo"),
+    secure     = True
+)
+
+# ─── Upload to Cloudinary ────────────────────────────────
+async def upload_to_cloudinary(tg_file, resource_type: str = "image") -> str:
+    """Download file from Telegram, upload to Cloudinary, return secure public URL."""
+    suffix = ".mp4" if resource_type == "video" else ".jpg"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
         await tg_file.download_to_drive(tmp.name)
-        blob = bucket.blob(f"products/{filename}")
-        blob.upload_from_filename(tmp.name, content_type=content_type)
-        blob.make_public()
-        return blob.public_url
+        result = cloudinary.uploader.upload(
+            tmp.name,
+            resource_type = resource_type,
+            folder        = "khaylimtech/products",
+        )
+        return result["secure_url"]
 
 # ─── Conversation states ─────────────────────────────────
 (
@@ -223,8 +233,7 @@ async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.photo:
         try:
             file = await update.message.photo[-1].get_file()
-            filename = f"{uuid.uuid4()}.jpg"
-            url = await upload_to_storage(file, filename, "image/jpeg")
+            url = await upload_to_cloudinary(file, "image")
             ctx.user_data["image"] = url
             ctx.user_data["video"] = None
             await msg.edit_text("✅ Image uploaded!")
@@ -241,8 +250,7 @@ async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     elif update.message.video:
         try:
             file = await update.message.video.get_file()
-            filename = f"{uuid.uuid4()}.mp4"
-            url = await upload_to_storage(file, filename, "video/mp4")
+            url = await upload_to_cloudinary(file, "video")
             ctx.user_data["video"] = url
             ctx.user_data["image"] = "https://placehold.co/400x400/1a1a24/c9a227?text=Video+Product"
             await msg.edit_text("✅ Video uploaded!")
@@ -287,11 +295,10 @@ async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 async def add_video(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.video:
-        msg = await update.message.reply_text("⏳ Uploading video to storage...")
+        msg = await update.message.reply_text("⏳ Uploading video to Cloudinary...")
         try:
             file = await update.message.video.get_file()
-            filename = f"{uuid.uuid4()}.mp4"
-            url = await upload_to_storage(file, filename, "video/mp4")
+            url = await upload_to_cloudinary(file, "video")
             ctx.user_data["video"] = url
             await msg.edit_text("✅ Video uploaded!")
         except Exception as e:
