@@ -78,6 +78,8 @@ function initTheme() {
   const saved = localStorage.getItem("khaylimtech_theme") || "dark";
   document.documentElement.setAttribute("data-theme", saved);
   updateThemeIcon(saved);
+  // Swap assets after DOM is ready
+  window.addEventListener("load", () => swapThemeAssets(saved));
 
   document.querySelectorAll(".theme-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -94,6 +96,23 @@ function updateThemeIcon(theme) {
   document.querySelectorAll(".theme-toggle i").forEach(icon => {
     icon.className = theme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
   });
+  swapThemeAssets(theme);
+}
+
+function swapThemeAssets(theme) {
+  const isDark = theme === "dark";
+
+  // Swap all logos (navbar + footer)
+  const logoSrc = isDark ? "assets/Darkmode_logo.png" : "assets/Lightmode_logo.png";
+  document.querySelectorAll(".nav-logo img, .footer-logo img").forEach(img => {
+    img.src = logoSrc;
+  });
+
+  // Swap hero banner (homepage only)
+  const heroBg = document.querySelector(".hero-bg");
+  if (heroBg) {
+    heroBg.src = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
+  }
 }
 
 // ─── Nav Active State & Hamburger ───────
