@@ -35,7 +35,10 @@ logger = logging.getLogger(__name__)
 
 # ─── Config ─────────────────────────────────────────────
 BOT_TOKEN     = os.getenv("BOT_TOKEN")       # Set in Railway environment variables
-ADMIN_CHAT_ID = int(os.getenv("ADMIN_ID", "0"))  # Your Telegram user ID
+# Multiple admins — add IDs separated by commas in ADMIN_IDS env var
+# e.g. ADMIN_IDS=123456789,5532033861
+_raw_ids = os.getenv("ADMIN_IDS", os.getenv("ADMIN_ID", "0"))
+ADMIN_IDS = set(int(i.strip()) for i in _raw_ids.split(",") if i.strip())
 
 # ─── Firebase Init ───────────────────────────────────────
 # Loads from FIREBASE_KEY_JSON env var (Railway) or local file (development)
@@ -89,7 +92,7 @@ CATEGORIES = {
 # ─── Auth guard ─────────────────────────────────────────
 def admin_only(func):
     async def wrapper(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
-        if update.effective_user.id != ADMIN_CHAT_ID:
+        if update.effective_user.id not in ADMIN_IDS:
             await update.message.reply_text("⛔ Unauthorized. Only the store admin can use this bot.")
             return ConversationHandler.END
         return await func(update, ctx)
