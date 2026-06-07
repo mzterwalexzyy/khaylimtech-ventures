@@ -111,7 +111,7 @@
 <script src="js/cart.js"></script>
 <script src="js/app.js"></script>
 <script>
-  const VAT_RATE = 0.075;
+  const VAT_RATE = 0; // VAT removed
 
   function renderCart() {
     const items = Cart.getAll();
@@ -131,8 +131,7 @@
     }
 
     const subtotal = Cart.subtotal();
-    const vat = Math.round(subtotal * VAT_RATE);
-    const total = subtotal + vat;
+    const total = subtotal;
 
     // Build WhatsApp message
     const waMsg = items.map(i => `• ${i.name} x${i.qty} = ${formatNGN(i.price * i.qty)}`).join("\n");
@@ -182,9 +181,8 @@
       <div class="cart-summary">
         <h3>Order Summary</h3>
         <div class="summary-row"><span>Subtotal (${Cart.count()} items)</span><span>${formatNGN(subtotal)}</span></div>
-        <div class="summary-row"><span>VAT (7.5%)</span><span>${formatNGN(vat)}</span></div>
         <div class="summary-row"><span>Delivery</span><span style="color:#22c55e">To be confirmed</span></div>
-        <div class="summary-row total"><span>Total</span><span>${formatNGN(total)}</span></div>
+        <div class="summary-row total"><span>Total</span><span>${formatNGN(subtotal)}</span></div>
 
         <a href="${waLink}" target="_blank" class="checkout-btn">
           <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp

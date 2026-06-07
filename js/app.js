@@ -216,10 +216,21 @@ function renderProductCard(p) {
           <span class="product-price">${formatNGN(p.price)}</span>
           ${p.oldPrice ? `<span class="product-price-old">${formatNGN(p.oldPrice)}</span>` : ""}
         </div>
-        <button class="product-add-btn" onclick="addToCartFromCard('${p.id}', this)" ${!p.inStock ? "disabled style='opacity:.5;cursor:not-allowed'" : ""}>
-          <i class="fa-solid fa-bag-shopping"></i>
-          ${p.inStock ? "Add to Cart" : "Out of Stock"}
-        </button>
+        ${!p.inStock
+          ? `<button class="product-add-btn" disabled style="opacity:.5;cursor:not-allowed;background:linear-gradient(135deg,#666,#444);color:#fff">
+               <i class="fa-solid fa-ban"></i> Out of Stock
+             </button>`
+          : (() => {
+              const inCart = Cart.getAll().some(i => i.id === p.id);
+              return inCart
+                ? `<button class="product-add-btn added" onclick="addToCartFromCard('${p.id}', this)">
+                     <i class="fa-solid fa-circle-check"></i> Added to Cart
+                   </button>`
+                : `<button class="product-add-btn" onclick="addToCartFromCard('${p.id}', this)">
+                     <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+                   </button>`;
+            })()
+        }
       </div>
     </div>
   `;
@@ -229,12 +240,10 @@ function addToCartFromCard(id, btn) {
   const product = getProductById(id);
   if (!product) return;
   Cart.add(product);
+  // Permanently mark as added — stays green until page refresh
   btn.classList.add("added");
-  btn.innerHTML = '<i class="fa-solid fa-check"></i> Added!';
-  setTimeout(() => {
-    btn.classList.remove("added");
-    btn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> Add to Cart';
-  }, 1800);
+  btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Added to Cart';
+  btn.onclick = null; // prevent double-add spam; click again does nothing
 }
 
 function toggleWishlist(btn) {
