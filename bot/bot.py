@@ -106,9 +106,11 @@ async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         "Use these commands to manage your store:\n\n"
         "📦 `/add` — Add a new product\n"
         "🗑️ `/delete` — Remove a product\n"
-        "✏️ `/update` — Update price or stock\n"
-        "📋 `/list` — View all products\n"
+        "✏️ `/update` — Update any product field\n"
+        "🏷️ `/discount` — Apply % or flat discount\n"
+        "📋 `/list` — View all products with IDs\n"
         "🔄 `/stock` — Toggle in/out of stock\n"
+        "📊 `/sales` — View recent orders report\n"
         "❓ `/help` — Show this message",
         parse_mode="Markdown"
     )
@@ -468,6 +470,91 @@ async def update_product(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 
 # ════════════════════════════════════════
+#  /discount — Apply % or flat discount
+# ════════════════════════════════════════
+@admin_only
+async def discount_product(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    args = ctx.args
+    if len(args) < 2:
+        await update.message.reply_text(
+            "Usage: `/discount <product_id> <percent|amount|off>`\n\n"
+            "Examples:\n"
+            "`/discount ph001 15` — 15% off\n"
+            "`/discount ph001 20000` — ₦20,000 off\n"
+            "`/discount ph001 off` — Remove discount",
+            parse_mode="Markdown"
+        )
+        return
+    pid, value = args[0].strip(), args[1].strip().lower()
+    doc = db.collection(COLLECTION).document(pid).get()
+    if not doc.exists:
+        await update.message.reply_text(f"❌ Product `{pid}` not found.", parse_mode="Markdown")
+        return
+    data = doc.to_dict()
+    name = data.get("name", pid)
+    current_price = int(data.get("price", 0))
+
+    if value == "off":
+        db.collection(COLLECTION).document(pid).update({"oldPrice": None})
+        await update.message.reply_text(f"✅ Discount removed from *{name}*.", parse_mode="Markdown")
+        return
+
+    try: amount = float(value)
+    except:
+        await update.message.reply_text("❌ Invalid value. Use a number (15 for 15%) or `off`.", parse_mode="Markdown")
+        return
+
+    if amount <= 100:  # treat as percentage
+        new_price = int(current_price * (1 - amount / 100))
+        label = f"{int(amount)}% off"
+    else:  # treat as flat naira amount
+        new_price = current_price - int(amount)
+        label = f"₦{int(amount):,} off"
+
+    if new_price <= 0:
+        await update.message.reply_text("❌ Discount too large — price would be zero or negative.", parse_mode="Markdown")
+        return
+
+    db.collection(COLLECTION).document(pid).update({"oldPrice": current_price, "price": new_price})
+    await update.message.reply_text(
+        f"🏷️ *Discount applied to {name}!*\n\n"
+        f"Original: ₦{current_price:,}\n"
+        f"Discount: {label}\n"
+        f"New price: ₦{new_price:,}\n\n"
+        f"Website updated instantly! 🌐",
+        parse_mode="Markdown"
+    )
+
+
+# ════════════════════════════════════════
+#  /sales — WhatsApp order summary
+# ════════════════════════════════════════
+@admin_only
+async def sales_report(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    docs = db.collection("orders").order_by("timestamp", direction=firestore.Query.DESCENDING).limit(20).stream()
+    orders = [doc.to_dict() for doc in docs]
+
+    if not orders:
+        await update.message.reply_text(
+            "📊 *Sales Report*\n\n"
+            "No recorded orders yet.\n\n"
+            "💡 Orders placed via WhatsApp cart button are tracked here automatically.",
+            parse_mode="Markdown"
+        )
+        return
+
+    total = sum(o.get("total", 0) for o in orders)
+    lines = [f"📊 *Sales Report* — Last {len(orders)} orders\n"]
+    for o in orders[:10]:
+        lines.append(
+            f"• {o.get('name','?')} — ₦{o.get('total',0):,} "
+            f"({o.get('date','?')})"
+        )
+    lines.append(f"\n💰 *Total Revenue: ₦{total:,}*")
+    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+
+
+# ════════════════════════════════════════
 #  Cancel handler
 # ════════════════════════════════════════
 async def cancel(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
@@ -500,10 +587,12 @@ def main():
 
     app.add_handler(help_handler)
     app.add_handler(add_conv)
-    app.add_handler(CommandHandler("list",   list_products))
-    app.add_handler(CommandHandler("delete", delete_product))
-    app.add_handler(CommandHandler("stock",  toggle_stock))
-    app.add_handler(CommandHandler("update", update_product))
+    app.add_handler(CommandHandler("list",     list_products))
+    app.add_handler(CommandHandler("delete",   delete_product))
+    app.add_handler(CommandHandler("stock",    toggle_stock))
+    app.add_handler(CommandHandler("update",   update_product))
+    app.add_handler(CommandHandler("discount", discount_product))
+    app.add_handler(CommandHandler("sales",    sales_report))
 
     logger.info("🤖 KhaylimTech Bot is running...")
     app.run_polling()

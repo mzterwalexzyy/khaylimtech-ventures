@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — KhaylimTech Ventures</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .about-hero {
+      background: linear-gradient(135deg, #1a1a24, #0d0d12);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0;
+      text-align: center;
+    }
+    .about-hero h1 { font-size: clamp(2rem,4vw,3rem); font-weight: 900; color: var(--text-heading); margin-bottom: 12px; }
+    .about-hero h1 span { color: var(--gold); }
+    .about-hero p { color: var(--text-muted); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; padding: 60px 0; align-items: center; }
+    .about-grid img { width: 100%; border-radius: 20px; border: 1px solid var(--border); }
+    .about-text h2 { font-size: 1.7rem; font-weight: 800; color: var(--text-heading); margin-bottom: 16px; }
+    .about-text h2 span { color: var(--gold); }
+    .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 14px; font-size: 0.92rem; }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-bottom: 60px; }
+    .value-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .value-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .value-icon { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+    .value-title { font-size: 1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 8px; }
+    .value-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+    .map-section { padding-bottom: 60px; }
+    .map-section h2 { font-size: 1.5rem; font-weight: 800; color: var(--text-heading); margin-bottom: 20px; }
+    .map-section h2 span { color: var(--gold); }
+    .map-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      height: 360px;
+    }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; }
+
+    .info-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .info-card i { color: var(--gold); font-size: 1.3rem; margin-top: 2px; flex-shrink: 0; }
+    .info-card h4 { font-size: 0.82rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .info-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .info-cards { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 540px) {
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+      <div class="nav-logo-text"><span>KhaylimTech</span><span>Ventures</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">All Products</a></li>
+      <li><a href="products.html?cat=phones">Phones</a></li>
+      <li><a href="products.html?cat=laptops">Laptops</a></li>
+      <li><a href="products.html?cat=gaming">Gaming</a></li>
+      <li><a href="products.html?cat=accessories">Accessories</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-btn theme-toggle"><i class="fa-solid fa-sun"></i></button>
+      <a href="cart.html" class="nav-btn"><i class="fa-solid fa-bag-shopping"></i><span class="cart-badge">0</span></a>
+      <button class="hamburger"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav">
+    <a href="index.html">Home</a>
+    <a href="products.html">All Products</a>
+    <a href="about.html" class="active">About Us</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</nav>
+
+<!-- HERO -->
+<div class="about-hero">
+  <div class="container">
+    <h1>About <span>KhaylimTech</span> Ventures</h1>
+    <p>Your trusted one-stop tech destination in the heart of Ibadan, Nigeria.</p>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="container">
+  <div class="about-grid">
+    <img src="assets/banner.jpeg" alt="KhaylimTech Store">
+    <div class="about-text">
+      <h2>Our <span>Story</span></h2>
+      <p>KhaylimTech Ventures was born out of a passion for technology and a desire to make premium gadgets accessible to everyone in Ibadan and across Nigeria.</p>
+      <p>We started as a small gadget shop and have grown into a trusted destination for phones, laptops, gaming consoles and accessories — all 100% authentic, at the best prices.</p>
+      <p>Our mission is simple: <strong style="color:var(--gold)">Smarter Tech. Better Life.</strong> We believe everyone deserves access to quality technology that makes life easier, more productive and more fun.</p>
+      <a href="products.html" class="btn-gold" style="display:inline-flex;gap:8px;margin-top:8px">
+        <i class="fa-solid fa-bag-shopping"></i> Shop Now
+      </a>
+    </div>
+  </div>
+
+  <!-- VALUES -->
+  <div class="section-header" style="margin-bottom:28px">
+    <div>
+      <h2 class="section-title">Why Choose <span>Us</span></h2>
+      <span class="section-line"></span>
+    </div>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <span class="value-icon">🛡️</span>
+      <div class="value-title">100% Authentic</div>
+      <div class="value-desc">Every product we sell is genuine and comes with a warranty. No fakes, no compromises.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">💰</span>
+      <div class="value-title">Best Prices</div>
+      <div class="value-desc">We offer competitive prices on all gadgets. Get premium tech without breaking the bank.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🚀</span>
+      <div class="value-title">Fast Delivery</div>
+      <div class="value-desc">Same-day delivery in Ibadan and swift nationwide delivery across Nigeria.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🎧</span>
+      <div class="value-title">Expert Support</div>
+      <div class="value-desc">Our team is always available on WhatsApp to help you pick the right gadget.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🔄</span>
+      <div class="value-title">Easy Returns</div>
+      <div class="value-desc">7-day return policy on defective items. Your satisfaction is our priority.</div>
+    </div>
+    <div class="value-card">
+      <span class="value-icon">🤝</span>
+      <div class="value-title">Trusted by Many</div>
+      <div class="value-desc">Hundreds of happy customers in Ibadan and across Nigeria trust KhaylimTech.</div>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-section">
+    <h2>Find <span>Our Store</span></h2>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.0!2d3.8964!3d7.3986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sOmoola+Plaza+Iwo+Road+Ibadan!5e0!3m2!1sen!2sng!4v1"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <div class="info-cards">
+      <div class="info-card">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <h4>Address</h4>
+          <p>No 19, Omoola Plaza, Iwo Road, Ibadan, Oyo State</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fa-brands fa-whatsapp"></i>
+        <div>
+          <h4>WhatsApp / Call</h4>
+          <p>08083873316<br>Available daily</p>
+        </div>
+      </div>
+      <div class="info-card">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <h4>Opening Hours</h4>
+          <p>Mon – Sat: 8am – 8pm<br>Sunday: 12pm – 6pm</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+          <div class="footer-logo-text"><span>KhaylimTech</span><br><span>Ventures</span></div>
+        </div>
+        <p>Your one-stop tech destination in Ibadan.</p>
+        <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i><span>No 19, Omoola Plaza, Iwo Road, Ibadan</span></div>
+        <div class="footer-contact-item"><i class="fa-brands fa-whatsapp"></i><span>08083873316</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="products.html?cat=phones">Phones</a></li>
+          <li><a href="products.html?cat=laptops">Laptops</a></li>
+          <li><a href="products.html?cat=gaming">Gaming</a></li>
+          <li><a href="products.html?cat=accessories">Accessories</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/2348083873316" class="social-link" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

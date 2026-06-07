@@ -7,7 +7,71 @@ document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initSearch();
   Cart.updateBadge();
+  initWhatsAppBubble();
 });
+
+// ─── WhatsApp Floating Bubble ────────────
+function initWhatsAppBubble() {
+  const bubble = document.createElement("div");
+  bubble.innerHTML = `
+    <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20need%20help%20with%20a%20product."
+       target="_blank" id="wa-bubble" title="Chat with us on WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span class="wa-tooltip">Chat with us!</span>
+    </a>
+  `;
+  document.body.appendChild(bubble);
+
+  // Inject bubble styles
+  const style = document.createElement("style");
+  style.textContent = `
+    #wa-bubble {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 9999;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: wa-pulse 2s infinite;
+    }
+    #wa-bubble:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.6);
+    }
+    .wa-tooltip {
+      position: absolute;
+      right: 68px;
+      background: #fff;
+      color: #111;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    #wa-bubble:hover .wa-tooltip { opacity: 1; }
+    @keyframes wa-pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+      50%       { box-shadow: 0 4px 32px rgba(37,211,102,0.75); }
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 // ─── Dark / Light Mode ──────────────────
 function initTheme() {
