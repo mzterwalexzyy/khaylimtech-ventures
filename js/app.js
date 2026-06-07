@@ -113,6 +113,13 @@ function swapThemeAssets(theme) {
   if (heroBg) {
     heroBg.src = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
   }
+
+  // Swap about page banners
+  const bannerSrc = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
+  ["about-hero-img", "about-story-img"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.src = bannerSrc;
+  });
 }
 
 // ─── Nav Active State & Hamburger ───────

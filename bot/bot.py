@@ -610,6 +610,80 @@ async def cancel(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
 
 # ════════════════════════════════════════
+#  /subscribers — View newsletter list
+# ════════════════════════════════════════
+@admin_only
+async def list_subscribers(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    docs = db.collection("subscribers").order_by("date", direction=firestore.Query.DESCENDING).limit(50).stream()
+    subs = [doc.to_dict() for doc in docs]
+    if not subs:
+        await update.message.reply_text("📭 No newsletter subscribers yet.")
+        return
+    lines = [f"📧 *Newsletter Subscribers ({len(subs)})*\n"]
+    for s in subs:
+        date = s.get("date","")[:10]
+        lines.append(f"• `{s.get('email','?')}` — {date}")
+    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+
+
+# ════════════════════════════════════════
+#  /promo — Update homepage promo banner
+# ════════════════════════════════════════
+@admin_only
+async def set_promo(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    """
+    Usage:
+      /promo <product_id> <title> | <description>
+    Examples:
+      /promo gc001 PlayStation 5 Now In Stock! | Limited units. Order before it sells out!
+      /promo ph003 New iPhone 15 Pro Has Arrived | Get yours today at the best price.
+      /promo hide   — hide the banner entirely
+    """
+    args = ctx.args
+    if not args:
+        await update.message.reply_text(
+            "📢 *Update Homepage Promo Banner*\n\n"
+            "Usage:\n`/promo <product_id> <title> | <description>`\n\n"
+            "Examples:\n"
+            "`/promo gc001 PlayStation 5 Now In Stock! | Limited units available!`\n"
+            "`/promo ph003 New iPhone 15 Pro Arrived | Best price guaranteed.`\n"
+            "`/promo hide` — hide the promo banner",
+            parse_mode="Markdown"
+        )
+        return
+
+    if args[0].lower() == "hide":
+        db.collection("config").document("promo").set({"hidden": True}, merge=True)
+        await update.message.reply_text("🙈 Promo banner hidden from homepage.")
+        return
+
+    pid = args[0].strip()
+    rest = " ".join(args[1:])
+    if "|" in rest:
+        title, desc = [x.strip() for x in rest.split("|", 1)]
+    else:
+        title, desc = rest.strip(), "Order now while stock lasts!"
+
+    db.collection("config").document("promo").set({
+        "productId": pid,
+        "title":     title,
+        "desc":      desc,
+        "tag":       "🔥 New Arrival",
+        "btnText":   "Order Now",
+        "hidden":    False,
+        "updatedAt": firestore.SERVER_TIMESTAMP
+    })
+    await update.message.reply_text(
+        f"✅ *Promo banner updated!*\n\n"
+        f"🔗 Product ID: `{pid}`\n"
+        f"📝 Title: {title}\n"
+        f"💬 Desc: {desc}\n\n"
+        f"Homepage banner updated instantly! 🌐",
+        parse_mode="Markdown"
+    )
+
+
+# ════════════════════════════════════════
 #  Main
 # ════════════════════════════════════════
 def main():
@@ -638,8 +712,10 @@ def main():
     app.add_handler(CommandHandler("delete",   delete_product))
     app.add_handler(CommandHandler("stock",    toggle_stock))
     app.add_handler(CommandHandler("update",   update_product))
-    app.add_handler(CommandHandler("discount", discount_product))
-    app.add_handler(CommandHandler("sales",    sales_report))
+    app.add_handler(CommandHandler("discount",    discount_product))
+    app.add_handler(CommandHandler("sales",       sales_report))
+    app.add_handler(CommandHandler("subscribers", list_subscribers))
+    app.add_handler(CommandHandler("promo",       set_promo))
 
     # Register commands so they appear in Telegram's / menu with descriptions
     from telegram import BotCommand
@@ -650,9 +726,11 @@ def main():
         BotCommand("update",   "✏️ [product_id] [field] [value] — Update a field"),
         BotCommand("discount", "🏷️ [product_id] [%|amount|off] — Apply discount"),
         BotCommand("delete",   "🗑️ [product_id] — Remove a product permanently"),
-        BotCommand("sales",    "📊 View recent orders and revenue report"),
-        BotCommand("cancel",   "❌ Cancel the current operation"),
-        BotCommand("help",     "❓ Show all available commands"),
+        BotCommand("sales",       "📊 View recent orders and revenue report"),
+        BotCommand("subscribers", "📧 View newsletter subscriber list"),
+        BotCommand("promo",       "📢 [product_id] [message] — Update homepage promo"),
+        BotCommand("cancel",      "❌ Cancel the current operation"),
+        BotCommand("help",        "❓ Show all available commands"),
     ]
     import asyncio
     asyncio.get_event_loop().run_until_complete(app.bot.set_my_commands(commands))

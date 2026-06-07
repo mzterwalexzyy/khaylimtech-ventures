@@ -157,13 +157,13 @@
      PROMO BANNER
 ═══════════════════════════════════ -->
 <div class="container">
-  <div class="promo-banner">
+  <div class="promo-banner" id="promo-banner">
     <div class="promo-text">
-      <p class="promo-tag">🎮 New Arrival</p>
-      <h2>PlayStation 5 Now <span>In Stock</span></h2>
-      <p>Limited units available. Order now before it sells out!</p>
+      <p class="promo-tag" id="promo-tag">🎮 New Arrival</p>
+      <h2 id="promo-title">PlayStation 5 Now <span>In Stock</span></h2>
+      <p id="promo-desc">Limited units available. Order now before it sells out!</p>
     </div>
-    <a href="product-detail.html?id=gc001" class="btn-gold">
+    <a href="product-detail.html?id=gc001" id="promo-btn" class="btn-gold">
       <i class="fa-solid fa-gamepad"></i> Order Now
     </a>
   </div>
@@ -298,41 +298,51 @@
         : PRODUCTS.slice(0, 4).map(renderProductCard).join("");
   }
 
+  // Load promo banner from Firestore config
+  function loadPromoBanner() {
+    if (typeof firebase === "undefined") return;
+    firebase.firestore().collection("config").doc("promo").get().then(doc => {
+      if (!doc.exists) return;
+      const d = doc.data();
+      if (d.tag)   document.getElementById("promo-tag").textContent  = d.tag;
+      if (d.title) {
+        // Bold last 2 words in gold span
+        const words = d.title.trim().split(" ");
+        const cut = Math.max(1, words.length - 2);
+        document.getElementById("promo-title").innerHTML =
+          words.slice(0, cut).join(" ") + " <span>" + words.slice(cut).join(" ") + "</span>";
+      }
+      if (d.desc)  document.getElementById("promo-desc").textContent  = d.desc;
+      if (d.productId) document.getElementById("promo-btn").href          = `product-detail.html?id=${d.productId}`;
+      if (d.btnText)   document.getElementById("promo-btn").innerHTML     = `<i class="fa-solid fa-gamepad"></i> ${d.btnText}`;
+      if (d.hidden)    document.getElementById("promo-banner").style.display = "none";
+    }).catch(() => {});
+  }
+
   // Called by firebase-db.js when data is ready (or on fallback)
-  window.onFirebaseReady = renderHomePage;
+  window.onFirebaseReady = function() {
+    renderHomePage();
+    loadPromoBanner();
+  };
 
   // Fallback: render local data immediately, Firebase will re-render with live data
   document.addEventListener("DOMContentLoaded", () => {
     if (!window.firebaseLoaded) renderHomePage();
   });
 
-  // Newsletter handler — saves to Firestore + notifies admin via Telegram
+  // Newsletter handler — saves to Firestore (bot checks via /subscribers command)
   function handleNewsletter(e) {
     e.preventDefault();
     const input = e.target.querySelector("input");
     const email = input.value.trim();
     if (!email) return;
 
-    // Save to Firestore subscribers collection
     if (typeof firebase !== "undefined") {
       const db2 = firebase.firestore();
       db2.collection("subscribers").add({
         email: email,
         date: new Date().toISOString(),
         source: "homepage"
-      }).catch(() => {});
-
-      // Notify admin via Telegram Bot API
-      const BOT = "REDACTED";
-      const ADMIN = "7153173810";
-      fetch(`https://api.telegram.org/bot${BOT}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: ADMIN,
-          text: `📧 *New Newsletter Subscriber!*\n\nEmail: \`${email}\`\nDate: ${new Date().toLocaleString("en-NG")}`,
-          parse_mode: "Markdown"
-        })
       }).catch(() => {});
     }
 
