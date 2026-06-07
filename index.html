@@ -38,6 +38,8 @@
       <li><a href="products.html?cat=laptops">Laptops</a></li>
       <li><a href="products.html?cat=gaming">Gaming</a></li>
       <li><a href="products.html?cat=accessories">Accessories</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
 
     <!-- Search -->
@@ -70,6 +72,8 @@
     <a href="products.html?cat=laptops">💻 Laptops</a>
     <a href="products.html?cat=gaming">🎮 Gaming</a>
     <a href="products.html?cat=accessories">🔌 Accessories</a>
+    <a href="about.html">ℹ️ About Us</a>
+    <a href="contact.html">📩 Contact</a>
   </nav>
 </nav>
 
@@ -302,14 +306,38 @@
     if (!window.firebaseLoaded) renderHomePage();
   });
 
-  // Newsletter handler
+  // Newsletter handler — saves to Firestore + notifies admin via Telegram
   function handleNewsletter(e) {
     e.preventDefault();
     const input = e.target.querySelector("input");
-    if (input.value) {
-      showToast('<i class="fa-solid fa-envelope"></i> <span>Thanks for subscribing!</span>');
-      input.value = "";
+    const email = input.value.trim();
+    if (!email) return;
+
+    // Save to Firestore subscribers collection
+    if (typeof firebase !== "undefined") {
+      const db2 = firebase.firestore();
+      db2.collection("subscribers").add({
+        email: email,
+        date: new Date().toISOString(),
+        source: "homepage"
+      }).catch(() => {});
+
+      // Notify admin via Telegram Bot API
+      const BOT = "REDACTED";
+      const ADMIN = "7153173810";
+      fetch(`https://api.telegram.org/bot${BOT}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: ADMIN,
+          text: `📧 *New Newsletter Subscriber!*\n\nEmail: \`${email}\`\nDate: ${new Date().toLocaleString("en-NG")}`,
+          parse_mode: "Markdown"
+        })
+      }).catch(() => {});
     }
+
+    showToast('<i class="fa-solid fa-envelope"></i> <span>Thanks for subscribing!</span>');
+    input.value = "";
   }
 </script>
 </body>
