@@ -75,7 +75,9 @@ function renderDetail(p) {
   // Thumbnails + video thumb
   const thumbRow = document.querySelector("#detail-thumb-row");
   if (thumbRow) {
-    const imgThumbs = isPlaceholder ? "" : (p.images || [p.image]).map((src, i) => `
+    // Build unique deduplicated images list
+    const allImgs = [...new Set([p.image, ...(p.images || [])].filter(Boolean).filter(s => !s.includes(PLACEHOLDER)))];
+    const imgThumbs = allImgs.map((src, i) => `
       <img src="${src}" alt="${p.name}" class="detail-thumb ${i===0?'active':''}"
         onclick="switchMainImg(this, '${src}')" loading="lazy">
     `).join("");

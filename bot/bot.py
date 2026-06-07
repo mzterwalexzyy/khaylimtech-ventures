@@ -75,9 +75,9 @@ async def upload_to_cloudinary(tg_file, resource_type: str = "image") -> str:
 # ─── Conversation states ─────────────────────────────────
 (
     ADD_NAME, ADD_CATEGORY, ADD_PRICE, ADD_OLD_PRICE,
-    ADD_DESCRIPTION, ADD_IMAGE, ADD_VIDEO, ADD_CONFIRM,
+    ADD_DESCRIPTION, ADD_IMAGE, ADD_MORE_IMAGES, ADD_VIDEO, ADD_CONFIRM,
     UPDATE_FIELD, UPDATE_VALUE,
-) = range(10)
+) = range(11)
 
 CATEGORIES = {
     "1": "phones",
@@ -221,10 +221,11 @@ async def add_old_price(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 async def add_description(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     ctx.user_data["description"] = update.message.text.strip()
     ctx.user_data["image"] = None
+    ctx.user_data["images"] = []
     ctx.user_data["video"] = None
     await update.message.reply_text(
-        "Step 6/7 — Send the *product image* 📸\n"
-        "_(Send as a photo, or paste a direct image URL)_",
+        "Step 6/8 — Send the *main product image* 📸\n"
+        "_(This is the primary image shown on the product card)_",
         parse_mode="Markdown"
     )
     return ADD_IMAGE
@@ -237,14 +238,16 @@ async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
             file = await update.message.photo[-1].get_file()
             url = await upload_to_cloudinary(file, "image")
             ctx.user_data["image"] = url
+            ctx.user_data["images"] = [url]
             ctx.user_data["video"] = None
-            await msg.edit_text("✅ Image uploaded!")
+            await msg.edit_text("✅ Main image uploaded! (1/5)")
             await update.message.reply_text(
-                "Step 7/7 — Send a *product video* 🎬 _(optional)_\n"
-                "Send a video file, or type `skip` to skip.",
+                "Step 7/8 — Send *more product images* 📸 _(up to 4 more)_\n"
+                "Send photos one by one, then type `done` when finished.\n"
+                "_More images = customers see all angles of the product!_",
                 parse_mode="Markdown"
             )
-            return ADD_VIDEO
+            return ADD_MORE_IMAGES
         except Exception as e:
             await msg.edit_text(f"❌ Upload failed: {e}\nPlease try again.")
             return ADD_IMAGE
@@ -294,6 +297,49 @@ async def add_image(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     else:
         await msg.edit_text("❌ Please send a *photo*, a *video*, or a direct image URL.", parse_mode="Markdown")
         return ADD_IMAGE
+
+async def add_more_images(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    images = ctx.user_data.get("images", [])
+    MAX = 5
+
+    # User typed "done" — move to video step
+    if update.message.text and update.message.text.strip().lower() == "done":
+        await update.message.reply_text(
+            f"✅ {len(images)} image(s) saved!\n\n"
+            "Step 8/8 — Send a *product video* 🎬 _(optional)_\n"
+            "Send a video file, or type `skip` to skip.",
+            parse_mode="Markdown"
+        )
+        return ADD_VIDEO
+
+    if update.message.photo:
+        if len(images) >= MAX:
+            await update.message.reply_text(
+                f"⚠️ Maximum {MAX} images reached. Type `done` to continue.",
+                parse_mode="Markdown"
+            )
+            return ADD_MORE_IMAGES
+        try:
+            msg = await update.message.reply_text("⏳ Uploading image...")
+            file = await update.message.photo[-1].get_file()
+            url = await upload_to_cloudinary(file, "image")
+            images.append(url)
+            ctx.user_data["images"] = images
+            remaining = MAX - len(images)
+            await msg.edit_text(
+                f"✅ Image {len(images)}/{MAX} uploaded!\n"
+                f"{'Send another photo or type `done` to continue.' if remaining > 0 else 'Maximum reached — type `done` to continue.'}"
+            )
+        except Exception as e:
+            await update.message.reply_text(f"❌ Upload failed: {e}. Try again.")
+        return ADD_MORE_IMAGES
+
+    await update.message.reply_text(
+        "📸 Send a photo or type `done` to continue.",
+        parse_mode="Markdown"
+    )
+    return ADD_MORE_IMAGES
+
 
 async def add_video(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.message.video:
@@ -356,7 +402,7 @@ async def add_confirm(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         "oldPrice": d.get("oldPrice"),
         "description": d["description"],
         "image": d["image"],
-        "images": [d["image"]],
+        "images": d.get("images") or [d["image"]],  # all uploaded images
         "video": d.get("video"),        # None if skipped
         "rating": 5.0,
         "reviews": 0,
@@ -579,6 +625,7 @@ def main():
             ADD_OLD_PRICE:   [MessageHandler(filters.TEXT & ~filters.COMMAND, add_old_price)],
             ADD_DESCRIPTION: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_description)],
             ADD_IMAGE:       [MessageHandler(filters.PHOTO | filters.VIDEO | filters.TEXT, add_image)],
+            ADD_MORE_IMAGES: [MessageHandler(filters.PHOTO | filters.TEXT, add_more_images)],
             ADD_VIDEO:       [MessageHandler(filters.VIDEO | filters.TEXT, add_video)],
             ADD_CONFIRM:     [CallbackQueryHandler(add_confirm)],
         },
