@@ -641,6 +641,22 @@ def main():
     app.add_handler(CommandHandler("discount", discount_product))
     app.add_handler(CommandHandler("sales",    sales_report))
 
+    # Register commands so they appear in Telegram's / menu with descriptions
+    from telegram import BotCommand
+    commands = [
+        BotCommand("add",      "➕ Add a new product (guided step-by-step)"),
+        BotCommand("list",     "📋 List all products with IDs and prices"),
+        BotCommand("stock",    "🔄 [product_id] [in|out] — Mark in/out of stock"),
+        BotCommand("update",   "✏️ [product_id] [field] [value] — Update a field"),
+        BotCommand("discount", "🏷️ [product_id] [%|amount|off] — Apply discount"),
+        BotCommand("delete",   "🗑️ [product_id] — Remove a product permanently"),
+        BotCommand("sales",    "📊 View recent orders and revenue report"),
+        BotCommand("cancel",   "❌ Cancel the current operation"),
+        BotCommand("help",     "❓ Show all available commands"),
+    ]
+    import asyncio
+    asyncio.get_event_loop().run_until_complete(app.bot.set_my_commands(commands))
+
     logger.info("🤖 KhaylimTech Bot is running...")
     app.run_polling()
 
