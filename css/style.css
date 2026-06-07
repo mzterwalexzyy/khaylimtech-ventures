@@ -467,7 +467,13 @@ body { padding-top: 70px; }
 }
 
 [data-theme="light"] .trust-strip {
-  background: linear-gradient(135deg, #1a1a2e, #111128);
+  background: linear-gradient(135deg, #f0f0f5, #e8e8f0);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+[data-theme="light"] .trust-item {
+  color: var(--text);
 }
 
 .trust-inner {
