@@ -16,7 +16,10 @@ let activeSearch = "";
 
 function loadFromURL() {
   const params = new URLSearchParams(window.location.search);
-  const cat = params.get("cat");
+  // Support both clean URLs (/phones) and query params (?cat=phones)
+  const pathCat = window.location.pathname.replace(/^\//, "").replace(/\.html$/, "");
+  const validCats = ["phones", "laptops", "gaming", "accessories"];
+  const cat = params.get("cat") || (validCats.includes(pathCat) ? pathCat : null);
   if (cat) {
     activeCategories = [cat];
     const cb = document.querySelector(`.filter-option input[value="${cat}"]`);
