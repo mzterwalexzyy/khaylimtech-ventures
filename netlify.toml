@@ -1,0 +1,39 @@
+[[redirects]]
+  from = "/phones"
+  to = "/products.html?cat=phones"
+  status = 200
+
+[[redirects]]
+  from = "/laptops"
+  to = "/products.html?cat=laptops"
+  status = 200
+
+[[redirects]]
+  from = "/gaming"
+  to = "/products.html?cat=gaming"
+  status = 200
+
+[[redirects]]
+  from = "/accessories"
+  to = "/products.html?cat=accessories"
+  status = 200
+
+[[redirects]]
+  from = "/products"
+  to = "/products.html"
+  status = 200
+
+[[redirects]]
+  from = "/cart"
+  to = "/cart.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
