@@ -145,14 +145,24 @@ function renderDetail(p) {
     });
   }
 
-  // Qty stepper
+  // Qty stepper — clone buttons to wipe any previously attached listeners
   const qtyInput = document.querySelector("#qty-input");
-  document.querySelector("#qty-minus")?.addEventListener("click", () => {
-    if (qtyInput && parseInt(qtyInput.value) > 1) qtyInput.value = parseInt(qtyInput.value) - 1;
-  });
-  document.querySelector("#qty-plus")?.addEventListener("click", () => {
-    if (qtyInput) qtyInput.value = parseInt(qtyInput.value) + 1;
-  });
+  const minusBtn = document.querySelector("#qty-minus");
+  const plusBtn  = document.querySelector("#qty-plus");
+  if (minusBtn) {
+    const freshMinus = minusBtn.cloneNode(true);
+    minusBtn.replaceWith(freshMinus);
+    freshMinus.addEventListener("click", () => {
+      if (qtyInput && parseInt(qtyInput.value) > 1) qtyInput.value = parseInt(qtyInput.value) - 1;
+    });
+  }
+  if (plusBtn) {
+    const freshPlus = plusBtn.cloneNode(true);
+    plusBtn.replaceWith(freshPlus);
+    freshPlus.addEventListener("click", () => {
+      if (qtyInput) qtyInput.value = parseInt(qtyInput.value) + 1;
+    });
+  }
 }
 
 function switchMainImg(thumb, src) {
