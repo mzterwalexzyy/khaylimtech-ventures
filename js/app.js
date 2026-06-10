@@ -113,6 +113,11 @@ function swapThemeAssets(theme) {
   if (heroBg) {
     heroBg.src = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
   }
+  // Swap hero flyer (right side visual)
+  const heroFlyer = document.getElementById("hero-flyer");
+  if (heroFlyer) {
+    heroFlyer.src = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
+  }
 
   // Swap about page banners
   const bannerSrc = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";

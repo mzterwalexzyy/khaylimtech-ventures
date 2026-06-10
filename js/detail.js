@@ -172,6 +172,7 @@ function showVideo(url) {
   videoEl.id = "detail-video-player";
   videoEl.controls = true;
   videoEl.autoplay = true;
+  videoEl.muted = true;
   videoEl.playsInline = true;
   videoEl.preload = "auto";
   videoEl.src = url;

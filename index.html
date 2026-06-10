@@ -84,7 +84,7 @@
 <section class="hero">
   <img src="assets/banner.jpeg" alt="KhaylimTech Ventures Banner" class="hero-bg">
   <div class="hero-overlay"></div>
-  <div class="container">
+  <div class="container hero-inner">
     <div class="hero-content">
       <div class="hero-tag">
         <i class="fa-solid fa-bolt"></i> Nigeria's Trusted Gadget Store
@@ -106,6 +106,13 @@
         <a href="/phones" class="btn-outline">
           <i class="fa-solid fa-mobile-screen"></i> View Phones
         </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-showcase">
+        <div class="showcase-label"><i class="fa-solid fa-fire"></i> Featured Products</div>
+        <div class="showcase-track" id="showcase-track"></div>
+        <div class="showcase-dots" id="showcase-dots"></div>
       </div>
     </div>
   </div>
@@ -234,7 +241,7 @@
           <li><a href="#">Return Policy</a></li>
           <li><a href="#">Warranty</a></li>
           <li><a href="#">FAQ</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="/contact">Contact Us</a></li>
         </ul>
       </div>
 
@@ -330,6 +337,75 @@
   document.addEventListener("DOMContentLoaded", () => {
     if (!window.firebaseLoaded) renderHomePage();
   });
+
+  // ── Hero Showcase Carousel ──────────────────
+  (function initShowcase() {
+    const track = document.getElementById("showcase-track");
+    const dotsEl = document.getElementById("showcase-dots");
+    if (!track) return;
+
+    let current = 0;
+    let timer = null;
+
+    function buildSlides(products) {
+      // Get best display image for a product (use video thumbnail if no real image)
+      function getDisplayImage(p) {
+        if (p.image && !p.image.includes("placehold.co")) return p.image;
+        if (p.video && p.video.includes("/video/upload/")) {
+          return p.video.replace("/video/upload/", "/video/upload/so_0,f_jpg/").replace(/\.(mp4|webm|mov)$/i, ".jpg");
+        }
+        return null;
+      }
+      const picks = products
+        .map(p => ({ ...p, _thumb: getDisplayImage(p) }))
+        .filter(p => p._thumb)
+        .slice(0, 8);
+      if (!picks.length) { track.closest(".hero-visual").style.display = "none"; return; }
+
+      track.innerHTML = picks.map((p, i) => `
+        <a href="/product-detail.html?id=${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
+          <img src="${p._thumb}" alt="${p.name}" loading="lazy">
+          <div class="showcase-info">
+            <div class="showcase-cat">${p.category}</div>
+            <div class="showcase-name">${p.name}</div>
+            <div class="showcase-price">${formatNGN(p.price)}</div>
+          </div>
+        </a>`).join("");
+
+      dotsEl.innerHTML = picks.map((_, i) =>
+        `<div class="showcase-dot${i === 0 ? " active" : ""}" data-i="${i}"></div>`).join("");
+
+      dotsEl.querySelectorAll(".showcase-dot").forEach(d =>
+        d.addEventListener("click", () => goTo(+d.dataset.i)));
+
+      function goTo(next) {
+        const slides = track.querySelectorAll(".showcase-slide");
+        const dots   = dotsEl.querySelectorAll(".showcase-dot");
+        slides[current].classList.remove("active");
+        slides[current].classList.add("exit");
+        setTimeout(() => slides[current] && slides[current].classList.remove("exit"), 600);
+        dots[current].classList.remove("active");
+        current = (next + picks.length) % picks.length;
+        slides[current].classList.add("active");
+        dots[current].classList.add("active");
+      }
+
+      timer = setInterval(() => goTo(current + 1), 3000);
+    }
+
+    // Wait for Firebase products, fallback to static PRODUCTS
+    const tryBuild = () => {
+      if (PRODUCTS && PRODUCTS.length) buildSlides(PRODUCTS);
+    };
+    const origReady = window.onFirebaseReady;
+    window.onFirebaseReady = function() {
+      if (origReady) origReady();
+      clearInterval(timer);
+      buildSlides(PRODUCTS);
+    };
+    // Fallback: if firebase never fires, use static data
+    setTimeout(tryBuild, 1500);
+  })();
 
   // Newsletter handler — saves to Firestore (bot checks via /subscribers command)
   function handleNewsletter(e) {
