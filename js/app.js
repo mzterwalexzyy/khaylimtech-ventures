@@ -75,7 +75,7 @@ function initWhatsAppBubble() {
 
 // ─── Dark / Light Mode ──────────────────
 function initTheme() {
-  const saved = localStorage.getItem("khaylimtech_theme") || "dark";
+  const saved = localStorage.getItem("khaylimtech_theme") || "light";
   document.documentElement.setAttribute("data-theme", saved);
   updateThemeIcon(saved);
   // Swap assets after DOM is ready
