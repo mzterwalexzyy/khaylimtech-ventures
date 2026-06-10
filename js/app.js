@@ -104,7 +104,7 @@ function swapThemeAssets(theme) {
   const isDark = theme === "dark";
 
   // Swap all logos (navbar + footer)
-  const logoSrc = isDark ? "assets/Darkmode_logo.png" : "assets/Lightmode_logo.png";
+  const logoSrc = isDark ? "/assets/Darkmode_logo.png" : "/assets/Lightmode_logo.png";
   document.querySelectorAll(".nav-logo img, .footer-logo img").forEach(img => {
     img.src = logoSrc;
   });
@@ -112,16 +112,16 @@ function swapThemeAssets(theme) {
   // Swap hero banner (homepage only)
   const heroBg = document.querySelector(".hero-bg");
   if (heroBg) {
-    heroBg.src = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
+    heroBg.src = isDark ? "/assets/dark_banner.jpeg" : "/assets/light_banner.png";
   }
   // Swap hero flyer (right side visual)
   const heroFlyer = document.getElementById("hero-flyer");
   if (heroFlyer) {
-    heroFlyer.src = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
+    heroFlyer.src = isDark ? "/assets/dark_banner.jpeg" : "/assets/light_banner.png";
   }
 
   // Swap about page banners
-  const bannerSrc = isDark ? "assets/dark_banner.jpeg" : "assets/light_banner.png";
+  const bannerSrc = isDark ? "/assets/dark_banner.jpeg" : "/assets/light_banner.png";
   ["about-hero-img", "about-story-img"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.src = bannerSrc;
@@ -130,7 +130,7 @@ function swapThemeAssets(theme) {
   // Swap favicon to match theme
   const favicon = document.getElementById("favicon") || document.querySelector("link[rel='icon']");
   if (favicon) {
-    favicon.href = isDark ? "assets/Darkmode_logo.png" : "assets/Lightmode_logo.png";
+    favicon.href = isDark ? "/assets/Darkmode_logo.png" : "/assets/Lightmode_logo.png";
   }
 }
 
