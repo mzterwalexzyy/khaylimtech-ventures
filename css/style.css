@@ -546,6 +546,14 @@ body { padding-top: 70px; }
   border: 1px solid rgba(212,170,60,0.5);
   padding: 7px 14px;
   border-radius: 20px;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.hero-cat:hover {
+  background: rgba(212,170,60,0.35);
+  border-color: var(--gold);
+  color: #fff;
 }
 
 .hero-actions {
