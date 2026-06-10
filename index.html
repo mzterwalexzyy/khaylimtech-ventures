@@ -171,7 +171,7 @@
       <h2 id="promo-title">PlayStation 5 Now <span>In Stock</span></h2>
       <p id="promo-desc">Limited units available. Order now before it sells out!</p>
     </div>
-    <a href="product-detail.html?id=gc001" id="promo-btn" class="btn-gold">
+    <a href="/product/gc001" id="promo-btn" class="btn-gold">
       <i class="fa-solid fa-gamepad"></i> Order Now
     </a>
   </div>
@@ -321,7 +321,7 @@
           words.slice(0, cut).join(" ") + " <span>" + words.slice(cut).join(" ") + "</span>";
       }
       if (d.desc)  document.getElementById("promo-desc").textContent  = d.desc;
-      if (d.productId) document.getElementById("promo-btn").href          = `product-detail.html?id=${d.productId}`;
+      if (d.productId) document.getElementById("promo-btn").href          = `/product/${d.productId}`;
       if (d.btnText)   document.getElementById("promo-btn").innerHTML     = `<i class="fa-solid fa-gamepad"></i> ${d.btnText}`;
       if (d.hidden)    document.getElementById("promo-banner").style.display = "none";
     }).catch(() => {});
@@ -357,13 +357,14 @@
         return null;
       }
       const picks = products
+        .filter(p => p.inStock !== false)
         .map(p => ({ ...p, _thumb: getDisplayImage(p) }))
         .filter(p => p._thumb)
         .slice(0, 8);
       if (!picks.length) { track.closest(".hero-visual").style.display = "none"; return; }
 
       track.innerHTML = picks.map((p, i) => `
-        <a href="/product-detail.html?id=${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
+        <a href="//product/${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
           <img src="${p._thumb}" alt="${p.name}" loading="lazy">
           <div class="showcase-info">
             <div class="showcase-cat">${p.category}</div>

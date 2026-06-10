@@ -178,7 +178,7 @@ function initSearch() {
       if (!matches.length) { dropdown.classList.remove("open"); return; }
 
       dropdown.innerHTML = matches.map(p => `
-        <div class="search-result-item" onclick="location.href='product-detail.html?id=${p.id}'">
+        <div class="search-result-item" onclick="location.href='/product/${p.id}'">
           <img src="${p.image}" alt="${p.name}" loading="lazy">
           <div class="sri-info">
             <div class="sri-name">${p.name}</div>
@@ -213,7 +213,7 @@ function renderProductCard(p) {
   return `
     <div class="product-card">
       <div class="product-img-wrap">
-        <a href="product-detail.html?id=${p.id}">
+        <a href="/product/${p.id}">
           ${mediaHtml}
         </a>
         ${badgeHtml}
@@ -223,7 +223,7 @@ function renderProductCard(p) {
       </div>
       <div class="product-info">
         <span class="product-cat">${CATEGORIES.find(c=>c.id===p.category)?.label || p.category}</span>
-        <a href="product-detail.html?id=${p.id}">
+        <a href="/product/${p.id}">
           <div class="product-name">${p.name}</div>
         </a>
         <div class="product-rating">

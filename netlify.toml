@@ -42,3 +42,8 @@
   from = "/contact"
   to = "/contact.html"
   status = 200
+
+[[redirects]]
+  from = "/product/:id"
+  to = "/product-detail.html?id=:id"
+  status = 200
