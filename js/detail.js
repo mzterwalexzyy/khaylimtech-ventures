@@ -22,9 +22,16 @@ function showNotFound() {
     </div>`;
 }
 
-function initDetailPage() {
+function getProductIdFromURL() {
+  // Support both /product/lp001 (clean URL) and ?id=lp001 (query param)
   const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  if (params.get("id")) return params.get("id");
+  const pathMatch = window.location.pathname.match(/\/product\/(.+)/);
+  return pathMatch ? pathMatch[1] : null;
+}
+
+function initDetailPage() {
+  const id = getProductIdFromURL();
   const product = id ? getProductById(id) : null;
 
   if (!product) {
@@ -46,7 +53,7 @@ window.onFirebaseReady = () => {
 
 // On page load — try local data first, otherwise show loading overlay
 document.addEventListener("DOMContentLoaded", () => {
-  const id = new URLSearchParams(window.location.search).get("id");
+  const id = getProductIdFromURL();
   const product = id ? getProductById(id) : null;
   if (product) {
     setLoading(false);

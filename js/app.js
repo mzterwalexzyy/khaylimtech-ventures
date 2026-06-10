@@ -75,7 +75,8 @@ function initWhatsAppBubble() {
 
 // ─── Dark / Light Mode ──────────────────
 function initTheme() {
-  const saved = localStorage.getItem("khaylimtech_theme") || "light";
+  // v2: light is new default — migrate old "dark" default saves
+  const saved = localStorage.getItem("khaylimtech_theme_v2") || "light";
   document.documentElement.setAttribute("data-theme", saved);
   updateThemeIcon(saved);
   // Swap assets after DOM is ready
@@ -86,7 +87,7 @@ function initTheme() {
       const current = document.documentElement.getAttribute("data-theme");
       const next = current === "dark" ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", next);
-      localStorage.setItem("khaylimtech_theme", next);
+      localStorage.setItem("khaylimtech_theme_v2", next);
       updateThemeIcon(next);
     });
   });
