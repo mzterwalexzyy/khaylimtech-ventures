@@ -120,6 +120,12 @@ function swapThemeAssets(theme) {
     const el = document.getElementById(id);
     if (el) el.src = bannerSrc;
   });
+
+  // Swap favicon to match theme
+  const favicon = document.getElementById("favicon") || document.querySelector("link[rel='icon']");
+  if (favicon) {
+    favicon.href = isDark ? "assets/Darkmode_logo.png" : "assets/Lightmode_logo.png";
+  }
 }
 
 // ─── Nav Active State & Hamburger ───────
