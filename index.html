@@ -281,7 +281,7 @@
   function renderHomePage() {
     // Categories
     document.getElementById("category-grid").innerHTML = CATEGORIES.map(c => `
-      <a href="products.html?cat=${c.id}" class="cat-card">
+      <a href="/${c.id}" class="cat-card">
         <span class="cat-icon">${c.icon}</span>
         <div class="cat-name">${c.label}</div>
         <div class="cat-count">${c.count} Products</div>
@@ -364,7 +364,7 @@
       if (!picks.length) { track.closest(".hero-visual").style.display = "none"; return; }
 
       track.innerHTML = picks.map((p, i) => `
-        <a href="//product/${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
+        <a href="/product/${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
           <img src="${p._thumb}" alt="${p.name}" loading="lazy">
           <div class="showcase-info">
             <div class="showcase-cat">${p.category}</div>
