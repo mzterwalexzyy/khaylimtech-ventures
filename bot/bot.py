@@ -735,8 +735,11 @@ def main():
         BotCommand("cancel",      "❌ Cancel the current operation"),
         BotCommand("help",        "❓ Show all available commands"),
     ]
+    from telegram import MenuButtonCommands
     import asyncio
-    asyncio.get_event_loop().run_until_complete(app.bot.set_my_commands(commands))
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(app.bot.set_my_commands(commands))
+    loop.run_until_complete(app.bot.set_chat_menu_button(menu_button=MenuButtonCommands()))
 
     logger.info("🤖 KhaylimTech Bot is running...")
     app.run_polling()
