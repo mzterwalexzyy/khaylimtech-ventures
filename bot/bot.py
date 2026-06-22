@@ -104,18 +104,20 @@ def admin_only(func):
 # ════════════════════════════════════════
 @admin_only
 async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    from telegram import ReplyKeyboardMarkup, KeyboardButton
+    # Buttons starting with "/" are sent as commands natively by Telegram
+    keyboard = [
+        [KeyboardButton("/add"),         KeyboardButton("/list"),        KeyboardButton("/stock")],
+        [KeyboardButton("/update"),      KeyboardButton("/discount"),    KeyboardButton("/delete")],
+        [KeyboardButton("/sales"),       KeyboardButton("/subscribers"), KeyboardButton("/promo")],
+        [KeyboardButton("/cancel"),      KeyboardButton("/help")],
+    ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, persistent=True)
     await update.message.reply_text(
         "👋 Welcome to *KhaylimTech Ventures* Admin Bot!\n\n"
-        "Use these commands to manage your store:\n\n"
-        "📦 `/add` — Add a new product\n"
-        "🗑️ `/delete` — Remove a product\n"
-        "✏️ `/update` — Update any product field\n"
-        "🏷️ `/discount` — Apply % or flat discount\n"
-        "📋 `/list` — View all products with IDs\n"
-        "🔄 `/stock` — Toggle in/out of stock\n"
-        "📊 `/sales` — View recent orders report\n"
-        "❓ `/help` — Show this message",
-        parse_mode="Markdown"
+        "Use the buttons below or type commands to manage your store:",
+        parse_mode="Markdown",
+        reply_markup=reply_markup
     )
 
 help_handler = CommandHandler(["start", "help"], start)
