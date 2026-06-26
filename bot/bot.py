@@ -112,7 +112,7 @@ async def start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         [KeyboardButton("/sales"),       KeyboardButton("/subscribers"), KeyboardButton("/promo")],
         [KeyboardButton("/cancel"),      KeyboardButton("/help")],
     ]
-    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, persistent=True)
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     await update.message.reply_text(
         "👋 Welcome to *KhaylimTech Ventures* Admin Bot!\n\n"
         "Use the buttons below or type commands to manage your store:",
