@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
   initFilters();
 });
 
+// Re-render when Firebase live data arrives
+window.onFirebaseReady = () => {
+  renderProducts();
+};
+
 let activeCategories = [];
 let activePriceMin = 0;
 let activePriceMax = Infinity;
