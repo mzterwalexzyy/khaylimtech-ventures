@@ -364,12 +364,14 @@
       if (!picks.length) { track.closest(".hero-visual").style.display = "none"; return; }
 
       track.innerHTML = picks.map((p, i) => `
-        <a href="//product/${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
+        <a href="/product/${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
           <img src="${p._thumb}" alt="${p.name}" loading="lazy">
           <div class="showcase-info">
-            <div class="showcase-cat">${p.category}</div>
+            <div class="showcase-cat">${CATEGORIES.find(c=>c.id===p.category)?.label || p.category}</div>
             <div class="showcase-name">${p.name}</div>
-            <div class="showcase-price">${formatNGN(p.price)}</div>
+            ${p.description ? `<div class="showcase-desc">${p.description}</div>` : ""}
+            <div class="showcase-price">${formatNGN(p.price)}${p.oldPrice ? ` <span style="font-size:.75rem;color:var(--text-muted);text-decoration:line-through;font-weight:400">${formatNGN(p.oldPrice)}</span>` : ""}</div>
+            <div class="showcase-cta"><i class="fa-solid fa-bag-shopping"></i> View Product</div>
           </div>
         </a>`).join("");
 
@@ -391,7 +393,7 @@
         dots[current].classList.add("active");
       }
 
-      timer = setInterval(() => goTo(current + 1), 3000);
+      timer = setInterval(() => goTo(current + 1), 5000);
     }
 
     // Wait for Firebase products, fallback to static PRODUCTS
