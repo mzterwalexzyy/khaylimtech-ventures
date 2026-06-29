@@ -112,10 +112,10 @@ function renderDetail(p) {
   if (breadEl)  breadEl.textContent = p.name;
   if (descEl)   descEl.textContent = p.description;
 
-  if (ratingEl) ratingEl.innerHTML = `
+  if (ratingEl) ratingEl.innerHTML = p.reviews > 0 ? `
     <span class="stars">${"★".repeat(Math.round(p.rating))}${"☆".repeat(5-Math.round(p.rating))}</span>
     <span style="font-size:.85rem;color:var(--gold);font-weight:700">${p.rating}</span>
-    <span style="font-size:.8rem;color:var(--text-muted)">(${p.reviews} reviews)</span>`;
+    <span style="font-size:.8rem;color:var(--text-muted)">(${p.reviews} reviews)</span>` : "";
 
   if (stockEl) {
     stockEl.className = `detail-stock ${p.inStock ? "in-stock" : "out-stock"}`;

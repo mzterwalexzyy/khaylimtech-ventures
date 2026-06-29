@@ -47,3 +47,13 @@
   from = "/product/:id"
   to = "/product-detail.html?id=:id"
   status = 200
+
+[[redirects]]
+  from = "/how-to-order"
+  to = "/how-to-order.html"
+  status = 200
+
+[[redirects]]
+  from = "/faq"
+  to = "/faq.html"
+  status = 200

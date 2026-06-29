@@ -227,10 +227,10 @@ function renderProductCard(p) {
         <a href="/product/${p.id}">
           <div class="product-name">${p.name}</div>
         </a>
-        <div class="product-rating">
+        ${p.reviews > 0 ? `<div class="product-rating">
           <span class="stars">${"★".repeat(Math.round(p.rating))}${"☆".repeat(5-Math.round(p.rating))}</span>
           <span class="rating-count">(${p.reviews})</span>
-        </div>
+        </div>` : ""}
         <div class="product-price-row">
           <span class="product-price">${formatNGN(p.price)}</span>
           ${p.oldPrice ? `<span class="product-price-old">${formatNGN(p.oldPrice)}</span>` : ""}
