@@ -7,6 +7,64 @@
 // Sample products — shown immediately, then Firebase products are merged in on top
 const PRODUCTS = [
 
+  // ─── PHONES ───────────────────────────
+  {
+    id: "ph001",
+    name: "iPhone 15 (128GB)",
+    category: "phones",
+    price: 920000,
+    oldPrice: 1050000,
+    rating: 0,
+    reviews: 0,
+    badge: "hot",
+    inStock: true,
+    description: "Apple iPhone 15 — 6.1\" Super Retina XDR, Dynamic Island, 48MP main camera, A16 Bionic chip, USB-C charging, Ceramic Shield, all-day battery. The iPhone everyone is talking about.",
+    image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80",
+    images: ["https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80"]
+  },
+  {
+    id: "ph002",
+    name: "Samsung Galaxy S24 (256GB)",
+    category: "phones",
+    price: 780000,
+    oldPrice: 860000,
+    rating: 0,
+    reviews: 0,
+    badge: "new",
+    inStock: true,
+    description: "Galaxy S24 — 6.2\" Dynamic AMOLED 2X, Snapdragon 8 Gen 3, 50MP triple camera with AI ProVisual Engine, 4000mAh battery with 25W fast charge. Android's finest.",
+    image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80",
+    images: ["https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80"]
+  },
+  {
+    id: "ph003",
+    name: "Tecno Phantom X2 Pro",
+    category: "phones",
+    price: 285000,
+    oldPrice: 320000,
+    rating: 0,
+    reviews: 0,
+    badge: null,
+    inStock: true,
+    description: "6.8\" AMOLED curved display, 50MP periscope telephoto with retractable portrait lens, Dimensity 9000, 5000mAh battery, 45W SuperCharge. Premium at a smart price.",
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80",
+    images: ["https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80"]
+  },
+  {
+    id: "ph004",
+    name: "Infinix Zero 30 5G",
+    category: "phones",
+    price: 185000,
+    oldPrice: 210000,
+    rating: 0,
+    reviews: 0,
+    badge: "new",
+    inStock: true,
+    description: "6.78\" curved 144Hz AMOLED, 50MP front selfie camera with OIS, Dimensity 8020 5G chipset, 5000mAh battery, 68W fast charging. 5G-ready value champion.",
+    image: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=80",
+    images: ["https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=500&q=80"]
+  },
+
   // ─── LAPTOPS ──────────────────────────
   {
     id: "lp001",
@@ -192,10 +250,10 @@ const PRODUCTS = [
 
 // Category metadata — counts updated dynamically by firebase-db.js
 const CATEGORIES = [
-  { id: "phones",      label: "Phones",          icon: "📱", count: 0 },
-  { id: "laptops",     label: "Laptops",          icon: "💻", count: 0 },
-  { id: "gaming",      label: "Gaming Consoles",  icon: "🎮", count: 0 },
-  { id: "accessories", label: "Accessories",      icon: "🔌", count: 0 }
+  { id: "phones",      label: "Phones",          icon: '<i class="fa-solid fa-mobile-screen-button"></i>', count: 0 },
+  { id: "laptops",     label: "Laptops",         icon: '<i class="fa-solid fa-laptop"></i>', count: 0 },
+  { id: "gaming",      label: "Gaming Consoles", icon: '<i class="fa-solid fa-gamepad"></i>', count: 0 },
+  { id: "accessories", label: "Accessories",     icon: '<i class="fa-solid fa-headphones"></i>', count: 0 }
 ];
 
 // Helpers

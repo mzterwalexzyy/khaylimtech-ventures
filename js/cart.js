@@ -54,8 +54,14 @@ const Cart = (() => {
   function updateBadge() {
     const total = count();
     document.querySelectorAll(".cart-badge").forEach(el => {
+      const previous = Number(el.textContent || 0);
       el.textContent = total;
       el.classList.toggle("visible", total > 0);
+      if (total !== previous) {
+        el.classList.remove("is-updated");
+        void el.offsetWidth;
+        el.classList.add("is-updated");
+      }
     });
   }
 
@@ -72,7 +78,13 @@ function showToast(html, duration = 2800) {
   }
   const toast = document.createElement("div");
   toast.className = "toast";
+  toast.setAttribute("role", "status");
   toast.innerHTML = html;
   container.appendChild(toast);
-  setTimeout(() => toast.remove(), duration);
+  requestAnimationFrame(() => toast.classList.add("is-visible"));
+  setTimeout(() => {
+    toast.classList.remove("is-visible");
+    toast.classList.add("is-leaving");
+    setTimeout(() => toast.remove(), 220);
+  }, duration);
 }

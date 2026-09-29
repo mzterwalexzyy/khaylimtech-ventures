@@ -43,6 +43,7 @@ function initDetailPage() {
   setLoading(false);
   renderDetail(product);
   renderRelated(product);
+  if (typeof reRunReveal === "function") setTimeout(reRunReveal, 50);
 }
 
 // Called by firebase-db.js when live Firestore data is ready
@@ -100,17 +101,40 @@ function renderDetail(p) {
   const nameEl   = document.querySelector("#detail-name");
   const priceEl  = document.querySelector("#detail-price");
   const oldPrice = document.querySelector("#detail-old-price");
+  const savingsEl = document.querySelector("#detail-savings");
   const ratingEl = document.querySelector("#detail-rating");
   const descEl   = document.querySelector("#detail-desc");
   const stockEl  = document.querySelector("#detail-stock");
   const breadEl  = document.querySelector("#breadcrumb-name");
+  const breadCat = document.querySelector("#breadcrumb-cat");
+  const waBtn    = document.querySelector("#detail-wa-btn");
 
-  if (catEl)    catEl.textContent = CATEGORIES.find(c=>c.id===p.category)?.label || p.category;
+  const categoryObj = CATEGORIES.find(c=>c.id===p.category);
+  const categoryLabel = categoryObj?.label || p.category;
+
+  if (catEl)    catEl.textContent = categoryLabel;
+  if (breadCat) {
+    breadCat.textContent = categoryLabel;
+    breadCat.href = `/${p.category}`;
+  }
   if (nameEl)   nameEl.textContent = p.name;
   if (priceEl)  priceEl.textContent = formatNGN(p.price);
   if (oldPrice) oldPrice.textContent = p.oldPrice ? formatNGN(p.oldPrice) : "";
+  if (savingsEl) {
+    if (p.oldPrice && p.oldPrice > p.price) {
+      savingsEl.textContent = `Save ${formatNGN(p.oldPrice - p.price)}`;
+      savingsEl.style.display = "inline-flex";
+    } else {
+      savingsEl.style.display = "none";
+    }
+  }
   if (breadEl)  breadEl.textContent = p.name;
   if (descEl)   descEl.textContent = p.description;
+
+  if (waBtn) {
+    const waText = encodeURIComponent(`Hello KhaylimTech! I want to order ${p.name} (${formatNGN(p.price)}). Is it available for delivery?`);
+    waBtn.href = `https://wa.me/2348083873316?text=${waText}`;
+  }
 
   if (ratingEl) ratingEl.innerHTML = p.reviews > 0 ? `
     <span class="stars">${"★".repeat(Math.round(p.rating))}${"☆".repeat(5-Math.round(p.rating))}</span>

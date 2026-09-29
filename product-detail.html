@@ -3,145 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product — KhaylimTech Ventures</title>
+  <title>Product | KhaylimTech Ventures</title>
   <link rel="icon" type="image/png" href="/assets/Lightmode_logo.png" id="favicon">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/professional.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="has-utility-bar">
+
+<!-- ═══════════════════════════════════
+     TOP UTILITY BAR
+═══════════════════════════════════ -->
+<div class="top-utility-bar">
+  <div class="container top-utility-inner">
+    <div class="top-utility-left">
+      <span class="utility-badge"><i class="fa-solid fa-shield-halved"></i> 100% Authentic</span>
+      <span class="utility-text">Same-Day Doorstep Delivery in Ibadan &bull; Insured Nationwide Shipping</span>
+    </div>
+    <div class="top-utility-right">
+      <span class="utility-item"><i class="fa-solid fa-location-dot"></i> Iwo Road, Ibadan</span>
+      <span class="utility-sep">|</span>
+      <a href="tel:+2348083873316" class="utility-item"><i class="fa-solid fa-phone"></i> 08083873316</a>
+      <span class="utility-sep">|</span>
+      <a href="https://wa.me/2348083873316" target="_blank" class="utility-item whatsapp-link"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</a>
+    </div>
+  </div>
+</div>
 
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="container nav-inner">
     <a href="/" class="nav-logo">
-      <img src="/assets/logo.jpeg" alt="KhaylimTech Logo">
+      <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
       <div class="nav-logo-text"><span>KhaylimTech</span><span>Ventures</span></div>
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/products">All Products</a></li>
-      <li><a href="/phones">Phones</a></li>
-      <li><a href="/laptops">Laptops</a></li>
-      <li><a href="/gaming">Gaming</a></li>
-      <li><a href="/accessories">Accessories</a></li>
+      <li class="nav-dropdown">
+        <a href="/products" class="nav-dropdown-trigger active" aria-haspopup="true" aria-expanded="false">
+          <span>Catalog</span> <i class="fa-solid fa-chevron-down nav-caret"></i>
+        </a>
+        <div class="nav-dropdown-menu">
+          <div class="nav-dropdown-header">Explore Categories</div>
+          <a href="/phones" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Phones</span>
+              <span class="dropdown-item-desc">iPhones, Samsung & Android</span>
+            </div>
+          </a>
+          <a href="/laptops" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-laptop"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Laptops</span>
+              <span class="dropdown-item-desc">MacBooks, HP & Workstations</span>
+            </div>
+          </a>
+          <a href="/gaming" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Gaming</span>
+              <span class="dropdown-item-desc">PS5, Consoles & Controllers</span>
+            </div>
+          </a>
+          <a href="/accessories" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-headphones"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Accessories</span>
+              <span class="dropdown-item-desc">Audio, Smartwatches & Gear</span>
+            </div>
+          </a>
+          <div class="nav-dropdown-footer">
+            <a href="/products" class="dropdown-footer-link">Browse All Products <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li><a href="/how-to-order">How to Order</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
     <div class="nav-search">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="text" placeholder="Search gadgets...">
+      <input type="text" placeholder="Search..." aria-label="Search products">
       <div class="search-dropdown"></div>
     </div>
     <div class="nav-actions">
-      <button class="nav-btn theme-toggle"><i class="fa-solid fa-sun"></i></button>
+      <button class="nav-btn theme-toggle" aria-label="Toggle color theme"><i class="fa-solid fa-moon"></i></button>
       <a href="/cart" class="nav-btn">
         <i class="fa-solid fa-bag-shopping"></i>
         <span class="cart-badge">0</span>
       </a>
-      <button class="hamburger"><span></span><span></span><span></span></button>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </div>
   <nav class="mobile-nav">
-    <a href="/">Home</a>
-    <a href="/products">All Products</a>
-    <a href="/phones">📱 Phones</a>
-    <a href="/laptops">💻 Laptops</a>
-    <a href="/gaming">🎮 Gaming</a>
-    <a href="/accessories">🔌 Accessories</a>
-    <a href="/about">ℹ️ About Us</a>
-    <a href="/contact">📩 Contact</a>
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Categories</div>
+    <a href="/phones"><i class="fa-solid fa-mobile-screen-button"></i> Phones</a>
+    <a href="/laptops"><i class="fa-solid fa-laptop"></i> Laptops</a>
+    <a href="/gaming"><i class="fa-solid fa-gamepad"></i> Gaming Consoles</a>
+    <a href="/accessories"><i class="fa-solid fa-headphones"></i> Accessories</a>
+    <a href="/products" style="font-weight:700;color:var(--gold-light)"><i class="fa-solid fa-layer-group"></i> All Products</a>
+    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Company</div>
+    <a href="/how-to-order"><i class="fa-solid fa-truck-fast"></i> How to Order</a>
+    <a href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a>
+    <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
   </nav>
 </nav>
 
-<!-- PAGE HEADER -->
-<div class="page-header">
-  <div class="container">
-    <h1 id="breadcrumb-name">Product Detail</h1>
-  </div>
-</div>
-
-<!-- Loading overlay — shown until Firebase loads the product -->
-<div id="detail-loading" style="text-align:center;padding:80px 20px;display:none">
-  <div style="font-size:2.5rem;margin-bottom:16px">⏳</div>
-  <h3 style="color:var(--text-heading);margin-bottom:8px">Loading product...</h3>
-  <p style="color:var(--text-muted);font-size:.875rem">Fetching from store database</p>
+<!-- BREADCRUMBS -->
+<div class="container" style="padding-top:24px">
+  <nav class="editorial-breadcrumb-nav" aria-label="Breadcrumb">
+    <a href="/"><i class="fa-solid fa-house" style="font-size:0.75rem"></i> Home</a>
+    <span class="sep">/</span>
+    <a href="/products">Catalog</a>
+    <span class="sep">/</span>
+    <a href="/products" id="breadcrumb-cat">Category</a>
+    <span class="sep">/</span>
+    <span id="breadcrumb-name" class="current">Product</span>
+  </nav>
 </div>
 
 <!-- DETAIL LAYOUT -->
-<div class="container">
-  <div class="detail-layout" id="detail-layout-wrap">
+<div class="container luxury-detail-container">
+  <!-- Loading overlay — shown until Firebase loads the product -->
+  <div id="detail-loading" style="text-align:center;padding:80px 20px;display:none">
+    <div style="font-size:2.5rem;margin-bottom:16px">⏳</div>
+    <h3 style="color:var(--text-heading);margin-bottom:8px">Loading product...</h3>
+    <p style="color:var(--text-muted);font-size:.875rem">Fetching verified hardware details</p>
+  </div>
+
+  <div class="detail-layout-luxury reveal" id="detail-layout-wrap">
 
     <!-- Image Column -->
-    <div>
-      <img id="detail-main-img" src="" alt="" class="detail-img-main">
-      <div id="detail-thumb-row" class="detail-thumb-row"></div>
+    <div class="detail-media-showcase">
+      <div class="detail-authenticity-badge">
+        <i class="fa-solid fa-shield-halved"></i> 100% Original Verified
+      </div>
+      <div class="detail-img-viewport">
+        <img id="detail-main-img" src="" alt="" class="detail-img-main">
+      </div>
+      <div id="detail-thumb-row" class="detail-thumb-strip"></div>
     </div>
 
     <!-- Info Column -->
-    <div>
-      <div id="detail-cat" class="detail-cat"></div>
-      <h1 id="detail-name" class="detail-name"></h1>
-      <div id="detail-rating" class="detail-rating"></div>
-
-      <div class="detail-price-row">
-        <span id="detail-price" class="detail-price"></span>
-        <span id="detail-old-price" class="detail-price-old"></span>
+    <div class="detail-info-column">
+      <div class="detail-brand-badge-wrap">
+        <span id="detail-cat" class="cat-pill-btn active" style="pointer-events:none;padding:5px 14px;font-size:0.75rem"></span>
+        <div id="detail-stock" class="detail-stock in-stock" style="margin:0">
+          <i class="fa-solid fa-circle-check"></i> In Stock
+        </div>
       </div>
 
-      <div id="detail-stock" class="detail-stock in-stock">
-        <i class="fa-solid fa-circle-check"></i> In Stock
+      <h1 id="detail-name" class="detail-title-editorial"></h1>
+      <div id="detail-rating" class="detail-rating" style="margin-bottom:14px"></div>
+
+      <div class="detail-price-editorial-row">
+        <span id="detail-price" class="detail-price-huge"></span>
+        <span id="detail-old-price" class="detail-price-original"></span>
+        <span id="detail-savings" class="detail-savings-badge" style="display:none"></span>
       </div>
 
-      <p id="detail-desc" class="detail-desc"></p>
+      <div class="dispatch-live-card">
+        <div class="live-pulse-dot"></div>
+        <div>
+          <div class="dispatch-live-text">In Stock &bull; Same-Day Ibadan Dispatch</div>
+          <div class="dispatch-live-sub">Delivers in under 3 hours to Bodija, UI, Ring Road, Akobo &amp; nationwide</div>
+        </div>
+      </div>
+
+      <p id="detail-desc" class="detail-desc" style="color:var(--text-muted);line-height:1.75;margin-bottom:20px;font-size:0.92rem"></p>
+
+      <div class="detail-specs-editorial">
+        <div class="spec-chip"><i class="fa-solid fa-box-open"></i> <span>Brand New &bull; Sealed Factory Box</span></div>
+        <div class="spec-chip"><i class="fa-solid fa-award"></i> <span>KhaylimTech 1-Year Warranty</span></div>
+        <div class="spec-chip"><i class="fa-solid fa-building"></i> <span>In-Store Inspection at Iwo Road</span></div>
+        <div class="spec-chip"><i class="fa-solid fa-bolt"></i> <span>Free Setup &amp; Data Migration</span></div>
+      </div>
 
       <!-- Qty -->
-      <div class="qty-row">
-        <span class="qty-label">Quantity:</span>
+      <div class="qty-row" style="margin-bottom:20px;align-items:center">
+        <span class="qty-label" style="font-weight:700;color:var(--text-heading);font-size:0.88rem">Quantity:</span>
         <div class="qty-stepper">
-          <button id="qty-minus"><i class="fa-solid fa-minus"></i></button>
-          <input id="qty-input" type="number" value="1" min="1" max="99">
-          <button id="qty-plus"><i class="fa-solid fa-plus"></i></button>
+          <button id="qty-minus" aria-label="Decrease quantity"><i class="fa-solid fa-minus"></i></button>
+          <input id="qty-input" type="number" value="1" min="1" max="99" aria-label="Quantity">
+          <button id="qty-plus" aria-label="Increase quantity"><i class="fa-solid fa-plus"></i></button>
         </div>
       </div>
 
       <!-- Actions -->
-      <div class="detail-actions">
-        <button id="detail-add-btn" class="btn-add-cart">
+      <div class="detail-actions-editorial">
+        <button id="detail-add-btn" class="btn-detail-cart">
           <i class="fa-solid fa-bag-shopping"></i> Add to Cart
         </button>
-        <a href="https://wa.me/2348083873316" target="_blank" class="btn-outline" style="padding:14px 20px">
+        <a id="detail-wa-btn" href="https://wa.me/2348083873316" target="_blank" class="btn-detail-wa">
           <i class="fa-brands fa-whatsapp"></i> Order via WhatsApp
         </a>
       </div>
 
-      <!-- Meta -->
-      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px">
-        <div style="display:flex;gap:10px;align-items:center;font-size:.82rem;color:var(--text-muted)">
-          <i class="fa-solid fa-truck-fast" style="color:var(--gold)"></i>
-          <span>Fast delivery across Ibadan & nationwide</span>
+      <!-- Buyer Protection Matrix -->
+      <div class="buyer-protection-matrix">
+        <div class="protection-item">
+          <i class="fa-solid fa-shield-halved"></i>
+          <div>
+            <div class="protection-title">100% Genuine Guaranteed</div>
+            <div class="protection-desc">Direct OEM hardware with verified serial numbers.</div>
+          </div>
         </div>
-        <div style="display:flex;gap:10px;align-items:center;font-size:.82rem;color:var(--text-muted)">
-          <i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i>
-          <span>100% Authentic — warranty included</span>
+        <div class="protection-item">
+          <i class="fa-solid fa-truck-fast"></i>
+          <div>
+            <div class="protection-title">Express Delivery</div>
+            <div class="protection-desc">Under 3 hours in Ibadan, 1–3 days nationwide.</div>
+          </div>
         </div>
-        <div style="display:flex;gap:10px;align-items:center;font-size:.82rem;color:var(--text-muted)">
-          <i class="fa-solid fa-rotate-left" style="color:var(--gold)"></i>
-          <span>7-day return policy on defective items <em style="font-size:.75rem;color:var(--text-muted);font-style:normal">(T&amp;Cs apply)</em></span>
+        <div class="protection-item">
+          <i class="fa-solid fa-rotate-left"></i>
+          <div>
+            <div class="protection-title">7-Day Replacement</div>
+            <div class="protection-desc">Hassle-free return policy on defective items.</div>
+          </div>
+        </div>
+        <div class="protection-item">
+          <i class="fa-solid fa-store"></i>
+          <div>
+            <div class="protection-title">Physical Store Pickup</div>
+            <div class="protection-desc">No 19 Omoola Plaza, Iwo Road, Ibadan.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- RELATED PRODUCTS -->
-  <section class="section" style="padding-top:0">
-    <div class="section-header">
+  <section class="section" style="padding-top:40px;margin-top:40px;border-top:1px solid var(--border-card)">
+    <div class="section-header reveal">
       <div>
-        <h2 class="section-title">Related <span>Products</span></h2>
+        <div style="font-size:0.75rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Complete Your Tech Ecosystem</div>
+        <h2 class="section-title">Related <span>Hardware</span></h2>
         <span class="section-line"></span>
       </div>
     </div>
-    <div class="product-grid" id="related-grid"></div>
+    <div class="product-grid reveal-stagger" id="related-grid"></div>
+  </section>
+
+  <!-- STORE GUARANTEES MATRIX -->
+  <section class="section" style="padding-top:0">
+    <div class="store-guarantees-matrix reveal">
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-truck-bolt"></i></div>
+        <h3 class="guarantee-title">Same-Day Ibadan Delivery</h3>
+        <p class="guarantee-desc">Dispatched within 3 hours to Bodija, Ring Road, Akobo, UI, and all environs.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 class="guarantee-title">100% Authentic Tech</h3>
+        <p class="guarantee-desc">Every smartphone, laptop, console, and accessory is genuine and sealed.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h3 class="guarantee-title">7-Day Hassle-Free Returns</h3>
+        <p class="guarantee-desc">Comprehensive warranty protection on all defective items. Total peace of mind.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <h3 class="guarantee-title">Iwo Road Ibadan Hub</h3>
+        <p class="guarantee-desc">Visit No 19 Omoola Plaza to test, verify, and collect your gear in person.</p>
+      </div>
+    </div>
   </section>
 </div>
 
@@ -151,7 +282,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/assets/logo.jpeg" alt="KhaylimTech Logo">
+          <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
           <div class="footer-logo-text"><span>KhaylimTech</span><br><span>Ventures</span></div>
         </div>
         <p>Your one-stop tech destination in Ibadan. We deal in genuine phones, laptops, gaming consoles and accessories at the best prices.</p>
@@ -190,7 +321,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Built with ❤️ in Ibadan.</p>
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Serving Nigeria from Ibadan.</p>
       <div class="social-links">
         <a href="#" class="social-link" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="https://www.instagram.com/_khaylimtech7_/" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
@@ -207,21 +338,11 @@
 <!-- Firebase compat SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <script src="/js/firebase-db.js"></script>
+<script src="js/auth.js"></script>
 <script src="/js/detail.js"></script>
 <script>
-  function handleNewsletter(e) {
-    e.preventDefault();
-    const input = e.target.querySelector("input");
-    const email = input.value.trim();
-    if (!email) return;
-    if (typeof firebase !== "undefined") {
-      firebase.firestore().collection("subscribers").add({ email, date: new Date().toISOString(), source: "detail" }).catch(() => {});
-    }
-    showToast('<i class="fa-solid fa-envelope"></i> <span>Thanks for subscribing!</span>');
-    input.value = "";
-  }
-
   // sync breadcrumb
   document.addEventListener("DOMContentLoaded", () => {
     const name = document.getElementById("detail-name");

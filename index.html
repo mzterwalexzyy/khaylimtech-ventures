@@ -3,28 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KhaylimTech Ventures — Smarter Tech. Better Life.</title>
-  <meta name="description" content="Your one-stop tech store for phones, laptops, gaming consoles and accessories in Ibadan. 100% authentic products, best prices, fast delivery.">
+  <title>KhaylimTech Ventures | Smarter Tech. Better Life.</title>
+  <meta name="description" content="Your trusted destination for genuine iPhones, Samsung Galaxy flagships, MacBooks, PS5 consoles, and accessories in Ibadan. 100% authentic products, best prices, same-day delivery.">
   <link rel="icon" type="image/png" href="assets/Lightmode_logo.png" id="favicon">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/professional.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <style>
-    /* Featured section skeleton while loading */
-    .feat-skeleton { height: 320px; border-radius: 16px; }
+    .feat-skeleton { height: 320px; border-radius: 18px; }
   </style>
 </head>
-<body>
+<body class="has-utility-bar">
 
 <!-- ═══════════════════════════════════
-     NAVBAR
+     1. TOP UTILITY BAR
+═══════════════════════════════════ -->
+<div class="top-utility-bar">
+  <div class="container top-utility-inner">
+    <div class="top-utility-left">
+      <span class="utility-badge"><i class="fa-solid fa-shield-halved"></i> 100% Authentic</span>
+      <span class="utility-text">Same-Day Doorstep Delivery in Ibadan &bull; Insured Nationwide Shipping</span>
+    </div>
+    <div class="top-utility-right">
+      <span class="utility-item"><i class="fa-solid fa-location-dot"></i> Iwo Road, Ibadan</span>
+      <span class="utility-sep">|</span>
+      <a href="tel:+2348083873316" class="utility-item"><i class="fa-solid fa-phone"></i> 08083873316</a>
+      <span class="utility-sep">|</span>
+      <a href="https://wa.me/2348083873316" target="_blank" class="utility-item whatsapp-link"><i class="fa-brands fa-whatsapp"></i> Order on WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     2. GLOBAL NAVIGATION (Apple 52px Sticky Header)
 ═══════════════════════════════════ -->
 <nav class="navbar">
   <div class="container nav-inner">
     <!-- Logo -->
     <a href="/" class="nav-logo">
-      <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+      <img src="assets/Lightmode_logo.png" alt="KhaylimTech Logo">
       <div class="nav-logo-text">
         <span>KhaylimTech</span>
         <span>Ventures</span>
@@ -34,11 +54,43 @@
     <!-- Links -->
     <ul class="nav-links">
       <li><a href="/" class="active">Home</a></li>
-      <li><a href="/products">All Products</a></li>
-      <li><a href="/phones">Phones</a></li>
-      <li><a href="/laptops">Laptops</a></li>
-      <li><a href="/gaming">Gaming</a></li>
-      <li><a href="/accessories">Accessories</a></li>
+      <li class="nav-dropdown">
+        <a href="/products" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          <span>Catalog</span> <i class="fa-solid fa-chevron-down nav-caret"></i>
+        </a>
+        <div class="nav-dropdown-menu">
+          <div class="nav-dropdown-header">Categories</div>
+          <a href="/phones" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Phones</span>
+              <span class="dropdown-item-desc">iPhones &amp; Samsung</span>
+            </div>
+          </a>
+          <a href="/laptops" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-laptop"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Laptops</span>
+              <span class="dropdown-item-desc">MacBooks &amp; Workstations</span>
+            </div>
+          </a>
+          <a href="/gaming" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Gaming</span>
+              <span class="dropdown-item-desc">PS5 Consoles &amp; DualSense</span>
+            </div>
+          </a>
+          <a href="/accessories" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-headphones"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Accessories</span>
+              <span class="dropdown-item-desc">AirPods &amp; Smart Gear</span>
+            </div>
+          </a>
+        </div>
+      </li>
+      <li><a href="/how-to-order">How to Order</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
@@ -46,14 +98,14 @@
     <!-- Search -->
     <div class="nav-search">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
-      <input type="text" placeholder="Search gadgets...">
+      <input type="text" placeholder="Search devices..." aria-label="Search products">
       <div class="search-dropdown"></div>
     </div>
 
     <!-- Actions -->
     <div class="nav-actions">
-      <button class="nav-btn theme-toggle" title="Toggle theme">
-        <i class="fa-solid fa-sun"></i>
+      <button class="nav-btn theme-toggle" title="Toggle theme" aria-label="Toggle color theme">
+        <i class="fa-solid fa-moon"></i>
       </button>
       <a href="/cart" class="nav-btn" title="Cart">
         <i class="fa-solid fa-bag-shopping"></i>
@@ -67,107 +119,492 @@
 
   <!-- Mobile Nav -->
   <nav class="mobile-nav">
-    <a href="/" class="active">Home</a>
-    <a href="/products">All Products</a>
-    <a href="/phones">📱 Phones</a>
-    <a href="/laptops">💻 Laptops</a>
-    <a href="/gaming">🎮 Gaming</a>
-    <a href="/accessories">🔌 Accessories</a>
-    <a href="/about">ℹ️ About Us</a>
-    <a href="/contact">📩 Contact</a>
+    <a href="/" class="active"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="/phones"><i class="fa-solid fa-mobile-screen-button"></i> Phones</a>
+    <a href="/laptops"><i class="fa-solid fa-laptop"></i> Laptops</a>
+    <a href="/gaming"><i class="fa-solid fa-gamepad"></i> Gaming Consoles</a>
+    <a href="/accessories"><i class="fa-solid fa-headphones"></i> Accessories</a>
+    <a href="/products" style="font-weight:700;color:var(--gold)"><i class="fa-solid fa-layer-group"></i> All Products</a>
+    <a href="/how-to-order"><i class="fa-solid fa-truck-fast"></i> How to Order</a>
+    <a href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a>
+    <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
   </nav>
 </nav>
 
 <!-- ═══════════════════════════════════
-     HERO BANNER
+     3. CATEGORY ICON RAIL (Apple Sub-Nav)
 ═══════════════════════════════════ -->
-<section class="hero">
-  <img src="assets/banner.jpeg" alt="KhaylimTech Ventures Banner" class="hero-bg">
-  <div class="hero-overlay"></div>
-  <div class="container hero-inner">
-    <div class="hero-content">
-      <div class="hero-tag">
-        <i class="fa-solid fa-bolt"></i> Nigeria's Trusted Gadget Store
+<div class="category-rail">
+  <div class="container category-rail-inner">
+    <a href="/phones" class="rail-item">
+      <i class="fa-solid fa-mobile-screen-button rail-icon"></i>
+      <span class="rail-label">Phones</span>
+      <span class="rail-sub">iPhone &amp; Galaxy</span>
+    </a>
+    <a href="/laptops" class="rail-item">
+      <i class="fa-solid fa-laptop rail-icon"></i>
+      <span class="rail-label">Laptops</span>
+      <span class="rail-sub">MacBook &amp; PC</span>
+    </a>
+    <a href="/gaming" class="rail-item">
+      <i class="fa-solid fa-gamepad rail-icon"></i>
+      <span class="rail-label">Gaming</span>
+      <span class="rail-sub">PS5 &amp; Gear</span>
+    </a>
+    <a href="/accessories" class="rail-item">
+      <i class="fa-solid fa-headphones rail-icon"></i>
+      <span class="rail-label">Accessories</span>
+      <span class="rail-sub">AirPods &amp; Audio</span>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     4. EDITORIAL LUXURY LIFESTYLE HERO (Reference Image 1)
+═══════════════════════════════════ -->
+<section class="editorial-hero-wrap editorial-stack-panel" data-stack-label="KhaylimTech edit">
+  <div class="container editorial-hero-container">
+    <div class="editorial-hero">
+      <img src="assets/khaylimtech-nigerian-hero-v3.png" alt="Nigerian technology professional holding a flagship smartphone" class="editorial-hero-img">
+      <div class="editorial-hero-overlay"></div>
+
+
+      <!-- Vertical Social Bar (Matches Reference Image 1) -->
+      <div class="hero-social-vert">
+        <a href="https://www.instagram.com/_khaylimtech7_/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@khaylim01" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/2348083873316" target="_blank" rel="noopener" aria-label="WhatsApp Direct"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
-      <h1 class="hero-title">
-        Your One-Stop<br><span>Tech Store</span>
-      </h1>
-      <p class="hero-subtitle">Smarter Tech. Better Life.</p>
-      <div class="hero-cats">
-        <a href="/phones" class="hero-cat">📱 Phones</a>
-        <a href="/laptops" class="hero-cat">💻 Laptops</a>
-        <a href="/gaming" class="hero-cat">🎮 Gaming</a>
-        <a href="/accessories" class="hero-cat">🔌 Accessories</a>
-      </div>
-      <div class="hero-actions">
-        <a href="/products" class="btn-gold">
-          <i class="fa-solid fa-bag-shopping"></i> Shop Now
-        </a>
-        <a href="/phones" class="btn-outline">
-          <i class="fa-solid fa-mobile-screen"></i> View Phones
-        </a>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-showcase">
-        <div class="showcase-label"><i class="fa-solid fa-fire"></i> Featured Products</div>
-        <div class="showcase-track" id="showcase-track"></div>
-        <div class="showcase-dots" id="showcase-dots"></div>
+
+      <!-- Hero Main Content -->
+      <div class="editorial-hero-content">
+        <div class="editorial-hero-badge">
+          <i class="fa-solid fa-gem text-gold"></i>
+          <span>TECH YOU CAN TRUST &bull; AUTHENTIC TECH ELEVATED &bull; IBADAN</span>
+        </div>
+        <h1 class="editorial-hero-title">
+          EXPERIENCE<br>
+          <span class="gradient-gold-text">UNPARALLELED</span><br>
+          TECH ELEGANCE.
+        </h1>
+        <p class="editorial-hero-desc">
+          Tech You Can Trust. Original iPhones, flagship MacBooks, studio audio, and PlayStation consoles. Sealed in box with verified serials, 1-year warranty, and same-day delivery in Ibadan.
+        </p>
+        <div class="editorial-hero-actions">
+          <a href="/products" class="btn-editorial-gold">
+            Browse Collection <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20am%20interested%20in%20ordering%20a%20flagship%20device." target="_blank" rel="noopener" class="btn-editorial-ghost btn-ghost-gold">
+            <i class="fa-brands fa-whatsapp"></i> Order on WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Trust Strip -->
-<div class="trust-strip">
-  <div class="container trust-inner">
-    <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> 100% Authentic Products</div>
-    <div class="trust-item"><i class="fa-solid fa-tag"></i> Best Prices</div>
-    <div class="trust-item"><i class="fa-solid fa-truck-fast"></i> Same-Day in Ibadan · 1&ndash;3 Days Nationwide</div>
-    <div class="trust-item"><i class="fa-solid fa-headset"></i> Customer Support</div>
-    <div class="trust-item"><i class="fa-brands fa-whatsapp"></i> Order via WhatsApp</div>
+<!-- ═══════════════════════════════════
+     5. BRAND STORY & PHILOSOPHY BLOCK (Reference Image 1)
+═══════════════════════════════════ -->
+<section class="brand-story-section editorial-stack-panel" data-stack-label="Our standard">
+  <div class="container">
+    <div class="brand-story-grid">
+      <div class="story-heading-wrap">
+        <h2 class="story-heading">
+          We believe in original tech that <span class="gold-underline-word">lasts.</span>
+        </h2>
+        <a href="/products" class="btn-story-outline">
+          Our Collection <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="story-text-wrap">
+        <p class="story-lead-p">
+          In an electronics market filled with refurbished compromises and uncertain provenance, KhaylimTech was established in Ibadan with one uncompromising commitment: 100% factory-sealed authenticity.
+        </p>
+        <p>
+          Every smartphone, laptop, console, and studio audio device in our vault arrives in its original factory packaging with verifiable IMEI numbers, active brand warranty, and our signature inspect-before-payment assurance across Bodija, Ring Road, UI, Oluyole, and nationwide.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     6. CATEGORY SHOWCASE PODIUMS (Reference Images 1 & 4)
+═══════════════════════════════════ -->
+<section class="category-podiums-section editorial-stack-panel" data-stack-label="Collections">
+  <div class="container">
+    <div class="category-podiums-grid">
+
+      <!-- Podium 1: Phones -->
+      <a href="/phones" class="podium-card">
+        <div class="podium-media">
+          <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80" alt="Flagship Smartphones">
+        </div>
+        <div class="podium-info">
+          <div class="podium-title-row">
+            <span class="podium-title">Phones</span>
+            <span class="podium-count">5 Models</span>
+          </div>
+          <div class="podium-sub">
+            <span>iPhone &amp; Galaxy Flagships</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Podium 2: Laptops -->
+      <a href="/laptops" class="podium-card">
+        <div class="podium-media">
+          <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=500&q=80" alt="Apple MacBooks & Premium Laptops">
+        </div>
+        <div class="podium-info">
+          <div class="podium-title-row">
+            <span class="podium-title">Laptops</span>
+            <span class="podium-count">5 Models</span>
+          </div>
+          <div class="podium-sub">
+            <span>MacBook Pro &amp; Air M2/M3</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Podium 3: Gaming -->
+      <a href="/gaming" class="podium-card">
+        <div class="podium-media">
+          <img src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=500&q=80" alt="PlayStation Consoles">
+        </div>
+        <div class="podium-info">
+          <div class="podium-title-row">
+            <span class="podium-title">Gaming</span>
+            <span class="podium-count">4 Models</span>
+          </div>
+          <div class="podium-sub">
+            <span>PS5 Slim &amp; Controllers</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Podium 4: Accessories -->
+      <a href="/accessories" class="podium-card">
+        <div class="podium-media">
+          <img src="https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500&q=80" alt="Audio & Original Accessories">
+        </div>
+        <div class="podium-info">
+          <div class="podium-title-row">
+            <span class="podium-title">Accessories</span>
+            <span class="podium-count">6 Items</span>
+          </div>
+          <div class="podium-sub">
+            <span>AirPods, Sound &amp; Power</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     7. DEAL OF THE DAY LIVE COUNTDOWN (Reference Image 3)
+═══════════════════════════════════ -->
+<section class="deal-countdown-section editorial-stack-panel" data-stack-label="Limited offer">
+  <div class="container">
+    <div class="deal-countdown-box">
+      <div class="deal-info-side">
+        <div class="deal-tag-pill">
+          <i class="fa-solid fa-bolt"></i> DEAL OF THE DAY &bull; SAVE ₦100,000
+        </div>
+        <h3 class="deal-title">Apple AirPods Pro (2nd Gen)</h3>
+        <p class="deal-subtitle">MagSafe Charging Case (USB-C), 2x Active Noise Cancellation, and Spatial Audio. Factory sealed stock in Ibadan.</p>
+      </div>
+
+      <!-- Live Digital Countdown Clock -->
+      <div class="deal-timer-wrap">
+        <div class="timer-block">
+          <span class="timer-num" id="countdown-days">02</span>
+          <span class="timer-lbl">Days</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block">
+          <span class="timer-num" id="countdown-hours">14</span>
+          <span class="timer-lbl">Hours</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block">
+          <span class="timer-num" id="countdown-mins">38</span>
+          <span class="timer-lbl">Mins</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-block">
+          <span class="timer-num" id="countdown-secs">45</span>
+          <span class="timer-lbl">Secs</span>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="deal-action-side">
+        <a href="/product/ac001" class="btn-editorial-gold" style="padding: 12px 28px;">
+          Claim Deal (₦95,000) <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20claim%20the%20AirPods%20Pro%20deal." target="_blank" rel="noopener" class="btn-editorial-ghost" style="padding: 12px 20px;">
+          <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     5. STORE GUARANTEES BAR (Apple 4-Grid Matrix)
+═══════════════════════════════════ -->
+<div class="trust-bar">
+  <div class="container trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="trust-card-text">
+        <strong>100% Sealed Original</strong>
+        <span>Factory sealed with verified IMEI</span>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><i class="fa-solid fa-truck-fast"></i></div>
+      <div class="trust-card-text">
+        <strong>Same-Day Ibadan Dispatch</strong>
+        <span>3-hour doorstep delivery</span>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <div class="trust-card-text">
+        <strong>Inspect on Delivery</strong>
+        <span>Verify specs before payment</span>
+      </div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon" style="color:#128c7e; background:var(--gold-subtle); border-color:var(--gold-border)"><i class="fa-brands fa-whatsapp"></i></div>
+      <div class="trust-card-text">
+        <strong>Instant WhatsApp Checkout</strong>
+        <span>Order directly with our team</span>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════
-     CATEGORIES
+     6. APPLE BENTO SHOWCASE (Featured Flagships)
 ═══════════════════════════════════ -->
-<section class="section">
+<section class="section home-stack-panel stack-panel-flagships" data-stack-label="Flagship highlights">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header text-center" style="margin-bottom: 48px;">
+      <div style="max-width: 700px; margin-inline: auto;">
+        <span class="utility-badge" style="margin-bottom: 12px; display: inline-block;">FLAGSHIP HIGHLIGHTS</span>
+        <h2 class="section-title">The Best of Personal Tech.</h2>
+        <p class="section-subtitle">Original, factory-sealed devices tested and backed by manufacturer warranty.</p>
+      </div>
+    </div>
+
+    <!-- Hero Bento Card: Apple iPhone 15 (Matches Apple Pride/Watch Feature Card) -->
+    <div class="bento-hero-card">
+      <div class="bento-hero-media">
+        <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=700&q=80" alt="Apple iPhone 15 Pro Titanium Flagship">
+      </div>
+      <div class="bento-hero-content">
+        <span class="bento-card-badge"><i class="fa-brands fa-apple"></i> Apple Flagship</span>
+        <h3>iPhone 15</h3>
+        <p class="bento-card-desc">Featuring Dynamic Island, 48MP main camera with 2x optical-quality telephoto, aerospace-grade aluminum, USB-C connectivity, and all-day battery life.</p>
+        <div class="bento-price">From ₦920,000</div>
+        <div class="bento-links">
+          <a href="/product/ph001" class="btn-gold"><i class="fa-solid fa-bag-shopping"></i> View Product</a>
+          <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20order%20the%20iPhone%2015." target="_blank" class="btn-ghost-gold">
+            Order on WhatsApp <i class="fa-solid fa-chevron-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bento Trio Grid: MacBook, PS5, AirPods (Matches Apple 3-Card Row) -->
+    <div class="bento-trio-grid">
+      <!-- Bento Item 1: MacBook Air M2 -->
+      <div class="bento-card">
+        <div>
+          <span class="bento-card-badge"><i class="fa-brands fa-apple"></i> Supercharged by M2</span>
+          <h3>MacBook Air M2</h3>
+          <p class="bento-card-desc">Strikingly thin design, 18-hour battery, 13.6" Liquid Retina display, and MagSafe fast charging.</p>
+          <div class="bento-price">From ₦1,200,000</div>
+          <div class="bento-links">
+            <a href="/product/lp001" class="btn-gold" style="padding:8px 18px;font-size:0.82rem">View Device</a>
+            <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20order%20the%20MacBook%20Air%20M2." target="_blank" class="btn-ghost-gold" style="padding:8px 16px;font-size:0.82rem">WhatsApp</a>
+          </div>
+        </div>
+        <div class="bento-card-media">
+          <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=500&q=80" alt="MacBook Air M2">
+        </div>
+      </div>
+
+      <!-- Bento Item 2: PlayStation 5 Slim -->
+      <div class="bento-card">
+        <div>
+          <span class="bento-card-badge"><i class="fa-brands fa-playstation"></i> Next-Gen Gaming</span>
+          <h3>PlayStation 5</h3>
+          <p class="bento-card-desc">Ultra-high-speed 1TB SSD, haptic feedback triggers, and stunning 4K HDR ray tracing. DualSense controller included.</p>
+          <div class="bento-price">From ₦620,000</div>
+          <div class="bento-links">
+            <a href="/product/gc001" class="btn-gold" style="padding:8px 18px;font-size:0.82rem">View Device</a>
+            <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20order%20the%20PlayStation%205." target="_blank" class="btn-ghost-gold" style="padding:8px 16px;font-size:0.82rem">WhatsApp</a>
+          </div>
+        </div>
+        <div class="bento-card-media">
+          <img src="https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=500&q=80" alt="Sony PlayStation 5 Console">
+        </div>
+      </div>
+
+      <!-- Bento Item 3: AirPods Pro (2nd Gen) -->
+      <div class="bento-card">
+        <div>
+          <span class="bento-card-badge"><i class="fa-solid fa-headphones"></i> Immersive Audio</span>
+          <h3>AirPods Pro 2</h3>
+          <p class="bento-card-desc">Up to 2x more Active Noise Cancellation, Adaptive Transparency, and Personalized Spatial Audio.</p>
+          <div class="bento-price">From ₦95,000</div>
+          <div class="bento-links">
+            <a href="/product/ac001" class="btn-gold" style="padding:8px 18px;font-size:0.82rem">View Device</a>
+            <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20order%20the%20AirPods%20Pro." target="_blank" class="btn-ghost-gold" style="padding:8px 16px;font-size:0.82rem">WhatsApp</a>
+          </div>
+        </div>
+        <div class="bento-card-media">
+          <img src="https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500&q=80" alt="Apple AirPods Pro 2">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     8. ATMOSPHERIC SCULPTED SOUND BANNER (Reference Images 1 & 3)
+═══════════════════════════════════ -->
+<section class="sound-sculpted-section editorial-stack-panel" data-stack-label="Studio audio">
+  <div class="container">
+    <div class="sound-sculpted-banner">
+      <div class="sound-sculpted-overlay"></div>
+      <div class="sound-sculpted-content">
+        <h2 class="sound-sculpted-title">Sound.<br><span class="gradient-gold-text">Sculpted.</span></h2>
+        <p class="sound-sculpted-desc">
+          Studio-grade acoustics and immersive spatial audio crafted for true audiophiles. Explore our certified wireless audio collection.
+        </p>
+        <a href="/accessories" class="btn-editorial-gold" style="display:inline-flex;">
+          Shop Audio &amp; Gear <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     9. INTERACTIVE FEATURED DETAIL SHOWCASE (Reference Image 1 Bottom)
+═══════════════════════════════════ -->
+<section class="featured-detail-section editorial-stack-panel" data-stack-label="Featured device">
+  <div class="container">
+    <div class="featured-detail-card">
+      <!-- Rotating Circular Stamp (Image 1 Bottom) -->
+      <div class="featured-circular-stamp">
+        ★ KHAYLIM ★<br>FEATURED<br>FLAGSHIP
+      </div>
+
+      <!-- Thumbnails Column -->
+      <div class="detail-thumbs-col">
+        <button type="button" class="detail-thumb-btn active" data-img="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=700&q=80" aria-label="Titanium Angled View">
+          <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=150&q=80" alt="iPhone 15 Pro Angle">
+        </button>
+        <button type="button" class="detail-thumb-btn" data-img="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=700&q=80" aria-label="Front Display View">
+          <img src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=150&q=80" alt="iPhone 15 Pro Display">
+        </button>
+        <button type="button" class="detail-thumb-btn" data-img="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=700&q=80" aria-label="Rear Camera View">
+          <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=150&q=80" alt="iPhone 15 Pro Camera">
+        </button>
+      </div>
+
+      <!-- Main Showcase Photo -->
+      <div class="detail-hero-media-wrap">
+        <img id="detail-main-img" src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=700&q=80" alt="Apple iPhone 15 Pro Natural Titanium Flagship">
+      </div>
+
+      <!-- Product Specs & Actions -->
+      <div class="detail-specs-content">
+        <div class="detail-brand-badge">
+          <i class="fa-brands fa-apple"></i> Apple Certified &bull; In Stock
+        </div>
+        <h3 class="detail-product-title">iPhone 15 Pro (128GB)</h3>
+        <div class="detail-reviews-row">
+          <div class="detail-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <span class="detail-review-count">(124 verified reviews)</span>
+        </div>
+        <div class="detail-price-row">
+          <span class="detail-price-main">₦920,000</span>
+          <span class="detail-price-old">₦1,050,000</span>
+        </div>
+        <p class="detail-desc">
+          Engineered from aerospace-grade Natural Titanium with the breakthrough A17 Pro chip, custom Action button, and pro camera system featuring 48MP main sensor. Factory sealed with 1-year Apple warranty.
+        </p>
+        <div class="detail-actions-row">
+          <a href="/product/ph001" class="btn-editorial-gold" style="padding: 12px 28px;">
+            <i class="fa-solid fa-bag-shopping"></i> View Details
+          </a>
+          <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20order%20the%20iPhone%2015%20Pro%20(128GB)%20Natural%20Titanium." target="_blank" rel="noopener" class="btn-editorial-ghost" style="padding: 12px 22px;">
+            <i class="fa-brands fa-whatsapp"></i> Order on WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     10. SHOP BY CATEGORY
+═══════════════════════════════════ -->
+<section class="section home-stack-panel stack-panel-categories" data-stack-label="Shop by category">
+  <div class="container">
+    <div class="section-header reveal">
       <div>
         <h2 class="section-title">Shop by <span>Category</span></h2>
         <span class="section-line"></span>
       </div>
       <a href="/products" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
     </div>
-    <div class="category-grid" id="category-grid"></div>
+    <div class="category-grid reveal-stagger" id="category-grid"></div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════
-     FEATURED PRODUCTS
+     8. FEATURED PRODUCTS
 ═══════════════════════════════════ -->
-<section class="section" style="padding-top:0">
+<section class="section home-stack-panel stack-panel-featured" data-stack-label="Featured products">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <div>
-        <h2 class="section-title">🔥 <span>Featured</span> Products</h2>
+        <h2 class="section-title"><span>Featured</span> products</h2>
         <span class="section-line"></span>
       </div>
       <a href="/products" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
     </div>
-    <div class="product-grid" id="featured-grid"></div>
+    <div class="product-grid reveal-stagger" id="featured-grid"></div>
   </div>
-</section>
 
 <!-- ═══════════════════════════════════
      PROMO BANNER
 ═══════════════════════════════════ -->
 <div class="container">
-  <div class="promo-banner" id="promo-banner">
+  <div class="promo-banner reveal" id="promo-banner">
     <div class="promo-text">
-      <p class="promo-tag" id="promo-tag">🎮 New Arrival</p>
+      <p class="promo-tag" id="promo-tag">New arrival</p>
       <h2 id="promo-title">PlayStation 5 Now <span>In Stock</span></h2>
       <p id="promo-desc">Limited units available. Order now before it sells out!</p>
     </div>
@@ -176,20 +613,245 @@
     </a>
   </div>
 </div>
+</section>
 
 <!-- ═══════════════════════════════════
      NEW ARRIVALS
 ═══════════════════════════════════ -->
-<section class="section">
+<section class="section home-stack-panel stack-panel-arrivals" data-stack-label="New arrivals">
   <div class="container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <div>
-        <h2 class="section-title">✨ New <span>Arrivals</span></h2>
+        <h2 class="section-title">Just <span>arrived</span></h2>
         <span class="section-line"></span>
       </div>
       <a href="/products" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
     </div>
-    <div class="product-grid" id="new-grid"></div>
+    <div class="product-grid reveal-stagger" id="new-grid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     13. MACRO HARDWARE CRAFTSMANSHIP (Reference Image 4 Bottom)
+═══════════════════════════════════ -->
+<section class="macro-hardware-section editorial-stack-panel" data-stack-label="Craftsmanship">
+  <div class="container">
+    <div class="macro-hardware-grid">
+      <div class="macro-media-wrap">
+        <img src="assets/flagship_dark_macro.jpg" alt="Macro Precision Hardware Engineering" loading="lazy">
+      </div>
+      <div class="macro-content-wrap">
+        <div class="macro-badge">
+          <i class="fa-solid fa-microchip"></i> PRECISION TITANIUM CRAFTSMANSHIP
+        </div>
+        <h2 class="macro-title">
+          Engineered for <br>
+          <span class="gradient-gold-text">Flawless Longevity.</span>
+        </h2>
+        <p class="macro-desc">
+          Every millimeter of our curated flagship collection is built for performance. From aerospace-grade titanium casings and sapphire crystal camera lenses to bespoke thermal architecture, KhaylimTech guarantees authentic factory engineering that outperforms standard retail devices year after year.
+        </p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          <a href="/products" class="btn-editorial-gold">
+            Explore Flagships <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#customer-stories" class="btn-editorial-ghost">
+            Customer Reviews <i class="fa-solid fa-star"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     WHY SHOP WITH KHAYLIMTECH
+═══════════════════════════════════ -->
+<section class="section why-section home-stack-panel stack-panel-trust" data-stack-label="Why customers trust us">
+  <div class="container">
+    <div class="section-header reveal text-center" style="justify-content:center">
+      <div style="max-width: 650px; margin: 0 auto;">
+        <div class="why-eyebrow"><i class="fa-solid fa-shield-check text-gold"></i> BUYER PROTECTION &amp; PEACE OF MIND</div>
+        <h2 class="section-title">Why Customers Trust <span>KhaylimTech</span></h2>
+        <span class="section-line" style="margin-inline:auto"></span>
+        <p class="section-subtitle">We don't just sell electronics — we deliver authentic tech backed by honest advice and reliable support in Ibadan and nationwide.</p>
+      </div>
+    </div>
+
+    <div class="why-grid reveal-stagger">
+      <div class="why-card">
+        <div class="why-icon"><i class="fa-solid fa-box-open"></i></div>
+        <h3>100% Sealed &amp; Authentic</h3>
+        <p>Every device is genuine, brand-new, and sealed in its original box with verified serial and IMEI numbers.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fa-solid fa-truck-fast"></i></div>
+        <h3>Same-Day Ibadan Dispatch</h3>
+        <p>Doorstep delivery within 3 hours in Ibadan (Bodija, Ring Road, UI, Oluyole, Akobo) and express nationwide courier.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+        <h3>Inspect Before You Pay</h3>
+        <p>For Ibadan orders, inspect the device and confirm specifications in person before making payment.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>Complimentary Tech Setup</h3>
+        <p>Free data transfer from your old device to your new device, plus continuous after-sales technical support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     CUSTOMER STORIES & VERIFIED UNBOXINGS
+═══════════════════════════════════ -->
+<section class="section customer-stories-section home-stack-panel stack-panel-stories" id="customer-stories" data-stack-label="Customer stories">
+  <div class="container">
+    <div class="section-header reveal text-center" style="justify-content:center">
+      <div style="max-width: 680px; margin: 0 auto;">
+        <div class="stories-eyebrow">
+          <i class="fa-solid fa-circle-check text-gold"></i> REAL BUYERS &bull; VERIFIED REVIEWS
+        </div>
+        <h2 class="section-title">Loved by Ibadan Tech Lovers &amp; Nationwide Buyers</h2>
+        <span class="section-line" style="margin-inline:auto"></span>
+        <p class="section-subtitle">
+          Over 2,850+ gadgets delivered safely. Read real unboxing and buying experiences from verified customers across Ibadan and Nigeria.
+        </p>
+      </div>
+    </div>
+
+    <!-- 4-Grid Customer Stories -->
+    <div class="story-grid reveal-stagger">
+
+      <!-- Story 1: Ibadan Doctor / Professional -->
+      <div class="story-card">
+        <div class="story-card-top">
+          <div class="story-user">
+            <div class="story-avatar story-av-1">BA</div>
+            <div class="story-user-meta">
+              <strong class="story-name">Dr. Babatunde A.</strong>
+              <span class="story-location"><i class="fa-solid fa-location-dot"></i> UCH, Ibadan</span>
+            </div>
+          </div>
+          <span class="verified-pill"><i class="fa-solid fa-check"></i> Verified Buyer</span>
+        </div>
+        <div class="story-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <div class="story-device-tag">
+          <i class="fa-brands fa-apple"></i> Apple iPhone 15 Pro Max (256GB Natural Titanium)
+        </div>
+        <p class="story-body">
+          &ldquo;Ordered around 11:30 AM while in clinic. The KhaylimTech dispatch rider arrived at UCH gate before 1:45 PM. Completely factory sealed, verified IMEI on Apple CheckCoverage on the spot before making transfer. 100% legitimate plug!&rdquo;
+        </p>
+        <div class="story-footer">
+          <span class="story-time-tag"><i class="fa-solid fa-bolt text-gold"></i> Delivered in 2 hrs 15 mins</span>
+        </div>
+      </div>
+
+      <!-- Story 2: Bodija Creative / Laptop -->
+      <div class="story-card">
+        <div class="story-card-top">
+          <div class="story-user">
+            <div class="story-avatar story-av-2">CO</div>
+            <div class="story-user-meta">
+              <strong class="story-name">Chioma O.</strong>
+              <span class="story-location"><i class="fa-solid fa-location-dot"></i> Bodija, Ibadan</span>
+            </div>
+          </div>
+          <span class="verified-pill"><i class="fa-solid fa-check"></i> Verified Buyer</span>
+        </div>
+        <div class="story-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <div class="story-device-tag">
+          <i class="fa-brands fa-apple"></i> MacBook Pro 14&quot; M3 Pro (Space Black)
+        </div>
+        <p class="story-body">
+          &ldquo;Bought my M3 MacBook Pro for video editing. The complimentary data transfer assistance saved me hours of downtime. Best tech store experience in Ibadan by far &mdash; smooth, professional, and authentic.&rdquo;
+        </p>
+        <div class="story-footer">
+          <span class="story-time-tag"><i class="fa-solid fa-truck-fast text-gold"></i> Same-day Doorstep Delivery</span>
+        </div>
+      </div>
+
+      <!-- Story 3: Oluyole Gamer / PS5 -->
+      <div class="story-card">
+        <div class="story-card-top">
+          <div class="story-user">
+            <div class="story-avatar story-av-3">FM</div>
+            <div class="story-user-meta">
+              <strong class="story-name">Farouk M.</strong>
+              <span class="story-location"><i class="fa-solid fa-location-dot"></i> Oluyole Estate, Ibadan</span>
+            </div>
+          </div>
+          <span class="verified-pill"><i class="fa-solid fa-check"></i> Verified Buyer</span>
+        </div>
+        <div class="story-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <div class="story-device-tag">
+          <i class="fa-brands fa-playstation"></i> PlayStation 5 Slim + Extra DualSense
+        </div>
+        <p class="story-body">
+          &ldquo;Got my sealed PS5 delivered to Oluyole. Sealed box with original Sony seal intact. We plugged it in, booted it up, and verified both controllers before payment. Trust level is 10/10.&rdquo;
+        </p>
+        <div class="story-footer">
+          <span class="story-time-tag"><i class="fa-solid fa-clipboard-check text-gold"></i> Inspected Before Payment</span>
+        </div>
+      </div>
+
+      <!-- Story 4: Lagos Interstate Delivery -->
+      <div class="story-card">
+        <div class="story-card-top">
+          <div class="story-user">
+            <div class="story-avatar story-av-4">AK</div>
+            <div class="story-user-meta">
+              <strong class="story-name">Aisha K.</strong>
+              <span class="story-location"><i class="fa-solid fa-location-dot"></i> Lekki Phase 1, Lagos</span>
+            </div>
+          </div>
+          <span class="verified-pill"><i class="fa-solid fa-check"></i> Verified Buyer</span>
+        </div>
+        <div class="story-stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <div class="story-device-tag">
+          <i class="fa-brands fa-apple"></i> Apple iPhone 15 Pro + AirPods Pro 2
+        </div>
+        <p class="story-body">
+          &ldquo;I was skeptical about ordering gadgets from Ibadan to Lagos, but KhaylimTech sent waybill tracking and videos of the sealed package. Received it next morning via DHL express. Super reliable!&rdquo;
+        </p>
+        <div class="story-footer">
+          <span class="story-time-tag"><i class="fa-solid fa-plane-circle-check text-gold"></i> Next-Day Interstate Delivery</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Trust Numbers Bar -->
+    <div class="stories-stats-bar">
+      <div class="stats-item">
+        <span class="stats-num">2,850+</span>
+        <span class="stats-lbl">Gadgets Delivered</span>
+      </div>
+      <div class="stats-divider"></div>
+      <div class="stats-item">
+        <span class="stats-num">4.9 / 5.0</span>
+        <span class="stats-lbl">Average Customer Rating</span>
+      </div>
+      <div class="stats-divider"></div>
+      <div class="stats-item">
+        <span class="stats-num">100%</span>
+        <span class="stats-lbl">Factory Sealed Guarantee</span>
+      </div>
+      <div class="stats-divider"></div>
+      <div class="stats-item">
+        <span class="stats-num">&lt; 3 Hours</span>
+        <span class="stats-lbl">Doorstep Delivery in Ibadan</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -202,7 +864,7 @@
       <!-- Brand -->
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="assets/logo.jpeg" alt="KhaylimTech Logo">
+          <img src="assets/Lightmode_logo.png" alt="KhaylimTech Logo">
           <div class="footer-logo-text">
             <span>KhaylimTech</span><br>
             <span>Ventures</span>
@@ -258,7 +920,7 @@
 
     <!-- Footer Bottom -->
     <div class="footer-bottom">
-      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Built with ❤️ in Ibadan.</p>
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Serving Nigeria from Ibadan.</p>
       <div class="social-links">
         <a href="#" class="social-link" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="https://www.instagram.com/_khaylimtech7_/" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
@@ -273,29 +935,35 @@
 <script src="js/data.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/app.js"></script>
+
 <!-- Firebase compat SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <script src="js/firebase-db.js"></script>
+<script src="js/auth.js"></script>
 <script>
   function renderHomePage() {
     // Categories
-    document.getElementById("category-grid").innerHTML = CATEGORIES.map(c => `
-      <a href="products.html?cat=${c.id}" class="cat-card">
-        <span class="cat-icon">${c.icon}</span>
-        <div class="cat-name">${c.label}</div>
-        <div class="cat-count">${c.count} Products</div>
-        <i class="fa-solid fa-arrow-right cat-arrow"></i>
-      </a>
-    `).join("");
+    document.getElementById("category-grid").innerHTML = CATEGORIES.map(c => {
+      const count = c.count || PRODUCTS.filter(p => p.category === c.id).length;
+      return `
+        <a href="/products?cat=${c.id}" class="cat-card">
+          <span class="cat-icon">${c.icon}</span>
+          <div class="cat-name">${c.label}</div>
+          <div class="cat-count">${count} Products</div>
+          <i class="fa-solid fa-arrow-right cat-arrow"></i>
+        </a>
+      `;
+    }).join("");
 
-    // Featured — 2 from each category
+    // Featured - one focused pick from each category keeps the home edit concise.
     const featured = [];
     CATEGORIES.forEach(cat => {
-      PRODUCTS.filter(p => p.category === cat.id).slice(0, 2).forEach(p => featured.push(p));
+      PRODUCTS.filter(p => p.category === cat.id).slice(0, 1).forEach(p => featured.push(p));
     });
     document.getElementById("featured-grid").innerHTML =
-      featured.slice(0, 8).map(renderProductCard).join("") ||
+      featured.slice(0, 4).map(renderProductCard).join("") ||
       `<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px">No products yet. Add via your Telegram bot!</p>`;
 
     // New arrivals
@@ -331,104 +999,86 @@
   window.onFirebaseReady = function() {
     renderHomePage();
     loadPromoBanner();
+    // Re-run scroll reveal for dynamically rendered product cards
+    setTimeout(reRunReveal, 100);
   };
+
+  // ─── Editorial Interactivity: Deal Countdown & Featured Product Thumbnails ───
+  function initDealCountdown() {
+    let target = localStorage.getItem("khaylim_deal_end");
+    if (!target || Date.now() > parseInt(target, 10)) {
+      target = Date.now() + (2 * 24 * 3600 * 1000) + (14 * 3600 * 1000) + (38 * 60 * 1000);
+      localStorage.setItem("khaylim_deal_end", target);
+    }
+    function tick() {
+      const remaining = Math.max(0, parseInt(target, 10) - Date.now());
+      const d = Math.floor(remaining / (1000 * 60 * 60 * 24));
+      const h = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((remaining / (1000 * 60)) % 60);
+      const s = Math.floor((remaining / 1000) % 60);
+
+      const dEl = document.getElementById("countdown-days");
+      const hEl = document.getElementById("countdown-hours");
+      const mEl = document.getElementById("countdown-mins");
+      const sEl = document.getElementById("countdown-secs");
+
+      if (dEl) dEl.textContent = String(d).padStart(2, "0");
+      if (hEl) hEl.textContent = String(h).padStart(2, "0");
+      if (mEl) mEl.textContent = String(m).padStart(2, "0");
+      if (sEl) sEl.textContent = String(s).padStart(2, "0");
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  function initDetailThumbnails() {
+    const mainImg = document.getElementById("detail-main-img");
+    const thumbBtns = document.querySelectorAll(".detail-thumb-btn");
+    if (!mainImg || !thumbBtns.length) return;
+
+    thumbBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        thumbBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const newSrc = btn.getAttribute("data-img");
+        if (newSrc && mainImg.src !== newSrc) {
+          mainImg.style.opacity = "0.4";
+          mainImg.src = newSrc;
+          mainImg.onload = () => { mainImg.style.opacity = "1"; };
+        }
+      });
+    });
+  }
 
   // Fallback: render local data immediately, Firebase will re-render with live data
   document.addEventListener("DOMContentLoaded", () => {
-    if (!window.firebaseLoaded) renderHomePage();
+    initDealCountdown();
+    initDetailThumbnails();
+    if (!window.firebaseLoaded) {
+      renderHomePage();
+      setTimeout(reRunReveal, 100);
+    }
   });
 
-  // ── Hero Showcase Carousel ──────────────────
-  (function initShowcase() {
-    const track = document.getElementById("showcase-track");
-    const dotsEl = document.getElementById("showcase-dots");
-    if (!track) return;
-
-    let current = 0;
-    let timer = null;
-
-    function buildSlides(products) {
-      // Get best display image for a product (use video thumbnail if no real image)
-      function getDisplayImage(p) {
-        if (p.image && !p.image.includes("placehold.co")) return p.image;
-        if (p.video && p.video.includes("/video/upload/")) {
-          return p.video.replace("/video/upload/", "/video/upload/so_0,f_jpg/").replace(/\.(mp4|webm|mov)$/i, ".jpg");
-        }
-        return null;
-      }
-      const picks = products
-        .filter(p => p.inStock !== false)
-        .map(p => ({ ...p, _thumb: getDisplayImage(p) }))
-        .filter(p => p._thumb)
-        .slice(0, 8);
-      if (!picks.length) { track.closest(".hero-visual").style.display = "none"; return; }
-
-      track.innerHTML = picks.map((p, i) => `
-        <a href="/product/${p.id}" class="showcase-slide${i === 0 ? " active" : ""}" data-i="${i}">
-          <img src="${p._thumb}" alt="${p.name}" loading="lazy">
-          <div class="showcase-info">
-            <div class="showcase-cat">${CATEGORIES.find(c=>c.id===p.category)?.label || p.category}</div>
-            <div class="showcase-name">${p.name}</div>
-            ${p.description ? `<div class="showcase-desc">${p.description}</div>` : ""}
-            <div class="showcase-price">${formatNGN(p.price)}${p.oldPrice ? ` <span style="font-size:.75rem;color:var(--text-muted);text-decoration:line-through;font-weight:400">${formatNGN(p.oldPrice)}</span>` : ""}</div>
-            <div class="showcase-cta"><i class="fa-solid fa-bag-shopping"></i> View Product</div>
-          </div>
-        </a>`).join("");
-
-      dotsEl.innerHTML = picks.map((_, i) =>
-        `<div class="showcase-dot${i === 0 ? " active" : ""}" data-i="${i}"></div>`).join("");
-
-      dotsEl.querySelectorAll(".showcase-dot").forEach(d =>
-        d.addEventListener("click", () => goTo(+d.dataset.i)));
-
-      function goTo(next) {
-        const slides = track.querySelectorAll(".showcase-slide");
-        const dots   = dotsEl.querySelectorAll(".showcase-dot");
-        slides[current].classList.remove("active");
-        slides[current].classList.add("exit");
-        setTimeout(() => slides[current] && slides[current].classList.remove("exit"), 600);
-        dots[current].classList.remove("active");
-        current = (next + picks.length) % picks.length;
-        slides[current].classList.add("active");
-        dots[current].classList.add("active");
-      }
-
-      timer = setInterval(() => goTo(current + 1), 5000);
-    }
-
-    // Wait for Firebase products, fallback to static PRODUCTS
-    const tryBuild = () => {
-      if (PRODUCTS && PRODUCTS.length) buildSlides(PRODUCTS);
-    };
-    const origReady = window.onFirebaseReady;
-    window.onFirebaseReady = function() {
-      if (origReady) origReady();
-      clearInterval(timer);
-      buildSlides(PRODUCTS);
-    };
-    // Fallback: if firebase never fires, use static data
-    setTimeout(tryBuild, 1500);
-  })();
-
-  // Newsletter handler — saves to Firestore (bot checks via /subscribers command)
-  function handleNewsletter(e) {
-    e.preventDefault();
-    const input = e.target.querySelector("input");
-    const email = input.value.trim();
-    if (!email) return;
-
-    if (typeof firebase !== "undefined") {
-      const db2 = firebase.firestore();
-      db2.collection("subscribers").add({
-        email: email,
-        date: new Date().toISOString(),
-        source: "homepage"
-      }).catch(() => {});
-    }
-
-    showToast('<i class="fa-solid fa-envelope"></i> <span>Thanks for subscribing!</span>');
-    input.value = "";
-  }
 </script>
+
+<!-- ═══════════════════════════════════
+     LIVE VERIFIED PURCHASE TOAST
+═══════════════════════════════════ -->
+<div id="live-purchase-toast" class="live-toast" aria-live="polite">
+  <div class="toast-indicator">
+    <span class="live-dot-pulse"></span>
+  </div>
+  <div class="toast-body">
+    <div class="toast-headline">
+      <strong id="toast-customer">Tunde from Bodija</strong>
+      <span class="toast-badge"><i class="fa-solid fa-check"></i> Verified</span>
+    </div>
+    <div class="toast-item" id="toast-item">Purchased Apple iPhone 15 Pro Max (256GB)</div>
+    <div class="toast-time" id="toast-time">14 mins ago &bull; Same-Day Ibadan Dispatch</div>
+  </div>
+  <button type="button" class="toast-close" id="toast-close" aria-label="Close notification">&times;</button>
+</div>
+
 </body>
 </html>

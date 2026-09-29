@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How to Order — KhaylimTech Ventures</title>
+  <title>How to Order | KhaylimTech Ventures</title>
   <link rel="icon" type="image/png" href="/assets/Lightmode_logo.png" id="favicon">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/professional.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0; }
@@ -49,7 +51,26 @@
     @media (max-width: 768px) { .info-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
-<body>
+<body class="has-utility-bar">
+
+<!-- ═══════════════════════════════════
+     TOP UTILITY BAR
+═══════════════════════════════════ -->
+<div class="top-utility-bar">
+  <div class="container top-utility-inner">
+    <div class="top-utility-left">
+      <span class="utility-badge"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Tech</span>
+      <span class="utility-text"><i class="fa-solid fa-truck-fast"></i> Same-Day Doorstep Delivery in Ibadan &bull; Insured Nationwide Shipping</span>
+    </div>
+    <div class="top-utility-right">
+      <span class="utility-item"><i class="fa-solid fa-location-dot"></i> Iwo Road, Ibadan</span>
+      <span class="utility-sep">|</span>
+      <a href="tel:+2348083873316" class="utility-item"><i class="fa-solid fa-phone"></i> 08083873316</a>
+      <span class="utility-sep">|</span>
+      <a href="https://wa.me/2348083873316" target="_blank" class="utility-item whatsapp-link"><i class="fa-brands fa-whatsapp"></i> WhatsApp Sales</a>
+    </div>
+  </div>
+</div>
 
 <nav class="navbar">
   <div class="container nav-inner">
@@ -59,123 +80,199 @@
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/products">All Products</a></li>
-      <li><a href="/phones">Phones</a></li>
-      <li><a href="/laptops">Laptops</a></li>
-      <li><a href="/gaming">Gaming</a></li>
-      <li><a href="/accessories">Accessories</a></li>
+      <li class="nav-dropdown">
+        <a href="/products" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          <span>Catalog</span> <i class="fa-solid fa-chevron-down nav-caret"></i>
+        </a>
+        <div class="nav-dropdown-menu">
+          <div class="nav-dropdown-header">Explore Categories</div>
+          <a href="/phones" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Phones</span>
+              <span class="dropdown-item-desc">iPhones, Samsung & Android</span>
+            </div>
+          </a>
+          <a href="/laptops" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-laptop"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Laptops</span>
+              <span class="dropdown-item-desc">MacBooks, HP & Workstations</span>
+            </div>
+          </a>
+          <a href="/gaming" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Gaming</span>
+              <span class="dropdown-item-desc">PS5, Consoles & Controllers</span>
+            </div>
+          </a>
+          <a href="/accessories" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-headphones"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Accessories</span>
+              <span class="dropdown-item-desc">Audio, Smartwatches & Gear</span>
+            </div>
+          </a>
+          <div class="nav-dropdown-footer">
+            <a href="/products" class="dropdown-footer-link">Browse All Products <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li><a href="/how-to-order" class="active">How to Order</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
+    <div class="nav-search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Search..." aria-label="Search products">
+      <div class="search-dropdown"></div>
+    </div>
     <div class="nav-actions">
-      <button class="nav-btn theme-toggle"><i class="fa-solid fa-sun"></i></button>
+      <button class="nav-btn theme-toggle" aria-label="Toggle color theme"><i class="fa-solid fa-moon"></i></button>
       <a href="/cart" class="nav-btn"><i class="fa-solid fa-bag-shopping"></i><span class="cart-badge">0</span></a>
-      <button class="hamburger"><span></span><span></span><span></span></button>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </div>
   <nav class="mobile-nav">
-    <a href="/">Home</a>
-    <a href="/products">All Products</a>
-    <a href="/phones">📱 Phones</a>
-    <a href="/laptops">💻 Laptops</a>
-    <a href="/gaming">🎮 Gaming</a>
-    <a href="/accessories">🔌 Accessories</a>
-    <a href="/about">ℹ️ About Us</a>
-    <a href="/contact">📩 Contact</a>
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Categories</div>
+    <a href="/phones"><i class="fa-solid fa-mobile-screen-button"></i> Phones</a>
+    <a href="/laptops"><i class="fa-solid fa-laptop"></i> Laptops</a>
+    <a href="/gaming"><i class="fa-solid fa-gamepad"></i> Gaming Consoles</a>
+    <a href="/accessories"><i class="fa-solid fa-headphones"></i> Accessories</a>
+    <a href="/products" style="font-weight:700;color:var(--gold-light)"><i class="fa-solid fa-layer-group"></i> All Products</a>
+    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Company</div>
+    <a href="/how-to-order" class="active"><i class="fa-solid fa-truck-fast"></i> How to Order</a>
+    <a href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a>
+    <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
   </nav>
 </nav>
 
-<div class="page-header">
-  <div class="container">
-    <h1>How to Order</h1>
-    <div class="breadcrumb">
-      <a href="/">Home</a>
-      <i class="fa-solid fa-chevron-right" style="font-size:.65rem"></i>
-      <span>How to Order</span>
+<!-- EDITORIAL HERO -->
+<div class="editorial-catalog-hero reveal">
+  <div class="container hero-inner">
+    <div class="catalog-hero-badge">
+      <i class="fa-solid fa-truck-fast"></i> Seamless Order Process
     </div>
+    <h1 class="catalog-hero-title" style="max-width:820px;text-align:center">
+      How to Order from <span class="gradient-gold-text">KhaylimTech.</span>
+    </h1>
+    <p class="catalog-hero-desc" style="max-width:640px;text-align:center">
+      Simple, transparent, and swift. Choose between rapid same-day doorstep delivery anywhere in Ibadan or visit our physical lounge at Iwo Road.
+    </p>
   </div>
 </div>
 
 <div class="container" style="padding-bottom: 60px;">
 
-  <p style="color:var(--text-muted);font-size:.95rem;margin:32px 0 0;max-width:640px;line-height:1.8">
-    Ordering from KhaylimTech is simple. Browse our store, pick what you love, and reach us via WhatsApp or walk in at our Ibadan store. We'll handle the rest.
-  </p>
-
-  <!-- Steps -->
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div>
-        <h3>Browse & Pick Your Product</h3>
-        <p>Explore our full catalogue on the website. You can filter by category — Phones, Laptops, Gaming, or Accessories — or use the search bar to find something specific. Click any product to view full details and price.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div>
-        <h3>Add to Cart or Chat Directly</h3>
-        <p>Click <strong>Add to Cart</strong> to save items, then proceed to checkout — or skip the cart and click <strong>Order via WhatsApp</strong> on any product page to send us your enquiry instantly. WhatsApp is always the fastest way to confirm availability and negotiate.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div>
-        <h3>Confirm Your Order</h3>
-        <p>Our team will confirm stock availability, your delivery address, and final pricing. For price negotiation, just let us know on WhatsApp — we're always open to a deal.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div>
-        <h3>Make Payment</h3>
-        <p>We accept bank transfer and cash in-store. Payment details will be shared after your order is confirmed. You'll receive a confirmation once payment is received.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div>
-        <h3>Delivery or Pickup</h3>
-        <p>Choose home delivery or pick up at our store in Iwo Road, Ibadan. Deliveries within Ibadan are completed same day or within 24 hours. Orders outside Oyo State are delivered in 1–3 business days via courier.</p>
-      </div>
+  <!-- 5 KEYNOTE STEPS -->
+  <div class="section-header reveal" style="margin-top:40px;margin-bottom:28px">
+    <div>
+      <div style="font-size:0.76rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Step-by-Step Guide</div>
+      <h2 class="section-title">5 Simple <span>Steps</span></h2>
+      <span class="section-line"></span>
     </div>
   </div>
 
-  <!-- Delivery info -->
-  <h2 class="section-title" id="delivery" style="margin-bottom:24px">Delivery <span>Information</span></h2>
-  <div class="info-grid">
+  <div class="keynote-steps-grid reveal-stagger" style="margin-bottom:50px">
+    <div class="keynote-step-card">
+      <div class="keynote-step-number">01</div>
+      <h3 class="keynote-step-title">Browse Verified Catalog</h3>
+      <p class="keynote-step-desc">Explore smartphones, laptops, consoles, and audio gear online with real-time Nigerian Naira pricing and authentic specs.</p>
+    </div>
+    <div class="keynote-step-card">
+      <div class="keynote-step-number">02</div>
+      <h3 class="keynote-step-title">Instant WhatsApp or Cart</h3>
+      <p class="keynote-step-desc">Add items to cart for combined orders, or click <strong>Order via WhatsApp</strong> on any product to connect directly with our sales team.</p>
+    </div>
+    <div class="keynote-step-card">
+      <div class="keynote-step-number">03</div>
+      <h3 class="keynote-step-title">Stock &amp; Pricing Confirmation</h3>
+      <p class="keynote-step-desc">We verify live warehouse inventory, review your order details, confirm your delivery address, and finalize any bundle deals.</p>
+    </div>
+    <div class="keynote-step-card">
+      <div class="keynote-step-number">04</div>
+      <h3 class="keynote-step-title">Secure Payment Verification</h3>
+      <p class="keynote-step-desc">Pay securely via verified official bank transfer or cash during in-store pickup. Official digital receipts provided immediately.</p>
+    </div>
+    <div class="keynote-step-card">
+      <div class="keynote-step-number">05</div>
+      <h3 class="keynote-step-title">Rapid Dispatch or Pickup</h3>
+      <p class="keynote-step-desc">Same-day doorstep delivery within 3 hours across Ibadan, or walk into No 19 Omoola Plaza, Iwo Road. Insured courier nationwide.</p>
+    </div>
+  </div>
+
+  <!-- DELIVERY INFO -->
+  <div class="section-header reveal" id="delivery" style="margin-bottom:28px">
+    <div>
+      <div style="font-size:0.76rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:6px">Logistics &amp; Fulfillment</div>
+      <h2 class="section-title">Delivery &amp; <span>Pickup Options</span></h2>
+      <span class="section-line"></span>
+    </div>
+  </div>
+
+  <div class="info-grid reveal-stagger">
     <div class="info-card">
-      <div class="info-card-icon">🏙️</div>
-      <h3>Within Ibadan</h3>
-      <p>Same-day delivery or within 24 hours. Our rider will contact you before dispatch.</p>
+      <div class="info-card-icon" style="color:var(--gold)"><i class="fa-solid fa-truck-bolt"></i></div>
+      <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:8px">Within Ibadan</h3>
+      <p>Same-day delivery dispatched in under 3 hours to Bodija, UI, Ring Road, Akobo, Oluyole, Jericho, and all surrounding areas. Rider contacts you before arrival.</p>
     </div>
     <div class="info-card">
-      <div class="info-card-icon">🚚</div>
-      <h3>Outside Oyo State</h3>
-      <p>1–3 business days via trusted courier (GIG Logistics / DHL). Tracking number provided after dispatch. Payment must be made before shipment.</p>
+      <div class="info-card-icon" style="color:var(--gold)"><i class="fa-solid fa-plane-departure"></i></div>
+      <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:8px">Outside Oyo State (Nationwide)</h3>
+      <p>1–3 business days via premier insured couriers (GIG Logistics / DHL Express). Real-time tracking code provided immediately upon dispatch.</p>
     </div>
     <div class="info-card">
-      <div class="info-card-icon">🏪</div>
-      <h3>Store Pickup</h3>
-      <p>Pick up for free at No 19, Omoola Plaza, Iwo Road, Ibadan. Open Monday–Saturday 8AM–8PM, Sunday 12PM–6PM.</p>
+      <div class="info-card-icon" style="color:var(--gold)"><i class="fa-solid fa-store"></i></div>
+      <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:8px">Physical Store Pickup</h3>
+      <p>Pick up for free at No 19, Omoola Plaza, Iwo Road, Ibadan. Test, unbox, and verify your device before taking it home. Open Mon–Sat 8AM–8PM, Sun 12PM–6PM.</p>
     </div>
     <div class="info-card">
-      <div class="info-card-icon">💳</div>
-      <h3>Payment Methods</h3>
-      <ul>
-        <li>Bank transfer (details on request)</li>
-        <li>Cash in-store</li>
+      <div class="info-card-icon" style="color:var(--gold)"><i class="fa-solid fa-credit-card"></i></div>
+      <h3 style="font-size:1.1rem;font-weight:800;margin-bottom:8px">Payment Methods</h3>
+      <ul style="padding-left:18px;margin:0;color:var(--text-muted);font-size:0.88rem;line-height:1.7">
+        <li>Official corporate bank transfer (details on confirmation)</li>
+        <li>Cash &amp; POS in-store at Omoola Plaza</li>
+        <li>Zero hidden fees or surprise surcharges</li>
       </ul>
     </div>
   </div>
 
-  <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20place%20an%20order." target="_blank" class="wa-cta">
+  <!-- WhatsApp CTA -->
+  <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20place%20an%20order." target="_blank" class="wa-cta reveal" style="border-radius:20px;box-shadow:0 8px 24px rgba(37,211,102,0.15)">
     <i class="fa-brands fa-whatsapp"></i>
     <div class="wa-cta-text">
-      <h4>Ready to order? Chat with us on WhatsApp</h4>
-      <p>08083873316 — we typically respond within minutes</p>
+      <h4>Ready to order or negotiate? Chat with us on WhatsApp</h4>
+      <p>08083873316 &bull; Direct connection to our Ibadan sales desk</p>
     </div>
   </a>
+
+  <!-- STORE GUARANTEES MATRIX -->
+  <section class="section" style="padding-top:20px;padding-bottom:20px">
+    <div class="store-guarantees-matrix reveal">
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-truck-bolt"></i></div>
+        <h3 class="guarantee-title">Same-Day Ibadan Delivery</h3>
+        <p class="guarantee-desc">Dispatched within 3 hours to Bodija, Ring Road, Akobo, UI, and all environs.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 class="guarantee-title">100% Authentic Tech</h3>
+        <p class="guarantee-desc">Every smartphone, laptop, console, and accessory is genuine and sealed.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h3 class="guarantee-title">7-Day Hassle-Free Returns</h3>
+        <p class="guarantee-desc">Comprehensive warranty protection on all defective items. Total peace of mind.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <h3 class="guarantee-title">Iwo Road Ibadan Hub</h3>
+        <p class="guarantee-desc">Visit No 19 Omoola Plaza to test, verify, and collect your gear in person.</p>
+      </div>
+    </div>
+  </section>
 
 </div>
 
@@ -184,7 +281,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/assets/logo.jpeg" alt="KhaylimTech Logo">
+          <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
           <div class="footer-logo-text"><span>KhaylimTech</span><br><span>Ventures</span></div>
         </div>
         <p>Your one-stop tech destination in Ibadan. We deal in genuine phones, laptops, gaming consoles and accessories at the best prices.</p>
@@ -221,7 +318,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Built with ❤️ in Ibadan.</p>
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Serving Nigeria from Ibadan.</p>
       <div class="social-links">
         <a href="https://www.instagram.com/_khaylimtech7_/" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://www.tiktok.com/@khaylim01" class="social-link" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
@@ -234,14 +331,6 @@
 <script src="/js/data.js"></script>
 <script src="/js/cart.js"></script>
 <script src="/js/app.js"></script>
-<script>
-function handleNewsletter(e) {
-  e.preventDefault();
-  const input = e.target.querySelector("input");
-  if (!input.value.trim()) return;
-  showToast('<i class="fa-solid fa-envelope"></i> <span>Thanks for subscribing!</span>');
-  input.value = "";
-}
-</script>
+<script src="js/auth.js"></script>
 </body>
 </html>

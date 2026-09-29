@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ — KhaylimTech Ventures</title>
+  <title>FAQ | KhaylimTech Ventures</title>
   <link rel="icon" type="image/png" href="/assets/Lightmode_logo.png" id="favicon">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/professional.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     .faq-section { margin: 40px 0 60px; }
@@ -14,25 +16,40 @@
     .faq-item {
       background: var(--bg-card); border: 1px solid var(--border);
       border-radius: 14px; margin-bottom: 12px; overflow: hidden;
-      transition: border-color 0.2s;
     }
-    .faq-item.open { border-color: var(--gold); }
     .faq-q {
       display: flex; align-items: center; justify-content: space-between;
       padding: 18px 20px; cursor: pointer; gap: 16px;
       font-size: 0.92rem; font-weight: 600; color: var(--text-heading);
     }
-    .faq-q i { color: var(--gold); flex-shrink: 0; transition: transform 0.3s; }
+    .faq-q i { color: var(--gold); flex-shrink: 0; }
     .faq-item.open .faq-q i { transform: rotate(45deg); }
     .faq-a {
-      display: none; padding: 0 20px 18px;
       font-size: 0.87rem; color: var(--text-muted); line-height: 1.8;
     }
     .faq-a a { color: var(--gold); }
-    .faq-item.open .faq-a { display: block; }
   </style>
 </head>
-<body>
+<body class="has-utility-bar">
+
+<!-- ═══════════════════════════════════
+     TOP UTILITY BAR
+═══════════════════════════════════ -->
+<div class="top-utility-bar">
+  <div class="container top-utility-inner">
+    <div class="top-utility-left">
+      <span class="utility-badge"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Tech</span>
+      <span class="utility-text"><i class="fa-solid fa-truck-fast"></i> Same-Day Doorstep Delivery in Ibadan &bull; Insured Nationwide Shipping</span>
+    </div>
+    <div class="top-utility-right">
+      <span class="utility-item"><i class="fa-solid fa-location-dot"></i> Iwo Road, Ibadan</span>
+      <span class="utility-sep">|</span>
+      <a href="tel:+2348083873316" class="utility-item"><i class="fa-solid fa-phone"></i> 08083873316</a>
+      <span class="utility-sep">|</span>
+      <a href="https://wa.me/2348083873316" target="_blank" class="utility-item whatsapp-link"><i class="fa-brands fa-whatsapp"></i> WhatsApp Sales</a>
+    </div>
+  </div>
+</div>
 
 <nav class="navbar">
   <div class="container nav-inner">
@@ -42,184 +59,250 @@
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/products">All Products</a></li>
-      <li><a href="/phones">Phones</a></li>
-      <li><a href="/laptops">Laptops</a></li>
-      <li><a href="/gaming">Gaming</a></li>
-      <li><a href="/accessories">Accessories</a></li>
+      <li class="nav-dropdown">
+        <a href="/products" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          <span>Catalog</span> <i class="fa-solid fa-chevron-down nav-caret"></i>
+        </a>
+        <div class="nav-dropdown-menu">
+          <div class="nav-dropdown-header">Explore Categories</div>
+          <a href="/phones" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Phones</span>
+              <span class="dropdown-item-desc">iPhones, Samsung & Android</span>
+            </div>
+          </a>
+          <a href="/laptops" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-laptop"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Laptops</span>
+              <span class="dropdown-item-desc">MacBooks, HP & Workstations</span>
+            </div>
+          </a>
+          <a href="/gaming" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Gaming</span>
+              <span class="dropdown-item-desc">PS5, Consoles & Controllers</span>
+            </div>
+          </a>
+          <a href="/accessories" class="nav-dropdown-item">
+            <div class="dropdown-item-icon"><i class="fa-solid fa-headphones"></i></div>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-title">Accessories</span>
+              <span class="dropdown-item-desc">Audio, Smartwatches & Gear</span>
+            </div>
+          </a>
+          <div class="nav-dropdown-footer">
+            <a href="/products" class="dropdown-footer-link">Browse All Products <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </li>
+      <li><a href="/how-to-order">How to Order</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
+    <div class="nav-search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Search..." aria-label="Search products">
+      <div class="search-dropdown"></div>
+    </div>
     <div class="nav-actions">
-      <button class="nav-btn theme-toggle"><i class="fa-solid fa-sun"></i></button>
+      <button class="nav-btn theme-toggle" aria-label="Toggle color theme"><i class="fa-solid fa-moon"></i></button>
       <a href="/cart" class="nav-btn"><i class="fa-solid fa-bag-shopping"></i><span class="cart-badge">0</span></a>
-      <button class="hamburger"><span></span><span></span><span></span></button>
+      <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </div>
   <nav class="mobile-nav">
-    <a href="/">Home</a>
-    <a href="/products">All Products</a>
-    <a href="/phones">📱 Phones</a>
-    <a href="/laptops">💻 Laptops</a>
-    <a href="/gaming">🎮 Gaming</a>
-    <a href="/accessories">🔌 Accessories</a>
-    <a href="/about">ℹ️ About Us</a>
-    <a href="/contact">📩 Contact</a>
+    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Categories</div>
+    <a href="/phones"><i class="fa-solid fa-mobile-screen-button"></i> Phones</a>
+    <a href="/laptops"><i class="fa-solid fa-laptop"></i> Laptops</a>
+    <a href="/gaming"><i class="fa-solid fa-gamepad"></i> Gaming Consoles</a>
+    <a href="/accessories"><i class="fa-solid fa-headphones"></i> Accessories</a>
+    <a href="/products" style="font-weight:700;color:var(--gold-light)"><i class="fa-solid fa-layer-group"></i> All Products</a>
+    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Company</div>
+    <a href="/how-to-order"><i class="fa-solid fa-truck-fast"></i> How to Order</a>
+    <a href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a>
+    <a href="/contact"><i class="fa-solid fa-envelope"></i> Contact</a>
   </nav>
 </nav>
 
-<div class="page-header">
-  <div class="container">
-    <h1>Frequently Asked Questions</h1>
-    <div class="breadcrumb">
-      <a href="/">Home</a>
-      <i class="fa-solid fa-chevron-right" style="font-size:.65rem"></i>
-      <span>FAQ</span>
+<!-- EDITORIAL HERO -->
+<div class="editorial-catalog-hero reveal">
+  <div class="container hero-inner">
+    <div class="catalog-hero-badge">
+      <i class="fa-solid fa-circle-question"></i> Help &amp; Support Hub
     </div>
+    <h1 class="catalog-hero-title" style="max-width:800px;text-align:center">
+      Frequently Asked <span class="gradient-gold-text">Questions.</span>
+    </h1>
+    <p class="catalog-hero-desc" style="max-width:640px;text-align:center">
+      Everything you need to know about our verified hardware sourcing, same-day Ibadan delivery, 7-day warranty policies, and physical showroom collection.
+    </p>
   </div>
 </div>
 
-<div class="container">
-  <p style="color:var(--text-muted);font-size:.95rem;margin:32px 0 0;max-width:640px;line-height:1.8">
-    Can't find your answer here? <a href="/contact" style="color:var(--gold)">Contact us</a> or send a message on <a href="https://wa.me/2348083873316" target="_blank" style="color:#25D366">WhatsApp</a> — we respond fast.
+<div class="container" style="max-width:920px;padding-bottom:60px">
+  <p class="reveal" style="color:var(--text-muted);font-size:.95rem;margin:36px 0 28px;text-align:center;line-height:1.8">
+    Can't find what you're looking for? <a href="/contact" style="color:var(--gold);font-weight:600">Contact our support desk</a> or message us directly on <a href="https://wa.me/2348083873316" target="_blank" style="color:#25D366;font-weight:600"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> — we respond within minutes.
   </p>
 
   <!-- Ordering -->
-  <div class="faq-section">
-    <h2>🛒 Ordering</h2>
+  <div class="faq-section reveal">
+    <div style="font-size:0.76rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Section 01</div>
+    <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-heading);margin-bottom:16px">🛒 Ordering &amp; Pricing</h2>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        How do I place an order?
+        How do I place an order on KhaylimTech?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">Browse our products, click <strong>Order via WhatsApp</strong> on any product page, and we'll confirm your order in minutes. You can also <a href="/how-to-order">read our full ordering guide</a> for step-by-step instructions.</div>
+      <div class="faq-a">Browse our products, click <strong>Order via WhatsApp</strong> on any product page, and we'll confirm your order in minutes. You can also add multiple items to your cart and proceed with instant WhatsApp checkout. For a complete walkthrough, see our <a href="/how-to-order">How to Order Guide</a>.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        Can I negotiate the price?
+        Can I negotiate prices or request bulk discounts?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">Yes! We're open to reasonable price discussions, especially for bulk orders. Send us a WhatsApp message with the product and your offer and we'll do our best to work something out.</div>
+      <div class="faq-a">Yes! We are open to reasonable price discussions, especially for multiple device purchases, bundle deals, or corporate tech procurement. Reach out to our WhatsApp sales line with your offer and we'll do our best to work out a competitive deal.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        How do I know if a product is available?
+        How do I verify real-time stock availability?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">Products marked <strong>In Stock</strong> on the website are available. However stock can change quickly — always confirm via WhatsApp before making payment to be sure.</div>
+      <div class="faq-a">Items marked <strong>In Stock</strong> on the website are active in our inventory. Because high-demand flagships sell rapidly, our WhatsApp concierge will confirm serials, storage tiers, and exact colors for you immediately before payment.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        Can I order by phone call?
+        Can I order via direct telephone call?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">Yes. Call or WhatsApp us on <strong>08083873316</strong>. WhatsApp is preferred as it allows us to share product photos and confirm details in writing.</div>
+      <div class="faq-a">Yes, call us directly on <strong>08083873316</strong>. However, WhatsApp is recommended as it allows us to share device unboxing clips, IMEI/serial verifications, and digital invoices.</div>
+    </div>
+  </div>
+
+  <!-- Delivery -->
+  <div class="faq-section reveal">
+    <div style="font-size:0.76rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Section 02</div>
+    <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-heading);margin-bottom:16px">🚚 Delivery &amp; Pickup Logistics</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        How fast is delivery within Ibadan?
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <div class="faq-a">
+        <strong>Within Ibadan:</strong> Same day, dispatched in under 3 hours to Bodija, UI, Ring Road, Akobo, Oluyole, Jericho, and all environs. Our dispatch rider will contact you prior to arrival.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Do you deliver outside Oyo State across Nigeria?
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <div class="faq-a">
+        Yes! We deliver nationwide to Lagos, Abuja, Port Harcourt, Enugu, Kano, and all 36 states via insured couriers (GIG Logistics and DHL Express). Delivery takes 1–3 business days, and real-time tracking is provided upon dispatch.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can I test and pick up my order at your store?
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <div class="faq-a">
+        Absolutely. You are welcome to visit our physical showroom at <strong>No 19, Omoola Plaza, Iwo Road, Ibadan</strong>. You can inspect the packaging, test battery health, and verify camera quality before completing payment.
+      </div>
     </div>
   </div>
 
   <!-- Payment -->
-  <div class="faq-section">
-    <h2>💳 Payment</h2>
+  <div class="faq-section reveal">
+    <div style="font-size:0.76rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Section 03</div>
+    <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-heading);margin-bottom:16px">💳 Payments &amp; Security</h2>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
         What payment methods do you accept?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">We accept bank transfer and cash in-store. Bank details are shared after your order is confirmed.</div>
+      <div class="faq-a">We accept bank transfer and cash/POS in-store at Omoola Plaza. Official business accounts are shared after order confirmation.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        Do I pay before or after delivery?
+        Is it safe to pay via bank transfer?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">Payment must be made before delivery for all orders. For orders outside Oyo State, payment must be completed before we dispatch your item.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Is it safe to pay by bank transfer?
-        <i class="fa-solid fa-plus"></i>
-      </div>
-      <div class="faq-a">Yes. We provide our official account details only through our verified WhatsApp number (08083873316). Always confirm the account name before sending any payment.</div>
+      <div class="faq-a">Yes. We provide official business account credentials exclusively through our verified WhatsApp sales desk (08083873316). Always verify the account name before transfer.</div>
     </div>
   </div>
 
-  <!-- Delivery -->
-  <div class="faq-section">
-    <h2>🚚 Delivery</h2>
+  <!-- Products & Authenticity -->
+  <div class="faq-section reveal">
+    <div style="font-size:0.76rem;font-weight:800;letter-spacing:0.08em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Section 04</div>
+    <h2 style="font-size:1.35rem;font-weight:800;color:var(--text-heading);margin-bottom:16px">🛡️ Authenticity &amp; Warranty</h2>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        How long does delivery take?
+        Are all devices 100% original and genuine?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">
-        <strong>Within Ibadan:</strong> Same day or within 24 hours.<br>
-        <strong>Outside Oyo State:</strong> 1–3 business days via courier (GIG Logistics / DHL).<br>
-        You'll receive a tracking number once your order is dispatched.
-      </div>
+      <div class="faq-a">100% yes. We do not deal in refurbished, cloned, or second-rate replicas. All electronics come factory-sealed in their original manufacturer packaging with full warranty documentation.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        Do you deliver nationwide?
+        What is your return policy on defective items?
         <i class="fa-solid fa-plus"></i>
       </div>
-      <div class="faq-a">Yes, we deliver to all states in Nigeria. Shipping cost depends on your location and will be confirmed before payment.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Can I pick up my order from the store?
-        <i class="fa-solid fa-plus"></i>
-      </div>
-      <div class="faq-a">Absolutely. Walk in or confirm via WhatsApp first. We're at No 19, Omoola Plaza, Iwo Road, Ibadan. Open Monday–Saturday 8AM–8PM, Sunday 12PM–6PM.</div>
+      <div class="faq-a">We provide a comprehensive <strong>7-day replacement guarantee</strong> for any factory defect. Contact us via WhatsApp with photos or videos, and we will swap or repair the unit promptly.</div>
     </div>
   </div>
 
-  <!-- Products -->
-  <div class="faq-section">
-    <h2>📦 Products & Authenticity</h2>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Are your products original / genuine?
-        <i class="fa-solid fa-plus"></i>
-      </div>
-      <div class="faq-a">Yes. 100% authentic products only. We do not sell clones, refurbished units, or counterfeit goods. All items come with their original box and accessories unless stated otherwise.</div>
+  <!-- Support Card -->
+  <div class="reveal" style="text-align:center;padding:48px 24px;background:var(--bg-card);border:1px solid var(--border-card);border-radius:24px;margin:40px 0 60px;box-shadow:0 12px 32px rgba(0,0,0,0.04)">
+    <div style="width:64px;height:64px;border-radius:50%;background:rgba(201,162,39,0.12);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:16px">
+      <i class="fa-solid fa-headset"></i>
     </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        Do products come with warranty?
-        <i class="fa-solid fa-plus"></i>
-      </div>
-      <div class="faq-a">Yes. Most products come with the manufacturer's standard warranty. Warranty duration varies by product — confirm with us on WhatsApp for specific items.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        What if I receive a faulty or wrong item?
-        <i class="fa-solid fa-plus"></i>
-      </div>
-      <div class="faq-a">Contact us immediately on WhatsApp with a photo or video of the issue. Defective items can be returned within 7 days of delivery for exchange or repair (T&Cs apply). We do not accept returns for buyer's remorse.</div>
-    </div>
-  </div>
-
-  <div style="text-align:center;padding:40px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;margin-bottom:60px">
-    <div style="font-size:2rem;margin-bottom:12px">💬</div>
-    <h3 style="color:var(--text-heading);margin-bottom:8px">Still have questions?</h3>
-    <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:20px">We're happy to help. Reach us on WhatsApp anytime.</p>
-    <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20have%20a%20question." target="_blank" class="btn-gold" style="display:inline-flex;gap:8px;align-items:center">
-      <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+    <h3 style="color:var(--text-heading);font-size:1.4rem;font-weight:800;margin-bottom:8px">Still have questions?</h3>
+    <p style="color:var(--text-muted);font-size:.92rem;max-width:480px;margin:0 auto 24px;line-height:1.6">Our Ibadan tech team is always available to assist with specs, availability, and delivery arrangements.</p>
+    <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20have%20a%20question." target="_blank" class="btn-detail-wa" style="display:inline-flex;max-width:260px;text-decoration:none">
+      <i class="fa-brands fa-whatsapp" style="font-size:1.2rem"></i> Chat on WhatsApp
     </a>
   </div>
+
+  <!-- STORE GUARANTEES MATRIX -->
+  <section class="section" style="padding-top:0;padding-bottom:20px">
+    <div class="store-guarantees-matrix reveal">
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-truck-bolt"></i></div>
+        <h3 class="guarantee-title">Same-Day Ibadan Delivery</h3>
+        <p class="guarantee-desc">Dispatched within 3 hours to Bodija, Ring Road, Akobo, UI, and all environs.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3 class="guarantee-title">100% Authentic Tech</h3>
+        <p class="guarantee-desc">Every smartphone, laptop, console, and accessory is genuine and sealed.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h3 class="guarantee-title">7-Day Hassle-Free Returns</h3>
+        <p class="guarantee-desc">Comprehensive warranty protection on all defective items. Total peace of mind.</p>
+      </div>
+      <div class="guarantee-card">
+        <div class="guarantee-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <h3 class="guarantee-title">Iwo Road Ibadan Hub</h3>
+        <p class="guarantee-desc">Visit No 19 Omoola Plaza to test, verify, and collect your gear in person.</p>
+      </div>
+    </div>
+  </section>
 </div>
 
 <footer class="footer">
@@ -227,7 +310,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
-          <img src="/assets/logo.jpeg" alt="KhaylimTech Logo">
+          <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
           <div class="footer-logo-text"><span>KhaylimTech</span><br><span>Ventures</span></div>
         </div>
         <p>Your one-stop tech destination in Ibadan. We deal in genuine phones, laptops, gaming consoles and accessories at the best prices.</p>
@@ -264,7 +347,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Built with ❤️ in Ibadan.</p>
+      <p>&copy; 2026 <span>KhaylimTech Ventures</span>. All rights reserved. Serving Nigeria from Ibadan.</p>
       <div class="social-links">
         <a href="https://www.instagram.com/_khaylimtech7_/" class="social-link" title="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
         <a href="https://www.tiktok.com/@khaylim01" class="social-link" title="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
@@ -277,19 +360,13 @@
 <script src="/js/data.js"></script>
 <script src="/js/cart.js"></script>
 <script src="/js/app.js"></script>
+<script src="js/auth.js"></script>
 <script>
 function toggleFaq(el) {
   const item = el.closest(".faq-item");
   const isOpen = item.classList.contains("open");
   document.querySelectorAll(".faq-item.open").forEach(i => i.classList.remove("open"));
   if (!isOpen) item.classList.add("open");
-}
-function handleNewsletter(e) {
-  e.preventDefault();
-  const input = e.target.querySelector("input");
-  if (!input.value.trim()) return;
-  showToast('<i class="fa-solid fa-envelope"></i> <span>Thanks for subscribing!</span>');
-  input.value = "";
 }
 </script>
 </body>

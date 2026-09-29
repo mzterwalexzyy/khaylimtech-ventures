@@ -1,0 +1,810 @@
+/* =========================================
+   KhaylimTech — Animation & Enhancement Layer
+   Loaded after style.css and responsive.css
+   ========================================= */
+
+/* ─── 1. SCROLL REVEAL ENGINE ─────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered grid children */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger.visible > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger.visible > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger.visible > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger.visible > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger.visible > *:nth-child(6) { transition-delay: 400ms; }
+.reveal-stagger.visible > *:nth-child(7) { transition-delay: 480ms; }
+.reveal-stagger.visible > *:nth-child(8) { transition-delay: 560ms; }
+
+.reveal-stagger.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── 2. HERO BLUR-FADE ENTRANCE ──────────────────── */
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+.hero-content-wrap {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(24px);
+  /* JS adds the transition on load — avoids flash */
+}
+
+.hero-content-wrap.revealed {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s ease,
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── 3. HERO GLOW BLOB ──────────────────────────── */
+@keyframes blobFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+  50%       { transform: translateX(-50%) translateY(-18px) scale(1.04); }
+}
+
+.hero-glow-blob {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 380px;
+  background: radial-gradient(ellipse, rgba(201,162,39,0.18) 0%, rgba(249,115,22,0.08) 50%, transparent 70%);
+  filter: blur(80px);
+  border-radius: 100%;
+  pointer-events: none;
+  z-index: 1;
+  animation: blobFloat 9s ease-in-out infinite;
+}
+
+[data-theme="dark"] .hero-glow-blob {
+  background: radial-gradient(ellipse, rgba(201,162,39,0.28) 0%, rgba(249,115,22,0.12) 50%, transparent 70%);
+}
+
+/* ─── 4. NAVBAR SCROLL TRANSITION ───────────────── */
+.navbar {
+  transition: background 0.35s ease, backdrop-filter 0.35s ease,
+              box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.navbar.nav-scrolled {
+  background: rgba(13, 13, 18, 0.97) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .navbar.nav-scrolled {
+  background: rgba(255, 255, 255, 0.97) !important;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ─── 5. NAV BUTTON ICON MICRO-INTERACTION ───────── */
+.nav-btn {
+  transition: border-color 0.2s, color 0.2s, transform 0.18s ease, box-shadow 0.2s;
+}
+
+.nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.2);
+}
+
+.nav-btn i {
+  transition: transform 0.2s ease;
+}
+
+.nav-btn:hover i {
+  transform: scale(1.15);
+}
+
+/* Theme toggle spin */
+.theme-toggle i.icon-swap {
+  animation: iconSpin 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes iconSpin {
+  from { transform: rotate(-90deg) scale(0.5); opacity: 0; }
+  to   { transform: rotate(0deg) scale(1);    opacity: 1; }
+}
+
+/* ─── 6. PRODUCT CARD ENHANCEMENTS ──────────────── */
+.product-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.product-card:hover {
+  border-color: var(--gold) !important;
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(201, 162, 39, 0.18),
+              0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.product-img-wrap img,
+.product-img-wrap video {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover .product-img-wrap img,
+.product-card:hover .product-img-wrap video {
+  transform: scale(1.07);
+}
+
+/* Add-to-cart button hover */
+.product-add-btn {
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s ease;
+}
+
+.product-add-btn:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(201, 162, 39, 0.4);
+}
+
+/* ─── 7. CATEGORY CARD ENHANCEMENTS ─────────────── */
+.cat-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.cat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(201, 162, 39, 0.15);
+}
+
+.cat-icon {
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cat-card:hover .cat-icon {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+/* ─── 8. TRUST STRIP MARQUEE ─────────────────────── */
+.trust-strip {
+  overflow: hidden;
+}
+
+.trust-inner {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+  justify-content: flex-start !important;
+  width: max-content;
+  animation: trustMarquee 28s linear infinite;
+}
+
+.trust-inner:hover {
+  animation-play-state: paused;
+}
+
+.trust-item {
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding: 0 32px;
+}
+
+/* Divider between trust items */
+.trust-item + .trust-item {
+  border-left: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+@keyframes trustMarquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── 9. PROMO BANNER PULSE ──────────────────────── */
+@keyframes promoBorderPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.0),
+                          inset 0 0 0 1px rgba(201,162,39,0.2); }
+  50%       { box-shadow: 0 0 28px 4px rgba(201, 162, 39, 0.12),
+                          inset 0 0 0 1px rgba(201,162,39,0.4); }
+}
+
+.promo-banner {
+  animation: promoBorderPulse 4s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.promo-banner:hover {
+  animation-play-state: paused;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(201, 162, 39, 0.2) !important;
+}
+
+/* Animated inner glow blob on promo */
+.promo-banner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -80px;
+  transform: translateY(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(201,162,39,0.1), transparent 70%);
+  border-radius: 100%;
+  animation: blobFloat 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ─── 10. PAGE HEADER ENHANCEMENTS ──────────────── */
+.page-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: 10%;
+  width: 320px;
+  height: 240px;
+  background: radial-gradient(ellipse, rgba(201,162,39,0.1) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  border-radius: 100%;
+}
+
+.page-header h1 {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── 11. FOOTER SOCIAL LINKS ──────────────────── */
+.social-link {
+  transition: color 0.2s, border-color 0.2s, background 0.2s,
+              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 6px 16px rgba(201, 162, 39, 0.25);
+}
+
+/* Newsletter input glow */
+.newsletter-form input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Newsletter submit button */
+.newsletter-form button {
+  transition: background 0.2s, transform 0.15s ease, box-shadow 0.2s;
+}
+
+.newsletter-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35);
+}
+
+/* ─── 12. CART ITEM ENTRANCE ─────────────────────── */
+@keyframes cartItemIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.cart-item {
+  animation: cartItemIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.cart-item:hover {
+  border-color: rgba(201, 162, 39, 0.4) !important;
+  box-shadow: 0 4px 20px rgba(201, 162, 39, 0.08);
+}
+
+/* Stagger cart items */
+.cart-item:nth-child(1) { animation-delay: 0ms; }
+.cart-item:nth-child(2) { animation-delay: 60ms; }
+.cart-item:nth-child(3) { animation-delay: 120ms; }
+.cart-item:nth-child(4) { animation-delay: 180ms; }
+.cart-item:nth-child(5) { animation-delay: 240ms; }
+
+/* Cart summary glow */
+.cart-summary {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.cart-summary:hover {
+  border-color: rgba(201, 162, 39, 0.35);
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.1);
+}
+
+/* Checkout button enhanced */
+.checkout-btn {
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.checkout-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.checkout-btn:hover::after {
+  opacity: 1;
+}
+
+.checkout-btn:hover {
+  box-shadow: 0 8px 28px rgba(201, 162, 39, 0.45);
+  transform: translateY(-2px);
+}
+
+/* ─── 13. FAQ ACCORDION SMOOTH ANIMATION ────────── */
+.faq-a {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s ease,
+              padding 0.3s ease;
+  padding: 0 20px !important;
+  display: block !important; /* override the old display:none */
+}
+
+.faq-item.open .faq-a {
+  max-height: 600px;
+  opacity: 1;
+  padding: 0 20px 18px !important;
+}
+
+.faq-item {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.faq-item.open {
+  border-color: var(--gold) !important;
+  box-shadow: 0 4px 24px rgba(201, 162, 39, 0.1);
+}
+
+.faq-q i {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s;
+  flex-shrink: 0;
+}
+
+.faq-item:not(.open) .faq-q:hover {
+  color: var(--gold);
+}
+
+/* ─── 14. DETAIL PAGE ENHANCEMENTS ──────────────── */
+.detail-img-main {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.detail-img-main:hover {
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.15);
+  transform: scale(1.01);
+}
+
+.detail-thumb {
+  transition: border-color 0.2s, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.detail-thumb:hover {
+  transform: scale(1.08);
+}
+
+/* Product meta badges (delivery/authentic/returns) */
+.detail-meta-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.detail-meta-row:hover {
+  background: rgba(201, 162, 39, 0.06);
+  color: var(--text);
+}
+
+.detail-meta-row i {
+  color: var(--gold);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.detail-meta-row:hover i {
+  transform: scale(1.2);
+}
+
+/* Add to cart button pulse when added */
+.btn-add-cart.added {
+  animation: addedPulse 0.4s ease;
+}
+
+@keyframes addedPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.2); }
+  100% { transform: scale(1); }
+}
+
+/* ─── 15. SIDEBAR CARD ENHANCEMENTS ─────────────── */
+.sidebar-card {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar-card:hover {
+  border-color: rgba(201, 162, 39, 0.3);
+  box-shadow: 0 4px 16px rgba(201, 162, 39, 0.06);
+}
+
+/* ─── 16. LIVE PING DOT ──────────────────────────── */
+@keyframes pingDot {
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+.ping-dot-outer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ping-dot-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  opacity: 0.7;
+  animation: pingDot 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.ping-dot-core {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── 17. SECTION HEADER ENHANCED ───────────────── */
+.section-title {
+  transition: color 0.2s;
+}
+
+.view-all {
+  transition: gap 0.25s ease, color 0.2s, transform 0.2s ease;
+}
+
+.view-all:hover {
+  gap: 10px;
+  transform: translateX(2px);
+}
+
+/* ─── 18. WHATSAPP BUBBLE TOOLTIP ───────────────── */
+#wa-bubble .wa-tooltip {
+  transition: opacity 0.25s ease, transform 0.25s ease !important;
+  transform: translateX(6px);
+}
+
+#wa-bubble:hover .wa-tooltip {
+  opacity: 1 !important;
+  transform: translateX(0);
+}
+
+/* ─── 19. SEARCH DROPDOWN ANIMATION ─────────────── */
+.search-dropdown {
+  transform-origin: top center;
+}
+
+.search-dropdown.open {
+  animation: dropdownOpen 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownOpen {
+  from { opacity: 0; transform: scaleY(0.92) translateY(-6px); }
+  to   { opacity: 1; transform: scaleY(1) translateY(0); }
+}
+
+.search-result-item {
+  transition: background 0.15s, transform 0.15s ease;
+}
+
+.search-result-item:hover {
+  transform: translateX(3px);
+}
+
+/* ─── 20. MOBILE NAV SLIDE-IN ────────────────────── */
+.mobile-nav {
+  transform-origin: top center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.mobile-nav:not(.open) {
+  display: none;
+}
+
+.mobile-nav.open {
+  animation: mobileNavOpen 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes mobileNavOpen {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-nav a {
+  transition: background 0.2s, color 0.2s, transform 0.15s ease, padding-left 0.2s ease;
+}
+
+.mobile-nav a:hover {
+  padding-left: 20px !important;
+}
+
+/* ─── 21. EMPTY CART ANIMATION ───────────────────── */
+.empty-cart i {
+  animation: emptyBounce 2.5s ease-in-out infinite;
+}
+
+@keyframes emptyBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ─── 22. TOAST SLIDE ENHANCEMENT ───────────────── */
+.toast {
+  animation: slideInToast 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+             fadeOutToast 0.3s ease 2.5s forwards !important;
+}
+
+/* ─── 23. BTN GOLD ENHANCEMENTS ──────────────────── */
+.btn-gold {
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.btn-gold:hover::after { opacity: 1; }
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201, 162, 39, 0.45);
+}
+
+/* ─── 24. REDUCED MOTION SAFETY ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .hero-content-wrap,
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+
+  .trust-inner {
+    animation: none !important;
+  }
+
+  .promo-banner {
+    animation: none !important;
+  }
+}
+
+/* ─── 25. PINNED CATALOG / ITEMS LAYOUT ────────────
+   Navbar, "All Products" Title, and Filters Nav stay permanently fixed;
+   ONLY the items (and their scrollable container) scroll.
+   Applies to All Products, Phones, Laptops, Gaming, Accessories.
+   ────────────────────────────────────────────────── */
+@media (min-width: 769px) {
+  /* Viewport lock on desktop items/catalog pages */
+  body.catalog-page {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px; /* navbar height */
+  }
+
+  /* Fixed navbar */
+  body.catalog-page .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    transform: none;
+    border-radius: 0;
+    height: 80px;
+    z-index: 100;
+  }
+
+  /* Permanently pinned compact page header directly under navbar */
+  body.catalog-page .page-header {
+    flex-shrink: 0;
+    padding: 12px 0;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 50;
+  }
+
+  body.catalog-page .page-header h1 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  /* Viewport wrapper fills remaining 100vh height */
+  body.catalog-page .catalog-viewport {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  body.catalog-page .products-container {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  body.catalog-page .products-layout {
+    display: flex;
+    gap: 28px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  /* Filters sidebar: stays permanently pinned on left */
+  body.catalog-page .sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 6px 40px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  body.catalog-page .sidebar::-webkit-scrollbar {
+    width: 5px;
+  }
+  body.catalog-page .sidebar::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+  }
+
+  /* Items area: THIS IS THE ONLY AREA THAT SCROLLS */
+  body.catalog-page .products-main {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 16px 40px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) transparent;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+  }
+
+  body.catalog-page .products-main::-webkit-scrollbar {
+    width: 7px;
+  }
+  body.catalog-page .products-main::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+  body.catalog-page .products-main::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 4px;
+  }
+
+  /* Toolbar sticks at top of items container */
+  body.catalog-page .products-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Product grid column responsive inside pinned layout */
+  @media (min-width: 1300px) {
+    body.catalog-page .product-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1299px) {
+    body.catalog-page .product-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+
+  /* Footer inside items scroll at the end of products */
+  body.catalog-page .products-main .footer {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+  body.catalog-page {
+    padding-top: 70px;
+  }
+  body.catalog-page .navbar {
+    height: 70px;
+  }
+}
