@@ -26,6 +26,21 @@ window.onFirebaseReady = () => {
 };
 
 function updatePillCounts() {
+  const phCount = PRODUCTS.filter(p => p.category === "phones").length;
+  const lpCount = PRODUCTS.filter(p => p.category === "laptops").length;
+  const gmCount = PRODUCTS.filter(p => p.category === "gaming").length;
+  const acCount = PRODUCTS.filter(p => p.category === "accessories").length;
+
+  const cntPh = document.querySelector("#cnt-phones");
+  const cntLp = document.querySelector("#cnt-laptops");
+  const cntGm = document.querySelector("#cnt-gaming");
+  const cntAc = document.querySelector("#cnt-accessories");
+
+  if (cntPh) cntPh.textContent = phCount;
+  if (cntLp) cntLp.textContent = lpCount;
+  if (cntGm) cntGm.textContent = gmCount;
+  if (cntAc) cntAc.textContent = acCount;
+
   const allEl = document.querySelector("#pill-all-count");
   const phEl  = document.querySelector("#pill-phones-count");
   const lpEl  = document.querySelector("#pill-laptops-count");
@@ -33,10 +48,10 @@ function updatePillCounts() {
   const acEl  = document.querySelector("#pill-accessories-count");
 
   if (allEl) allEl.textContent = PRODUCTS.length;
-  if (phEl)  phEl.textContent  = PRODUCTS.filter(p => p.category === "phones").length;
-  if (lpEl)  lpEl.textContent  = PRODUCTS.filter(p => p.category === "laptops").length;
-  if (gmEl)  gmEl.textContent  = PRODUCTS.filter(p => p.category === "gaming").length;
-  if (acEl)  acEl.textContent  = PRODUCTS.filter(p => p.category === "accessories").length;
+  if (phEl)  phEl.textContent  = phCount;
+  if (lpEl)  lpEl.textContent  = lpCount;
+  if (gmEl)  gmEl.textContent  = gmCount;
+  if (acEl)  acEl.textContent  = acCount;
 }
 
 function loadFromURL() {
@@ -48,9 +63,15 @@ function loadFromURL() {
   if (cat) {
     activeCategories = [cat];
     const cb = document.querySelector(`.filter-option input[value="${cat}"]`);
-    if (cb) cb.checked = true;
+    if (cb) {
+      cb.checked = true;
+      cb.closest(".filter-cat-item")?.classList.add("is-selected");
+    }
 
-    // Update active pill button
+    const clearBtn = document.querySelector("#clear-categories-btn");
+    if (clearBtn) clearBtn.style.display = "inline-block";
+
+    // Update active pill button if present
     document.querySelectorAll(".cat-pill-btn").forEach(btn => {
       btn.classList.toggle("active", btn.getAttribute("data-cat") === cat);
     });
@@ -210,6 +231,21 @@ function initToolbar() {
 }
 
 function initFilters() {
+  const updateCatSelectionUI = () => {
+    document.querySelectorAll(".filter-cat-item").forEach(item => {
+      const cb = item.querySelector("input[type='checkbox']");
+      if (cb && cb.checked) {
+        item.classList.add("is-selected");
+      } else {
+        item.classList.remove("is-selected");
+      }
+    });
+    const clearBtn = document.querySelector("#clear-categories-btn");
+    if (clearBtn) {
+      clearBtn.style.display = activeCategories.length > 0 ? "inline-block" : "none";
+    }
+  };
+
   // Category checkboxes
   document.querySelectorAll(".filter-option input[type='checkbox']:not(#filter-instock)").forEach(cb => {
     cb.addEventListener("change", () => {
@@ -217,15 +253,21 @@ function initFilters() {
         document.querySelectorAll(".filter-option input[type='checkbox']:not(#filter-instock):checked")
       ).map(el => el.value);
 
-      // Sync quick switcher pill buttons
+      updateCatSelectionUI();
+
+      if (activeCategories.length === 1) {
+        updateCategoryHero(activeCategories[0]);
+      } else {
+        updateCategoryHero("all");
+      }
+
+      // Sync quick switcher pill buttons if any
       document.querySelectorAll(".cat-pill-btn").forEach(btn => {
         const cat = btn.getAttribute("data-cat");
         if (activeCategories.length === 1 && activeCategories[0] === cat) {
           btn.classList.add("active");
-          updateCategoryHero(cat);
         } else if (activeCategories.length === 0 && cat === "all") {
           btn.classList.add("active");
-          updateCategoryHero("all");
         } else {
           btn.classList.remove("active");
         }
@@ -234,6 +276,19 @@ function initFilters() {
       renderProducts();
     });
   });
+
+  const clearBtn = document.querySelector("#clear-categories-btn");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      activeCategories = [];
+      document.querySelectorAll(".filter-option input[type='checkbox']:not(#filter-instock)").forEach(cb => {
+        cb.checked = false;
+      });
+      updateCatSelectionUI();
+      updateCategoryHero("all");
+      renderProducts();
+    });
+  }
 
   const stockFilter = document.querySelector("#filter-instock");
   if (stockFilter) {
