@@ -626,8 +626,10 @@
         console.error('Google Auth Error:', err);
         if (err.code === 'auth/popup-closed-by-user') {
           showToast('Google sign-in popup was closed.');
+        } else if (err.code === 'auth/operation-not-allowed') {
+          showToast('Google Sign-In is disabled in Firebase. Turn on "Google" under Firebase Console > Authentication > Sign-in method.');
         } else if (err.code === 'auth/unauthorized-domain') {
-          showToast('This domain is not yet whitelisted in Firebase Console. Add localhost to Authorized Domains.');
+          showToast('Domain not whitelisted. Add "khaylim.tech" and "localhost" in Firebase Console > Authentication > Settings > Authorized domains.');
         } else {
           showToast(err.message || 'Google sign-in failed.');
         }
@@ -697,7 +699,9 @@
         }
       } catch (err) {
         console.error('Email Auth Error:', err);
-        if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+        if (err.code === 'auth/operation-not-allowed') {
+          showToast('Email/Password sign-in is disabled in Firebase. Turn on "Email/Password" under Firebase Console > Authentication > Sign-in method.');
+        } else if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
           showToast('Invalid email or password. Please verify and retry.');
         } else if (err.code === 'auth/email-already-in-use') {
           showToast('An account already exists with this email. Switch to Sign In.');

@@ -1,0 +1,17 @@
+{
+  "status": 200,
+  "canvasCount": 1,
+  "canvasPainted": true,
+  "canvasMoved": true,
+  "sceneType": null,
+  "panelCount": 13,
+  "stickyCount": 13,
+  "panelTops": [
+    52,
+    52,
+    52
+  ],
+  "minimumPanelHeight": 664,
+  "overflow": false,
+  "errors": []
+}

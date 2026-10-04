@@ -1,0 +1,19 @@
+checking home at desktop
+checking products at desktop
+page.screenshot: Timeout 15000ms exceeded.
+Call log:
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+
+    at inspectPage (C:\Users\THIS PC\Desktop\Claude\sessions\KhaylimTech\qa\visual-check.js:58:14)
+    at async C:\Users\THIS PC\Desktop\Claude\sessions\KhaylimTech\qa\visual-check.js:135:20 {
+  log: [
+    '  - taking page screenshot',
+    '    - disabled all CSS animations',
+    '  - waiting for fonts to load...',
+    '  - fonts loaded'
+  ],
+  name: 'TimeoutError'
+}

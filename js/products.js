@@ -273,7 +273,15 @@ function initFilters() {
 function initMobileFilters() {
   const toggle = document.querySelector(".mobile-filter-toggle");
   const sidebar = document.querySelector("#catalog-filters");
+  const closeBtn = document.querySelector("#mobile-filter-drawer-close");
   if (!toggle || !sidebar) return;
+
+  function closeFilters() {
+    sidebar.classList.remove("mobile-open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("filters-open");
+    toggle.focus();
+  }
 
   toggle.addEventListener("click", () => {
     const isOpen = sidebar.classList.toggle("mobile-open");
@@ -281,12 +289,13 @@ function initMobileFilters() {
     document.body.classList.toggle("filters-open", isOpen);
   });
 
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeFilters);
+  }
+
   document.addEventListener("keydown", event => {
     if (event.key === "Escape" && sidebar.classList.contains("mobile-open")) {
-      sidebar.classList.remove("mobile-open");
-      toggle.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("filters-open");
-      toggle.focus();
+      closeFilters();
     }
   });
 }

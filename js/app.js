@@ -141,7 +141,7 @@ function swapThemeAssets(theme) {
 
   const favicon = document.getElementById("favicon") || document.querySelector("link[rel='icon']");
   if (favicon) {
-    favicon.href = isDark ? "/assets/khaylimtech-logo-dark.png" : "/assets/khaylimtech-logo-light.png";
+    favicon.href = isDark ? "/assets/Darkmode_logo.png?v=2" : "/assets/Lightmode_logo.png?v=2";
   }
 }
 
