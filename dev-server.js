@@ -49,6 +49,8 @@ const server = http.createServer((req, res) => {
     targetFile = '/products.html';
   } else if (pathname === '/products') {
     targetFile = '/products.html';
+  } else if (pathname === '/admin') {
+    targetFile = '/admin.html';
   } else if (pathname === '/cart') {
     targetFile = '/cart.html';
   } else if (pathname === '/about') {

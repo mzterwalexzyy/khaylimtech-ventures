@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal — KhaylimTech Ventures</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/professional.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Admin Portal Custom Theme & Utilities */
+    .admin-body {
+      background: var(--bg, #f8f9fa);
+      color: var(--text, #111);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    [data-theme="dark"] .admin-body {
+      background: #0b0c10;
+    }
+    .admin-navbar {
+      background: rgba(13, 13, 20, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201, 162, 39, 0.25);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .admin-brand img {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .admin-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .admin-brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--gold, #c9a227);
+      letter-spacing: -0.01em;
+    }
+    .admin-brand-sub {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .admin-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .btn-admin-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.2s ease;
+    }
+    .btn-admin-store:hover {
+      background: rgba(201, 162, 39, 0.2);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .admin-user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 6px;
+      border-radius: 50px;
+      background: rgba(201, 162, 39, 0.12);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+      color: #fff;
+      font-size: 0.82rem;
+    }
+    .admin-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c9a227, #e8c85a);
+      color: #0d0d12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.75rem;
+    }
+
+    /* Access Gate / Login Screen */
+    .admin-gate-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .admin-gate-card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, rgba(0,0,0,0.1));
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+    }
+    [data-theme="dark"] .admin-gate-card {
+      background: #14141c;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+    }
+    .admin-gate-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: rgba(201, 162, 39, 0.12);
+      color: var(--gold);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+
+    /* Admin Container & Stats */
+    .admin-main {
+      flex: 1;
+      padding: 32px 0 60px;
+    }
+    .admin-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .admin-metric-card {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, rgba(0,0,0,0.08));
+      border-radius: 18px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    }
+    [data-theme="dark"] .admin-metric-card {
+      background: #14141c;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .admin-metric-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(201, 162, 39, 0.12);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .admin-metric-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text-heading);
+      line-height: 1.1;
+    }
+    .admin-metric-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Controls Bar */
+    .admin-toolbar {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, rgba(0,0,0,0.08));
+      border-radius: 18px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    [data-theme="dark"] .admin-toolbar {
+      background: #14141c;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .admin-search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+    .admin-search-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .admin-search-input {
+      width: 100%;
+      height: 42px;
+      padding: 0 14px 0 38px;
+      border-radius: 10px;
+      background: var(--bg-secondary, #f0f0f4);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+    }
+    [data-theme="dark"] .admin-search-input {
+      background: #1e1e28;
+    }
+    .admin-filter-select {
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 10px;
+      background: var(--bg-secondary, #f0f0f4);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+    [data-theme="dark"] .admin-filter-select {
+      background: #1e1e28;
+    }
+    .btn-gold-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      padding: 0 20px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #c9a227, #e0b838);
+      color: #0d0d12;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(201, 162, 39, 0.25);
+    }
+    .btn-gold-primary:hover {
+      background: #e0b838;
+      transform: translateY(-1px);
+    }
+    .btn-ghost-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 42px;
+      padding: 0 16px;
+      border-radius: 50px;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-ghost-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Products Table & Grid */
+    .admin-table-wrap {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, rgba(0,0,0,0.08));
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+    [data-theme="dark"] .admin-table-wrap {
+      background: #14141c;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+    .admin-table th {
+      background: var(--bg-secondary, #f5f5f8);
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
+    }
+    [data-theme="dark"] .admin-table th {
+      background: #1a1a24;
+    }
+    .admin-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      color: var(--text);
+    }
+    .admin-table tr:hover {
+      background: rgba(201, 162, 39, 0.03);
+    }
+    .gadget-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: var(--bg-secondary, #f0f0f4);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .gadget-cell-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .gadget-title-text {
+      font-weight: 700;
+      color: var(--text-heading);
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .gadget-id-text {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      background: var(--bg-secondary, #f0f0f4);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .stock-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .stock-toggle-btn.in-stock {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .stock-toggle-btn.out-stock {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .action-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-action-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+    }
+    .btn-action-icon:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-1px);
+    }
+    .btn-action-icon.delete:hover {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+
+    /* Modal Framework */
+    .admin-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
+      animation: authFadeIn 0.2s ease-out;
+    }
+    .admin-modal-overlay.show {
+      display: flex;
+    }
+    .admin-modal-box {
+      width: 100%;
+      max-width: 620px;
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 30px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    }
+    [data-theme="dark"] .admin-modal-box {
+      background: #14141c;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .admin-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-heading);
+    }
+    .admin-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .admin-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .admin-form-group.full {
+      grid-column: 1 / -1;
+    }
+    .admin-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .admin-input, .admin-select, .admin-textarea {
+      width: 100%;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 10px;
+      background: var(--bg-secondary, #f0f0f4);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    [data-theme="dark"] .admin-input, [data-theme="dark"] .admin-select, [data-theme="dark"] .admin-textarea {
+      background: #1e1e28;
+    }
+    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+      border-color: var(--gold);
+    }
+    .admin-textarea {
+      height: 90px;
+      padding: 10px 14px;
+      resize: vertical;
+    }
+
+    /* Admin Badge & Admins List */
+    .admin-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: var(--bg-secondary, #f0f0f4);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+    [data-theme="dark"] .admin-item-row {
+      background: #1a1a24;
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- TOP NAVBAR -->
+  <header class="admin-navbar">
+    <a href="/" class="admin-brand">
+      <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
+      <div class="admin-brand-text">
+        <span class="admin-brand-title">KhaylimTech</span>
+        <span class="admin-brand-sub">Admin Portal</span>
+      </div>
+    </a>
+    <div class="admin-nav-actions">
+      <a href="/" class="btn-admin-store">
+        <i class="fa-solid fa-arrow-left"></i> View Live Store
+      </a>
+      <div id="admin-user-header" style="display:none;">
+        <div class="admin-user-pill">
+          <div class="admin-avatar" id="admin-header-avatar">K</div>
+          <span id="admin-header-email" style="font-weight:700;">kareemtoheeba10@gmail.com</span>
+          <button type="button" id="btn-admin-signout" title="Sign Out" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;padding:0 4px;font-size:0.85rem">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ACCESS GATE: NOT LOGGED IN OR UNAUTHORIZED -->
+  <section class="admin-gate-wrap" id="admin-gate" style="display:none;">
+    <div class="admin-gate-card">
+      <div class="admin-gate-icon" id="gate-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2 style="font-size:1.5rem;font-weight:800;color:var(--text-heading);margin-bottom:10px" id="gate-title">
+        Administrator Access
+      </h2>
+      <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;margin-bottom:28px" id="gate-desc">
+        Please sign in with your authorized KhaylimTech administrator account to manage products and store settings.
+      </p>
+
+      <!-- Sign In Actions -->
+      <div id="gate-signin-actions" style="display:flex;flex-direction:column;gap:12px;">
+        <button type="button" class="btn-gold-primary" id="gate-btn-google" style="justify-content:center;height:46px;">
+          <i class="fa-brands fa-google"></i> Sign In with Google
+        </button>
+        <button type="button" class="btn-ghost-secondary" id="gate-btn-email" style="justify-content:center;height:46px;">
+          <i class="fa-regular fa-envelope"></i> Sign In with Email &amp; Password
+        </button>
+      </div>
+
+      <!-- Access Denied Info -->
+      <div id="gate-denied-actions" style="display:none;flex-direction:column;gap:12px;">
+        <div style="padding:14px;border-radius:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#ef4444;font-size:0.84rem;margin-bottom:8px">
+          <i class="fa-solid fa-triangle-exclamation" style="margin-right:6px"></i>
+          <span id="gate-denied-email">Your account is not an authorized administrator.</span>
+        </div>
+        <button type="button" class="btn-gold-primary" id="gate-btn-switch" style="justify-content:center;height:46px;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Switch Account
+        </button>
+        <a href="/" class="btn-ghost-secondary" style="justify-content:center;height:46px;text-decoration:none;">
+          <i class="fa-solid fa-house"></i> Return to Store
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADMIN DASHBOARD (UNLOCKED FOR AUTHORIZED ADMINS) -->
+  <main class="admin-main" id="admin-dashboard" style="display:none;">
+    <div class="container">
+
+      <!-- Metrics Row -->
+      <div class="admin-metrics-grid">
+        <div class="admin-metric-card">
+          <div class="admin-metric-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+          <div>
+            <div class="admin-metric-value" id="stat-total-gadgets">0</div>
+            <div class="admin-metric-label">Total Gadgets</div>
+          </div>
+        </div>
+        <div class="admin-metric-card">
+          <div class="admin-metric-icon" style="color:#10b981;background:rgba(16,185,129,0.12)"><i class="fa-solid fa-circle-check"></i></div>
+          <div>
+            <div class="admin-metric-value" id="stat-instock-gadgets">0</div>
+            <div class="admin-metric-label">In Stock</div>
+          </div>
+        </div>
+        <div class="admin-metric-card">
+          <div class="admin-metric-icon" style="color:#ef4444;background:rgba(239,68,68,0.12)"><i class="fa-solid fa-box-archive"></i></div>
+          <div>
+            <div class="admin-metric-value" id="stat-outstock-gadgets">0</div>
+            <div class="admin-metric-label">Out of Stock</div>
+          </div>
+        </div>
+        <div class="admin-metric-card">
+          <div class="admin-metric-icon" style="color:var(--gold);"><i class="fa-solid fa-user-shield"></i></div>
+          <div>
+            <div class="admin-metric-value" id="stat-admins-count">1</div>
+            <div class="admin-metric-label">Store Admins</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Toolbar -->
+      <div class="admin-toolbar">
+        <div class="admin-search-wrap">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="admin-search" class="admin-search-input" placeholder="Search gadgets by title, model, or ID...">
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <select id="admin-category-filter" class="admin-filter-select">
+            <option value="all">All Categories</option>
+            <option value="phones">Phones</option>
+            <option value="laptops">Laptops</option>
+            <option value="gaming">Gaming Consoles</option>
+            <option value="accessories">Accessories</option>
+          </select>
+          <select id="admin-stock-filter" class="admin-filter-select">
+            <option value="all">All Stock Status</option>
+            <option value="instock">In Stock Only</option>
+            <option value="outstock">Out of Stock</option>
+          </select>
+          <button type="button" class="btn-ghost-secondary" id="btn-open-admins">
+            <i class="fa-solid fa-users-gear"></i> Manage Admins
+          </button>
+          <button type="button" class="btn-ghost-secondary" id="btn-sync-seed" title="Copy local seed inventory to Firestore if empty">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Sync Seed
+          </button>
+          <button type="button" class="btn-gold-primary" id="btn-open-new-gadget">
+            <i class="fa-solid fa-plus"></i> Post New Gadget
+          </button>
+        </div>
+      </div>
+
+      <!-- Gadgets Table -->
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width:70px">Item</th>
+              <th>Gadget Details</th>
+              <th>Category</th>
+              <th>Price (₦)</th>
+              <th>Status</th>
+              <th>Badge</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-gadgets-tbody">
+            <tr>
+              <td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">
+                <i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;margin-bottom:8px"></i><br>
+                Loading live catalog from Cloud Firestore...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL 1: POST / EDIT GADGET -->
+  <div class="admin-modal-overlay" id="modal-gadget">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" id="gadget-modal-title">Post New Gadget</h3>
+        <button type="button" class="btn-action-icon" id="btn-close-gadget-modal">&times;</button>
+      </div>
+      <form id="gadget-form">
+        <input type="hidden" id="form-gadget-id">
+        <div class="admin-form-grid">
+          
+          <div class="admin-form-group full">
+            <label class="admin-label">Gadget Name / Model</label>
+            <input type="text" id="form-name" class="admin-input" placeholder="e.g. Apple iPhone 16 Pro Max (256GB Desert Titanium)" required>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Category</label>
+            <select id="form-category" class="admin-select" required>
+              <option value="phones">Phones</option>
+              <option value="laptops">Laptops</option>
+              <option value="gaming">Gaming Consoles</option>
+              <option value="accessories">Accessories</option>
+            </select>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Badge Tag</label>
+            <select id="form-badge" class="admin-select">
+              <option value="new">NEW (Fresh Arrival)</option>
+              <option value="popular">POPULAR (Bestseller)</option>
+              <option value="hot-deal">HOT DEAL (Sale)</option>
+              <option value="oem">OFFICIAL OEM</option>
+              <option value="">None</option>
+            </select>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Price (₦ Naira)</label>
+            <input type="number" id="form-price" class="admin-input" placeholder="e.g. 1450000" min="0" required>
+          </div>
+
+          <div class="admin-form-group">
+            <label class="admin-label">Original Price (₦ Optional Strike-through)</label>
+            <input type="number" id="form-oldprice" class="admin-input" placeholder="e.g. 1600000" min="0">
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-label">Primary Image URL</label>
+            <div style="display:flex;gap:10px">
+              <input type="url" id="form-image" class="admin-input" placeholder="https://... (Direct image link or Cloudinary)" required>
+              <img id="form-image-preview" src="https://placehold.co/80x80/1a1a24/c9a227?text=Preview" alt="Preview" style="width:42px;height:42px;border-radius:8px;object-fit:cover;border:1px solid var(--border)">
+            </div>
+            <span style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">Paste direct JPG/PNG link or upload to Cloudinary/Imgur.</span>
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-label">Availability</label>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.85rem">
+              <input type="checkbox" id="form-instock" checked style="accent-color:var(--gold);width:16px;height:16px">
+              <span>Currently In Stock &amp; Ready for Delivery</span>
+            </label>
+          </div>
+
+          <div class="admin-form-group full">
+            <label class="admin-label">Description &amp; Specifications</label>
+            <textarea id="form-desc" class="admin-textarea" placeholder="Factory sealed in box, verifiable serial/IMEI, includes 1-year warranty, same-day delivery across Ibadan..."></textarea>
+          </div>
+
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+          <button type="button" class="btn-ghost-secondary" id="btn-cancel-gadget">Cancel</button>
+          <button type="submit" class="btn-gold-primary" id="btn-save-gadget">
+            <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: DELETE CONFIRMATION -->
+  <div class="admin-modal-overlay" id="modal-delete">
+    <div class="admin-modal-box" style="max-width:440px;text-align:center">
+      <div style="width:56px;height:56px;border-radius:50%;background:rgba(239,68,68,0.12);color:#ef4444;display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:14px">
+        <i class="fa-solid fa-trash-can"></i>
+      </div>
+      <h3 style="font-size:1.3rem;font-weight:800;color:var(--text-heading);margin-bottom:8px">Delete Gadget?</h3>
+      <p style="font-size:0.86rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px">
+        Are you sure you want to remove <strong id="delete-gadget-name" style="color:var(--text-heading)">this gadget</strong>? It will immediately disappear from the live store.
+      </p>
+      <input type="hidden" id="delete-gadget-id">
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button type="button" class="btn-ghost-secondary" id="btn-cancel-delete" style="flex:1">Cancel</button>
+        <button type="button" class="btn-gold-primary" id="btn-confirm-delete" style="background:#ef4444;color:#fff;flex:1">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: MANAGE ADMINISTRATORS (TWO ADMIN SUPPORT) -->
+  <div class="admin-modal-overlay" id="modal-admins">
+    <div class="admin-modal-box" style="max-width:540px">
+      <div class="admin-modal-header">
+        <div>
+          <h3 class="admin-modal-title">Store Administrators</h3>
+          <span style="font-size:0.75rem;color:var(--text-muted)">Manage accounts authorized to post, edit, and delete gadgets.</span>
+        </div>
+        <button type="button" class="btn-action-icon" id="btn-close-admins-modal">&times;</button>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label class="admin-label" style="margin-bottom:8px;display:block">Active Administrators</label>
+        <div id="admins-list-container">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <div style="background:var(--bg-secondary,#f5f5f8);padding:16px;border-radius:14px;border:1px solid var(--border)">
+        <h4 style="font-size:0.88rem;font-weight:700;color:var(--text-heading);margin-bottom:6px">
+          <i class="fa-solid fa-user-plus text-gold" style="margin-right:4px"></i> Add Second Admin
+        </h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px">
+          Grant full administrative control to a second team member email address.
+        </p>
+        <div style="display:flex;gap:8px">
+          <input type="email" id="input-new-admin-email" class="admin-input" placeholder="e.g. partner@gmail.com" style="flex:1">
+          <button type="button" class="btn-gold-primary" id="btn-add-admin" style="white-space:nowrap">
+            Add Admin
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;text-align:right">
+        <button type="button" class="btn-ghost-secondary" id="btn-done-admins">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div id="admin-toast" style="position:fixed;bottom:24px;right:24px;background:#0d0d12;color:#fff;border:1px solid var(--gold);padding:12px 20px;border-radius:50px;font-size:0.85rem;font-weight:600;display:none;align-items:center;gap:8px;box-shadow:0 12px 32px rgba(0,0,0,0.4);z-index:99999;"></div>
+
+  <!-- SCRIPTS -->
+  <script src="/js/data.js"></script>
+  <!-- Firebase Compat SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+  <script src="/js/firebase-db.js"></script>
+  <script src="/js/admin-config.js"></script>
+  <script src="/js/auth.js"></script>
+
+  <script>
+    // ========================================================
+    //  KhaylimTech Admin Portal Controller
+    // ========================================================
+    let currentAdminUser = null;
+    let liveGadgets = [];
+
+    function showAdminToast(msg, isSuccess = true) {
+      const toast = document.getElementById('admin-toast');
+      if (!toast) return;
+      toast.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check text-gold' : 'fa-circle-exclamation'}" style="color:${isSuccess ? '#c9a227' : '#ef4444'}"></i> ${msg}`;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+
+    // Check Auth State
+    function evaluateAdminState(user) {
+      currentAdminUser = user;
+      const gate = document.getElementById('admin-gate');
+      const dashboard = document.getElementById('admin-dashboard');
+      const headerUser = document.getElementById('admin-user-header');
+      const gateSignIn = document.getElementById('gate-signin-actions');
+      const gateDenied = document.getElementById('gate-denied-actions');
+      const gateDesc = document.getElementById('gate-desc');
+      const gateDeniedEmail = document.getElementById('gate-denied-email');
+
+      if (!user) {
+        // Not signed in
+        if (dashboard) dashboard.style.display = 'none';
+        if (headerUser) headerUser.style.display = 'none';
+        if (gate) {
+          gate.style.display = 'flex';
+          gateSignIn.style.display = 'flex';
+          gateDenied.style.display = 'none';
+          gateDesc.textContent = "Please sign in with your authorized KhaylimTech administrator account to manage gadgets.";
+        }
+        return;
+      }
+
+      // User signed in — check if email is admin
+      const email = user.email ? user.email.toLowerCase() : '';
+      const isAuthorized = window.isUserAdmin ? window.isUserAdmin(user) : (email === 'kareemtoheeba10@gmail.com');
+
+      if (isAuthorized) {
+        // Authorized Admin!
+        if (gate) gate.style.display = 'none';
+        if (dashboard) dashboard.style.display = 'block';
+        if (headerUser) {
+          headerUser.style.display = 'block';
+          document.getElementById('admin-header-email').textContent = email;
+          const initial = (user.displayName || email).charAt(0).toUpperCase();
+          document.getElementById('admin-header-avatar').textContent = initial;
+        }
+        bindLiveProducts();
+        renderAdminsList();
+      } else {
+        // Signed in, but unauthorized email
+        if (dashboard) dashboard.style.display = 'none';
+        if (headerUser) headerUser.style.display = 'none';
+        if (gate) {
+          gate.style.display = 'flex';
+          gateSignIn.style.display = 'none';
+          gateDenied.style.display = 'flex';
+          gateDesc.textContent = "Access Restricted: This management console is reserved for authorized store administrators.";
+          gateDeniedEmail.textContent = `Signed in as: ${email} (Unauthorized)`;
+        }
+      }
+    }
+
+    // Real-time Firestore Gadgets Listener
+    function bindLiveProducts() {
+      if (!window.db) {
+        setTimeout(bindLiveProducts, 200);
+        return;
+      }
+
+      window.db.collection('products').onSnapshot((snapshot) => {
+        liveGadgets = snapshot.docs.map(doc => {
+          const d = doc.data();
+          return {
+            id: doc.id,
+            name: d.name || 'Untitled Gadget',
+            category: d.category || 'accessories',
+            price: Number(d.price) || 0,
+            oldPrice: d.oldPrice ? Number(d.oldPrice) : null,
+            description: d.description || '',
+            image: d.image || 'https://placehold.co/400x400/1a1a24/c9a227?text=No+Image',
+            badge: d.badge || '',
+            inStock: d.inStock !== false
+          };
+        });
+
+        // If Firestore is empty, fall back to sample PRODUCTS for display
+        if (liveGadgets.length === 0 && window.PRODUCTS && window.PRODUCTS.length > 0) {
+          liveGadgets = window.PRODUCTS.map(p => ({ ...p }));
+        }
+
+        renderMetrics();
+        renderGadgetsTable();
+      }, (err) => {
+        console.warn('Firestore error in admin:', err);
+        if (window.PRODUCTS) {
+          liveGadgets = window.PRODUCTS.map(p => ({ ...p }));
+          renderMetrics();
+          renderGadgetsTable();
+        }
+      });
+    }
+
+    // Render Metrics
+    function renderMetrics() {
+      const total = liveGadgets.length;
+      const inStock = liveGadgets.filter(g => g.inStock).length;
+      const outStock = total - inStock;
+      const adminCount = window.KHAYLIM_ADMINS ? window.KHAYLIM_ADMINS.length : 1;
+
+      document.getElementById('stat-total-gadgets').textContent = total;
+      document.getElementById('stat-instock-gadgets').textContent = inStock;
+      document.getElementById('stat-outstock-gadgets').textContent = outStock;
+      document.getElementById('stat-admins-count').textContent = adminCount;
+    }
+
+    // Render Gadgets Table
+    function renderGadgetsTable() {
+      const tbody = document.getElementById('admin-gadgets-tbody');
+      const search = (document.getElementById('admin-search').value || '').toLowerCase().trim();
+      const catFilter = document.getElementById('admin-category-filter').value;
+      const stockFilter = document.getElementById('admin-stock-filter').value;
+
+      let filtered = liveGadgets.filter(g => {
+        const matchesSearch = !search || g.name.toLowerCase().includes(search) || g.id.toLowerCase().includes(search);
+        const matchesCat = catFilter === 'all' || g.category === catFilter;
+        let matchesStock = true;
+        if (stockFilter === 'instock') matchesStock = g.inStock === true;
+        if (stockFilter === 'outstock') matchesStock = g.inStock === false;
+        return matchesSearch && matchesCat && matchesStock;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center;padding:48px 20px;color:var(--text-muted)">
+              <div style="font-size:2rem;margin-bottom:10px"><i class="fa-solid fa-box-open"></i></div>
+              <strong style="font-size:1.05rem;color:var(--text-heading)">No gadgets found</strong>
+              <p style="margin-top:4px;font-size:0.84rem">Try adjusting your filters or click "+ Post New Gadget" above.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(g => {
+        const fmtPrice = '₦' + Number(g.price).toLocaleString('en-NG');
+        const fmtOld = g.oldPrice ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;margin-left:4px">₦${Number(g.oldPrice).toLocaleString('en-NG')}</span>` : '';
+        const badgeLabel = g.badge ? `<span style="font-size:0.7rem;font-weight:800;color:var(--gold);background:rgba(201,162,39,0.1);padding:3px 8px;border-radius:20px;text-transform:uppercase">${g.badge}</span>` : '—';
+        const stockClass = g.inStock ? 'in-stock' : 'out-stock';
+        const stockText = g.inStock ? '<i class="fa-solid fa-check"></i> In Stock' : '<i class="fa-solid fa-xmark"></i> Out of Stock';
+
+        return `
+          <tr>
+            <td>
+              <img src="${g.image}" alt="${g.name}" class="gadget-thumb" onerror="this.src='https://placehold.co/80x80/1a1a24/c9a227?text=Gadget'">
+            </td>
+            <td>
+              <div class="gadget-cell-meta">
+                <div>
+                  <div class="gadget-title-text" title="${g.name}">${g.name}</div>
+                  <div class="gadget-id-text">ID: ${g.id}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="category-badge">${g.category}</span>
+            </td>
+            <td>
+              <strong>${fmtPrice}</strong> ${fmtOld}
+            </td>
+            <td>
+              <button type="button" class="stock-toggle-btn ${stockClass}" onclick="toggleGadgetStock('${g.id}', ${!g.inStock})">
+                ${stockText}
+              </button>
+            </td>
+            <td>${badgeLabel}</td>
+            <td style="text-align:right">
+              <div class="action-btn-group" style="justify-content:flex-end">
+                <a href="/product/${g.id}" target="_blank" class="btn-action-icon" title="View in store">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                <button type="button" class="btn-action-icon" title="Edit gadget" onclick="openEditModal('${g.id}')">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button type="button" class="btn-action-icon delete" title="Delete gadget" onclick="openDeleteModal('${g.id}', '${escapeQuotes(g.name)}')">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function escapeQuotes(str) {
+      return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // Toggle In Stock / Out of Stock
+    window.toggleGadgetStock = async function(id, newStatus) {
+      if (!window.db) return;
+      try {
+        await window.db.collection('products').doc(id).set({
+          inStock: newStatus,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        showAdminToast(`Stock updated to ${newStatus ? 'In Stock' : 'Out of Stock'}.`);
+      } catch (err) {
+        console.error('Stock toggle error:', err);
+        showAdminToast('Failed to update stock status: ' + err.message, false);
+      }
+    };
+
+    // Open Edit Modal
+    window.openEditModal = function(id) {
+      const gadget = liveGadgets.find(g => g.id === id);
+      if (!gadget) return;
+
+      document.getElementById('gadget-modal-title').textContent = 'Edit Gadget';
+      document.getElementById('form-gadget-id').value = gadget.id;
+      document.getElementById('form-name').value = gadget.name;
+      document.getElementById('form-category').value = gadget.category;
+      document.getElementById('form-price').value = gadget.price;
+      document.getElementById('form-oldprice').value = gadget.oldPrice || '';
+      document.getElementById('form-badge').value = gadget.badge || '';
+      document.getElementById('form-image').value = gadget.image;
+      document.getElementById('form-image-preview').src = gadget.image;
+      document.getElementById('form-instock').checked = gadget.inStock !== false;
+      document.getElementById('form-desc').value = gadget.description || '';
+
+      document.getElementById('modal-gadget').classList.add('show');
+    };
+
+    // Open Delete Modal
+    window.openDeleteModal = function(id, name) {
+      document.getElementById('delete-gadget-id').value = id;
+      document.getElementById('delete-gadget-name').textContent = name;
+      document.getElementById('modal-delete').classList.add('show');
+    };
+
+    // Save Gadget (Create or Update)
+    document.getElementById('gadget-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!window.db) {
+        showAdminToast('Firestore database not connected.', false);
+        return;
+      }
+
+      const saveBtn = document.getElementById('btn-save-gadget');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+      try {
+        const id = document.getElementById('form-gadget-id').value.trim() || generateProductId();
+        const name = document.getElementById('form-name').value.trim();
+        const category = document.getElementById('form-category').value;
+        const price = Number(document.getElementById('form-price').value);
+        const oldPriceVal = document.getElementById('form-oldprice').value;
+        const oldPrice = oldPriceVal ? Number(oldPriceVal) : null;
+        const badge = document.getElementById('form-badge').value;
+        const image = document.getElementById('form-image').value.trim();
+        const inStock = document.getElementById('form-instock').checked;
+        const description = document.getElementById('form-desc').value.trim();
+
+        const gadgetPayload = {
+          name,
+          category,
+          price,
+          oldPrice,
+          badge,
+          image,
+          images: [image],
+          inStock,
+          description,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: currentAdminUser ? currentAdminUser.email : 'admin'
+        };
+
+        await window.db.collection('products').doc(id).set(gadgetPayload, { merge: true });
+        showAdminToast(`"${name}" saved successfully!`);
+        document.getElementById('modal-gadget').classList.remove('show');
+      } catch (err) {
+        console.error('Error saving gadget:', err);
+        showAdminToast('Error saving gadget: ' + err.message, false);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish';
+      }
+    });
+
+    function generateProductId() {
+      const cat = document.getElementById('form-category').value || 'item';
+      const prefixMap = { phones: 'ph', laptops: 'lp', gaming: 'gm', accessories: 'ac' };
+      const prefix = prefixMap[cat] || 'kh';
+      return `${prefix}_${Date.now().toString(36)}`;
+    }
+
+    // Confirm Delete
+    document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
+      const id = document.getElementById('delete-gadget-id').value;
+      if (!id || !window.db) return;
+
+      const delBtn = document.getElementById('btn-confirm-delete');
+      delBtn.disabled = true;
+      delBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
+
+      try {
+        await window.db.collection('products').doc(id).delete();
+        showAdminToast('Gadget removed from store.');
+        document.getElementById('modal-delete').classList.remove('show');
+      } catch (err) {
+        console.error('Delete error:', err);
+        showAdminToast('Failed to delete gadget: ' + err.message, false);
+      } finally {
+        delBtn.disabled = false;
+        delBtn.innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
+      }
+    });
+
+    // Image preview live sync
+    document.getElementById('form-image').addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      document.getElementById('form-image-preview').src = val || 'https://placehold.co/80x80/1a1a24/c9a227?text=Preview';
+    });
+
+    // Seed Import / Sync to Firestore
+    document.getElementById('btn-sync-seed').addEventListener('click', async () => {
+      if (!window.db || !window.PRODUCTS) return;
+      if (!confirm(`This will upload all ${window.PRODUCTS.length} seed products to Cloud Firestore. Continue?`)) return;
+
+      const btn = document.getElementById('btn-sync-seed');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Syncing...';
+
+      try {
+        const batch = window.db.batch();
+        window.PRODUCTS.forEach(p => {
+          const ref = window.db.collection('products').doc(p.id);
+          batch.set(ref, {
+            name: p.name,
+            category: p.category,
+            price: p.price,
+            oldPrice: p.oldPrice || null,
+            badge: p.badge || 'new',
+            image: p.image,
+            images: p.images || [p.image],
+            description: p.description || '',
+            inStock: p.inStock !== false,
+            rating: p.rating || 5.0,
+            reviews: p.reviews || 0,
+            syncedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        });
+        await batch.commit();
+        showAdminToast('All seed products synced to Firestore Cloud!');
+      } catch (err) {
+        console.error('Seed sync error:', err);
+        showAdminToast('Sync failed: ' + err.message, false);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Sync Seed';
+      }
+    });
+
+    // Modal Control Bindings
+    document.getElementById('btn-open-new-gadget').addEventListener('click', () => {
+      document.getElementById('gadget-modal-title').textContent = 'Post New Gadget';
+      document.getElementById('gadget-form').reset();
+      document.getElementById('form-gadget-id').value = '';
+      document.getElementById('form-instock').checked = true;
+      document.getElementById('form-image-preview').src = 'https://placehold.co/80x80/1a1a24/c9a227?text=Preview';
+      document.getElementById('modal-gadget').classList.add('show');
+    });
+
+    document.getElementById('btn-close-gadget-modal').addEventListener('click', () => {
+      document.getElementById('modal-gadget').classList.remove('show');
+    });
+    document.getElementById('btn-cancel-gadget').addEventListener('click', () => {
+      document.getElementById('modal-gadget').classList.remove('show');
+    });
+
+    document.getElementById('btn-cancel-delete').addEventListener('click', () => {
+      document.getElementById('modal-delete').classList.remove('show');
+    });
+
+    // Search and filter listeners
+    document.getElementById('admin-search').addEventListener('input', renderGadgetsTable);
+    document.getElementById('admin-category-filter').addEventListener('change', renderGadgetsTable);
+    document.getElementById('admin-stock-filter').addEventListener('change', renderGadgetsTable);
+
+    // Gate Sign In Buttons
+    document.getElementById('gate-btn-google').addEventListener('click', () => {
+      if (window.firebase && firebase.auth) {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider);
+      }
+    });
+    document.getElementById('gate-btn-email').addEventListener('click', () => {
+      if (window.KhaylimAuth && window.KhaylimAuth.openSignIn) {
+        window.KhaylimAuth.openSignIn();
+      }
+    });
+    document.getElementById('gate-btn-switch').addEventListener('click', () => {
+      if (window.firebase && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+          if (window.KhaylimAuth && window.KhaylimAuth.openSignIn) {
+            window.KhaylimAuth.openSignIn();
+          }
+        });
+      }
+    });
+    document.getElementById('btn-admin-signout').addEventListener('click', () => {
+      if (confirm('Sign out from KhaylimTech Admin Center?')) {
+        firebase.auth().signOut();
+      }
+    });
+
+    // ========================================================
+    //  MANAGE ADMINISTRATORS (TWO ADMINS SUPPORT)
+    // ========================================================
+    document.getElementById('btn-open-admins').addEventListener('click', () => {
+      renderAdminsList();
+      document.getElementById('modal-admins').classList.add('show');
+    });
+    document.getElementById('btn-close-admins-modal').addEventListener('click', () => {
+      document.getElementById('modal-admins').classList.remove('show');
+    });
+    document.getElementById('btn-done-admins').addEventListener('click', () => {
+      document.getElementById('modal-admins').classList.remove('show');
+    });
+
+    function renderAdminsList() {
+      const container = document.getElementById('admins-list-container');
+      if (!container) return;
+      const admins = window.KHAYLIM_ADMINS || ['kareemtoheeba10@gmail.com'];
+
+      container.innerHTML = admins.map(email => {
+        const isSuper = email.toLowerCase() === 'kareemtoheeba10@gmail.com';
+        return `
+          <div class="admin-item-row">
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:32px;height:32px;border-radius:50%;background:rgba(201,162,39,0.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:800">
+                <i class="fa-solid ${isSuper ? 'fa-crown text-gold' : 'fa-shield-halved'}"></i>
+              </div>
+              <div>
+                <strong style="color:var(--text-heading);font-size:0.88rem">${email}</strong>
+                <div style="font-size:0.7rem;color:var(--text-muted)">${isSuper ? 'Super Administrator (Permanent)' : 'Store Administrator'}</div>
+              </div>
+            </div>
+            <div>
+              ${isSuper ? '<span style="font-size:0.75rem;font-weight:700;color:var(--gold)">Primary</span>' : `
+                <button type="button" class="btn-action-icon delete" title="Remove admin" onclick="removeAdminEmail('${email}')">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Add Second Admin Email
+    document.getElementById('btn-add-admin').addEventListener('click', async () => {
+      const input = document.getElementById('input-new-admin-email');
+      const email = input.value.trim().toLowerCase();
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      if (window.KHAYLIM_ADMINS.map(e => e.toLowerCase()).includes(email)) {
+        alert('This email is already an authorized administrator.');
+        return;
+      }
+
+      const updated = Array.from(new Set([...window.KHAYLIM_ADMINS, email]));
+      try {
+        await window.db.collection('settings').doc('admins').set({
+          emails: updated,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: currentAdminUser ? currentAdminUser.email : 'kareemtoheeba10@gmail.com'
+        }, { merge: true });
+
+        window.KHAYLIM_ADMINS = updated;
+        input.value = '';
+        renderAdminsList();
+        renderMetrics();
+        showAdminToast(`Admin access granted to ${email}!`);
+      } catch (err) {
+        console.error('Error adding admin:', err);
+        showAdminToast('Failed to save admin: ' + err.message, false);
+      }
+    });
+
+    // Remove Admin Email
+    window.removeAdminEmail = async function(email) {
+      if (email.toLowerCase() === 'kareemtoheeba10@gmail.com') {
+        alert('Cannot remove the primary Super Administrator.');
+        return;
+      }
+      if (!confirm(`Revoke administrative access for ${email}?`)) return;
+
+      const updated = window.KHAYLIM_ADMINS.filter(e => e.toLowerCase() !== email.toLowerCase());
+      try {
+        await window.db.collection('settings').doc('admins').set({
+          emails: updated,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: currentAdminUser ? currentAdminUser.email : 'kareemtoheeba10@gmail.com'
+        }, { merge: true });
+
+        window.KHAYLIM_ADMINS = updated;
+        renderAdminsList();
+        renderMetrics();
+        showAdminToast(`Revoked admin access for ${email}.`);
+      } catch (err) {
+        console.error('Error removing admin:', err);
+        showAdminToast('Failed to revoke admin: ' + err.message, false);
+      }
+    };
+
+    // Firebase Auth State Listener
+    document.addEventListener('DOMContentLoaded', () => {
+      function checkAuth() {
+        if (window.firebase && firebase.auth) {
+          firebase.auth().onAuthStateChanged((user) => {
+            evaluateAdminState(user);
+          });
+        } else {
+          setTimeout(checkAuth, 150);
+        }
+      }
+      checkAuth();
+    });
+  </script>
+</body>
+</html>

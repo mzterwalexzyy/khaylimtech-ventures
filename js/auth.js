@@ -769,8 +769,11 @@
           <div class="dropdown-user-header">
             <div class="dropdown-user-name" id="menu-user-name">Guest User</div>
             <div class="dropdown-user-email" id="menu-user-email">guest@khaylimtech.com</div>
-            <div class="dropdown-user-badge"><i class="fa-solid fa-circle-check"></i> Verified Customer</div>
+            <div class="dropdown-user-badge" id="menu-user-badge"><i class="fa-solid fa-circle-check"></i> Verified Customer</div>
           </div>
+          <a href="/admin" class="dropdown-item-link admin-nav-link" id="dropdown-admin-link" style="display:none;background:rgba(201,162,39,0.12);color:var(--gold);font-weight:700;">
+            <i class="fa-solid fa-shield-halved text-gold"></i> Admin Portal
+          </a>
           <a href="/cart" class="dropdown-item-link">
             <i class="fa-solid fa-bag-shopping" style="color:var(--gold);"></i> My Cart
           </a>
@@ -857,9 +860,15 @@
       const mobileAuthText = document.getElementById('mobile-auth-text');
       const utilityTrigger = document.getElementById('utility-auth-trigger');
 
+      const adminLink = document.getElementById('dropdown-admin-link');
+      const userBadge = document.getElementById('menu-user-badge');
+      const mobileNav = document.querySelector('.mobile-nav');
+
       if (user) {
         const displayName = user.displayName || user.email.split('@')[0];
         const initial = displayName.charAt(0).toUpperCase();
+        const isAdmin = (window.isUserAdmin && window.isUserAdmin(user)) ||
+          (user.email && user.email.toLowerCase() === 'kareemtoheeba10@gmail.com');
 
         if (navAuthBtn) {
           navAuthBtn.className = 'nav-auth-user';
@@ -882,6 +891,28 @@
         if (menuUserEmail) menuUserEmail.textContent = user.email;
         if (mobileAuthText) mobileAuthText.textContent = `My Account (${displayName.split(' ')[0]})`;
         if (utilityTrigger) utilityTrigger.innerHTML = `<i class="fa-solid fa-user-check" style="margin-right:4px;color:#10b981;"></i> ${displayName.split(' ')[0]}`;
+
+        // Admin badge & links
+        if (adminLink) adminLink.style.display = isAdmin ? 'flex' : 'none';
+        if (userBadge) {
+          userBadge.innerHTML = isAdmin
+            ? `<i class="fa-solid fa-crown text-gold"></i> Store Administrator`
+            : `<i class="fa-solid fa-circle-check"></i> Verified Customer`;
+        }
+
+        // Mobile admin link insertion
+        let mobileAdminLink = document.getElementById('mobile-admin-link');
+        if (isAdmin && mobileNav && !mobileAdminLink) {
+          mobileAdminLink = document.createElement('a');
+          mobileAdminLink.id = 'mobile-admin-link';
+          mobileAdminLink.href = '/admin';
+          mobileAdminLink.style.color = 'var(--gold)';
+          mobileAdminLink.style.fontWeight = '700';
+          mobileAdminLink.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Admin Portal`;
+          mobileNav.insertBefore(mobileAdminLink, mobileNav.children[1] || null);
+        } else if (!isAdmin && mobileAdminLink) {
+          mobileAdminLink.remove();
+        }
       } else {
         if (navAuthBtn) {
           navAuthBtn.className = 'nav-auth-btn';
@@ -889,6 +920,9 @@
         }
         if (mobileAuthText) mobileAuthText.textContent = 'Sign In / Register';
         if (utilityTrigger) utilityTrigger.innerHTML = `<i class="fa-regular fa-user" style="margin-right:4px;"></i> Customer Login`;
+        if (adminLink) adminLink.style.display = 'none';
+        const mobileAdminLink = document.getElementById('mobile-admin-link');
+        if (mobileAdminLink) mobileAdminLink.remove();
       }
     });
   }

@@ -15,6 +15,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+window.db = db;
 
 // Real-time listener — fires instantly when bot adds/updates/deletes a product
 db.collection("products").onSnapshot((snapshot) => {

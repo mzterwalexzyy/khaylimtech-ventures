@@ -48,7 +48,8 @@ async function runTests() {
     ['/about', 'About Us page'],
     ['/contact', 'Contact page'],
     ['/faq', 'FAQ page'],
-    ['/how-to-order', 'How To Order page']
+    ['/how-to-order', 'How To Order page'],
+    ['/admin', 'Admin Portal']
   ];
 
   for (const [route, label] of routes) {
@@ -75,6 +76,7 @@ async function runTests() {
     '/js/products.js',
     '/js/detail.js',
     '/js/firebase-db.js',
+    '/js/admin-config.js',
     '/assets/logo.jpeg',
     '/assets/Lightmode_logo.png'
   ];
