@@ -403,6 +403,100 @@
       align-items: center;
       gap: 8px;
     }
+    .btn-sold-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-sold-pill:hover {
+      background: #ef4444;
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    .btn-relist-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-relist-pill:hover {
+      background: #10b981;
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .admin-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .admin-badge-pill.uk-used {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+    .admin-badge-pill.ng-used {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .admin-badge-pill.sold {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .admin-badge-pill.brand-new, .admin-badge-pill.new {
+      background: rgba(201, 162, 39, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+    }
+    .admin-badge-pill.popular, .admin-badge-pill.hot {
+      background: rgba(249, 115, 22, 0.15);
+      color: #f97316;
+      border: 1px solid rgba(249, 115, 22, 0.35);
+    }
+    .admin-badge-pill.custom {
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .rules-alert-banner {
+      background: rgba(201, 162, 39, 0.08);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+      border-radius: 14px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
     .btn-action-icon {
       width: 32px;
       height: 32px;
@@ -653,6 +747,9 @@
             <option value="instock">In Stock Only</option>
             <option value="outstock">Out of Stock</option>
           </select>
+          <button type="button" class="btn-ghost-secondary" id="btn-open-rules-guide" title="Cloud Firestore Security Rules & Permissions Fix">
+            <i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Rules Setup
+          </button>
           <button type="button" class="btn-ghost-secondary" id="btn-open-admins">
             <i class="fa-solid fa-users-gear"></i> Manage Admins
           </button>
@@ -722,10 +819,14 @@
           <div class="admin-form-group">
             <label class="admin-label">Badge Tag</label>
             <select id="form-badge" class="admin-select">
+              <option value="UK Used">🇬🇧 UK Used</option>
+              <option value="Nigerian Used">🇳🇬 Nigerian Used</option>
+              <option value="Brand New">✨ Brand New</option>
               <option value="new">NEW (Fresh Arrival)</option>
               <option value="popular">POPULAR (Bestseller)</option>
               <option value="hot-deal">HOT DEAL (Sale)</option>
               <option value="oem">OFFICIAL OEM</option>
+              <option value="SOLD">🚫 SOLD / Out of Stock</option>
               <option value="">None</option>
             </select>
           </div>
@@ -829,6 +930,62 @@
 
       <div style="margin-top:20px;text-align:right">
         <button type="button" class="btn-ghost-secondary" id="btn-done-admins">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: FIRESTORE RULES & PERMISSION SETUP -->
+  <div class="admin-modal-overlay" id="modal-rules-guide">
+    <div class="admin-modal-box" style="max-width:620px">
+      <div class="admin-modal-header">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:10px;background:rgba(201,162,39,0.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.1rem">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="admin-modal-title" style="margin:0;font-size:1.15rem">Cloud Firestore Security Rules</h3>
+            <span style="font-size:0.75rem;color:var(--text-muted)">Grant permanent read/write access for store gadgets &amp; admins</span>
+          </div>
+        </div>
+        <button type="button" class="btn-action-icon" id="btn-close-rules-modal">&times;</button>
+      </div>
+
+      <div style="margin-bottom:18px;">
+        <p style="font-size:0.84rem;color:var(--text);line-height:1.6;margin-bottom:12px">
+          If you encounter <code style="background:rgba(239,68,68,0.12);color:#ef4444;padding:2px 6px;border-radius:4px;font-size:0.8rem">Missing or insufficient permissions</code>, Google Cloud Firestore security rules are currently in test-mode expired or locked mode.
+        </p>
+        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">
+          Paste the following production rules into your <strong>Firebase Console &rarr; Firestore Database &rarr; Rules</strong> tab:
+        </p>
+
+        <div style="position:relative;background:#0d0d14;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px;font-family:monospace;font-size:0.76rem;color:#e2e8f0;line-height:1.5;overflow-x:auto;">
+          <pre id="firestore-rules-snippet" style="margin:0;white-space:pre-wrap;">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}</pre>
+          <button type="button" id="btn-copy-rules" style="position:absolute;top:10px;right:10px;padding:6px 12px;border-radius:6px;background:var(--gold);color:#0d0d12;border:none;font-size:0.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+            <i class="fa-regular fa-copy"></i> Copy Rules
+          </button>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid var(--border)">
+        <a href="https://console.firebase.google.com/project/khaylimtech-9ed75/firestore/rules" target="_blank" rel="noopener noreferrer" class="btn-gold-primary" style="text-decoration:none;font-size:0.82rem;padding:0 18px;height:40px">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Firebase Console Rules
+        </a>
+        <button type="button" class="btn-ghost-secondary" id="btn-done-rules" style="height:40px">Close</button>
       </div>
     </div>
   </div>
@@ -1000,9 +1157,33 @@
       tbody.innerHTML = filtered.map(g => {
         const fmtPrice = '₦' + Number(g.price).toLocaleString('en-NG');
         const fmtOld = g.oldPrice ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;margin-left:4px">₦${Number(g.oldPrice).toLocaleString('en-NG')}</span>` : '';
-        const badgeLabel = g.badge ? `<span style="font-size:0.7rem;font-weight:800;color:var(--gold);background:rgba(201,162,39,0.1);padding:3px 8px;border-radius:20px;text-transform:uppercase">${g.badge}</span>` : '—';
-        const stockClass = g.inStock ? 'in-stock' : 'out-stock';
-        const stockText = g.inStock ? '<i class="fa-solid fa-check"></i> In Stock' : '<i class="fa-solid fa-xmark"></i> Out of Stock';
+        
+        let badgeLabel = '—';
+        if (g.badge) {
+          const bLower = g.badge.toLowerCase().trim();
+          if (bLower === 'uk used' || bLower === 'uk-used') {
+            badgeLabel = `<span class="admin-badge-pill uk-used">🇬🇧 UK Used</span>`;
+          } else if (bLower === 'nigerian used' || bLower === 'nigerian-used' || bLower === 'naija used') {
+            badgeLabel = `<span class="admin-badge-pill ng-used">🇳🇬 Nigerian Used</span>`;
+          } else if (bLower === 'brand new' || bLower === 'new') {
+            badgeLabel = `<span class="admin-badge-pill brand-new">✨ Brand New</span>`;
+          } else if (bLower === 'sold' || !g.inStock) {
+            badgeLabel = `<span class="admin-badge-pill sold">🚫 SOLD</span>`;
+          } else if (bLower === 'popular' || bLower === 'hot') {
+            badgeLabel = `<span class="admin-badge-pill popular">🔥 Popular</span>`;
+          } else {
+            badgeLabel = `<span class="admin-badge-pill custom">${g.badge}</span>`;
+          }
+        } else if (!g.inStock) {
+          badgeLabel = `<span class="admin-badge-pill sold">🚫 SOLD</span>`;
+        }
+
+        const isSold = !g.inStock || (g.badge && g.badge.toLowerCase() === 'sold');
+        const stockClass = !isSold ? 'in-stock' : 'out-stock';
+        const stockText = !isSold ? '<i class="fa-solid fa-check"></i> In Stock' : '<i class="fa-solid fa-xmark"></i> Sold Out';
+        const soldActionBtn = !isSold
+          ? `<button type="button" class="btn-sold-pill" title="Mark this gadget as Sold" onclick="markGadgetSold('${g.id}')"><i class="fa-solid fa-tag"></i> Sold</button>`
+          : `<button type="button" class="btn-relist-pill" title="Restock gadget as In Stock" onclick="markGadgetInStock('${g.id}')"><i class="fa-solid fa-arrow-rotate-left"></i> Restock</button>`;
 
         return `
           <tr>
@@ -1024,13 +1205,14 @@
               <strong>${fmtPrice}</strong> ${fmtOld}
             </td>
             <td>
-              <button type="button" class="stock-toggle-btn ${stockClass}" onclick="toggleGadgetStock('${g.id}', ${!g.inStock})">
+              <button type="button" class="stock-toggle-btn ${stockClass}" onclick="toggleGadgetStock('${g.id}', ${isSold})">
                 ${stockText}
               </button>
             </td>
             <td>${badgeLabel}</td>
             <td style="text-align:right">
               <div class="action-btn-group" style="justify-content:flex-end">
+                ${soldActionBtn}
                 <a href="/product/${g.id}" target="_blank" class="btn-action-icon" title="View in store">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
@@ -1051,18 +1233,86 @@
       return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
 
+    function showPermissionRulesNotice() {
+      const modal = document.getElementById('modal-rules-guide');
+      if (modal) modal.classList.add('show');
+    }
+
+    // Mark as Sold (Sets inStock: false and updates badge)
+    window.markGadgetSold = async function(id) {
+      const g = liveGadgets.find(item => item.id === id);
+      const name = g ? g.name : 'Gadget';
+      try {
+        if (window.db) {
+          await window.db.collection('products').doc(id).set({
+            inStock: false,
+            badge: 'SOLD',
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        }
+        if (g) {
+          g.inStock = false;
+          g.badge = 'SOLD';
+        }
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast(`"${name}" marked as SOLD.`);
+      } catch (err) {
+        console.warn('Sold status cloud save notice:', err);
+        if (g) {
+          g.inStock = false;
+          g.badge = 'SOLD';
+          renderMetrics();
+          renderGadgetsTable();
+        }
+        showAdminToast(`"${name}" marked as SOLD locally.`, true);
+        if (err.message && err.message.includes('permission')) {
+          showPermissionRulesNotice();
+        }
+      }
+    };
+
+    // Mark as In Stock (Sets inStock: true)
+    window.markGadgetInStock = async function(id) {
+      const g = liveGadgets.find(item => item.id === id);
+      const name = g ? g.name : 'Gadget';
+      const prevBadge = (g && g.badge === 'SOLD') ? '' : (g ? g.badge : '');
+      try {
+        if (window.db) {
+          await window.db.collection('products').doc(id).set({
+            inStock: true,
+            badge: prevBadge,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        }
+        if (g) {
+          g.inStock = true;
+          g.badge = prevBadge;
+        }
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast(`"${name}" restocked & available.`);
+      } catch (err) {
+        console.warn('Restock cloud save notice:', err);
+        if (g) {
+          g.inStock = true;
+          g.badge = prevBadge;
+          renderMetrics();
+          renderGadgetsTable();
+        }
+        showAdminToast(`"${name}" restocked locally.`, true);
+        if (err.message && err.message.includes('permission')) {
+          showPermissionRulesNotice();
+        }
+      }
+    };
+
     // Toggle In Stock / Out of Stock
     window.toggleGadgetStock = async function(id, newStatus) {
-      if (!window.db) return;
-      try {
-        await window.db.collection('products').doc(id).set({
-          inStock: newStatus,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
-        showAdminToast(`Stock updated to ${newStatus ? 'In Stock' : 'Out of Stock'}.`);
-      } catch (err) {
-        console.error('Stock toggle error:', err);
-        showAdminToast('Failed to update stock status: ' + err.message, false);
+      if (newStatus) {
+        return window.markGadgetInStock(id);
+      } else {
+        return window.markGadgetSold(id);
       }
     };
 
@@ -1135,8 +1385,21 @@
         showAdminToast(`"${name}" saved successfully!`);
         document.getElementById('modal-gadget').classList.remove('show');
       } catch (err) {
-        console.error('Error saving gadget:', err);
-        showAdminToast('Error saving gadget: ' + err.message, false);
+        console.warn('Error saving gadget to Firestore:', err);
+        // Fallback: update gadget in local liveGadgets so UI reflects it immediately
+        const idx = liveGadgets.findIndex(item => item.id === id);
+        const localGadget = { id, ...gadgetPayload };
+        if (idx > -1) liveGadgets[idx] = localGadget;
+        else liveGadgets.unshift(localGadget);
+        renderMetrics();
+        renderGadgetsTable();
+        document.getElementById('modal-gadget').classList.remove('show');
+        showAdminToast(`"${name}" saved locally!`);
+        if (err.message && err.message.includes('permission')) {
+          showPermissionRulesNotice();
+        } else {
+          showAdminToast('Notice: ' + err.message, false);
+        }
       } finally {
         saveBtn.disabled = false;
         saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish';
@@ -1342,8 +1605,23 @@
         renderMetrics();
         showAdminToast(`Admin access granted to ${email}!`);
       } catch (err) {
-        console.error('Error adding admin:', err);
-        showAdminToast('Failed to save admin: ' + err.message, false);
+        console.warn('Error adding admin to Firestore:', err);
+        // Fallback: grant immediately in local memory and cache
+        window.KHAYLIM_ADMINS = updated;
+        try {
+          const cached = JSON.parse(localStorage.getItem('khaylim_extra_admins') || '[]');
+          if (!cached.includes(email)) cached.push(email);
+          localStorage.setItem('khaylim_extra_admins', JSON.stringify(cached));
+        } catch(e){}
+        input.value = '';
+        renderAdminsList();
+        renderMetrics();
+        showAdminToast(`Admin access granted to ${email} locally.`);
+        if (err.message && err.message.includes('permission')) {
+          showPermissionRulesNotice();
+        } else {
+          showAdminToast('Notice: ' + err.message, false);
+        }
       }
     });
 
@@ -1372,6 +1650,25 @@
         showAdminToast('Failed to revoke admin: ' + err.message, false);
       }
     };
+
+    // Firestore Rules Guide Modal Event Listeners
+    document.getElementById('btn-open-rules-guide')?.addEventListener('click', showPermissionRulesNotice);
+    document.getElementById('btn-close-rules-modal')?.addEventListener('click', () => {
+      document.getElementById('modal-rules-guide')?.classList.remove('show');
+    });
+    document.getElementById('btn-done-rules')?.addEventListener('click', () => {
+      document.getElementById('modal-rules-guide')?.classList.remove('show');
+    });
+    document.getElementById('btn-copy-rules')?.addEventListener('click', () => {
+      const code = document.getElementById('firestore-rules-snippet')?.textContent || '';
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('btn-copy-rules');
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          if (btn) btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Rules';
+        }, 2500);
+      });
+    });
 
     // Firebase Auth State Listener
     document.addEventListener('DOMContentLoaded', () => {

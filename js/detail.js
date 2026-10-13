@@ -141,21 +141,57 @@ function renderDetail(p) {
     <span style="font-size:.85rem;color:var(--gold);font-weight:700">${p.rating}</span>
     <span style="font-size:.8rem;color:var(--text-muted)">(${p.reviews} reviews)</span>` : "";
 
+  const badgePill = document.querySelector("#detail-badge-pill");
+  if (badgePill) {
+    if (p.badge) {
+      const bLower = p.badge.toLowerCase().trim();
+      let badgeLabel = p.badge;
+      let badgeClass = "badge-new";
+      if (bLower === "uk used" || bLower === "uk-used") {
+        badgeLabel = "🇬🇧 UK Used";
+        badgeClass = "badge-uk-used";
+      } else if (bLower === "nigerian used" || bLower === "nigerian-used" || bLower === "naija used") {
+        badgeLabel = "🇳🇬 Nigerian Used";
+        badgeClass = "badge-nigerian-used";
+      } else if (bLower === "brand new" || bLower === "new") {
+        badgeLabel = "✨ Brand New";
+        badgeClass = "badge-brand-new";
+      } else if (bLower === "sold") {
+        badgeLabel = "🚫 SOLD OUT";
+        badgeClass = "badge-sold";
+      } else if (bLower === "hot" || bLower === "popular") {
+        badgeLabel = "🔥 Popular";
+        badgeClass = "badge-hot";
+      }
+      badgePill.className = `product-badge ${badgeClass}`;
+      badgePill.textContent = badgeLabel;
+      badgePill.style.display = "inline-flex";
+    } else {
+      badgePill.style.display = "none";
+    }
+  }
+
+  const isSold = p.inStock === false || (p.badge && p.badge.toLowerCase() === 'sold');
   if (stockEl) {
-    stockEl.className = `detail-stock ${p.inStock ? "in-stock" : "out-stock"}`;
-    stockEl.innerHTML = p.inStock
-      ? '<i class="fa-solid fa-circle-check"></i> In Stock — Ready to Ship'
-      : '<i class="fa-solid fa-circle-xmark"></i> Out of Stock';
+    stockEl.className = `detail-stock ${isSold ? "out-stock" : "in-stock"}`;
+    stockEl.innerHTML = isSold
+      ? '<i class="fa-solid fa-circle-xmark"></i> Sold Out / Out of Stock'
+      : '<i class="fa-solid fa-circle-check"></i> In Stock — Ready to Ship';
   }
 
   // Add to cart
   const addBtn = document.querySelector("#detail-add-btn");
   if (addBtn) {
-    if (!p.inStock) {
+    if (isSold) {
       addBtn.disabled = true;
       addBtn.style.opacity = "0.5";
       addBtn.style.cursor = "not-allowed";
-      addBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Out of Stock';
+      addBtn.innerHTML = '<i class="fa-solid fa-ban"></i> Sold Out';
+    } else {
+      addBtn.disabled = false;
+      addBtn.style.opacity = "1";
+      addBtn.style.cursor = "pointer";
+      addBtn.innerHTML = '<i class="fa-solid fa-bag-shopping"></i> Add to Cart';
     }
     addBtn.addEventListener("click", () => {
       const qty = parseInt(document.querySelector("#qty-input")?.value || 1);

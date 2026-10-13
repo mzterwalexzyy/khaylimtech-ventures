@@ -406,9 +406,26 @@ function initFaqAccordion() {
 const PLACEHOLDER_IMG = "placehold.co";
 
 function renderProductCard(p) {
-  const badgeHtml = p.badge
-    ? `<span class="product-badge badge-${p.badge}">${p.badge === "hot" ? "Popular" : p.badge === "new" ? "New" : p.badge}</span>`
-    : (p.inStock ? "" : '<span class="product-badge badge-out">Out of Stock</span>');
+  let badgeHtml = '';
+  if (!p.inStock || (p.badge && p.badge.toLowerCase() === 'sold')) {
+    badgeHtml = '<span class="product-badge badge-sold">SOLD OUT</span>';
+  } else if (p.badge) {
+    const bLower = p.badge.toLowerCase().trim();
+    if (bLower === 'uk used' || bLower === 'uk-used') {
+      badgeHtml = '<span class="product-badge badge-uk-used">UK Used</span>';
+    } else if (bLower === 'nigerian used' || bLower === 'nigerian-used' || bLower === 'naija used') {
+      badgeHtml = '<span class="product-badge badge-nigerian-used">Nigerian Used</span>';
+    } else if (bLower === 'brand new' || bLower === 'brand-new') {
+      badgeHtml = '<span class="product-badge badge-brand-new">Brand New</span>';
+    } else if (bLower === 'hot' || bLower === 'popular') {
+      badgeHtml = '<span class="product-badge badge-hot">Popular</span>';
+    } else if (bLower === 'new') {
+      badgeHtml = '<span class="product-badge badge-new">New</span>';
+    } else {
+      const slug = bLower.replace(/[^a-z0-9]/g, '-');
+      badgeHtml = `<span class="product-badge badge-${slug}">${p.badge}</span>`;
+    }
+  }
 
   const isPlaceholder = !p.image || p.image.includes(PLACEHOLDER_IMG);
   const mediaHtml = (p.video && isPlaceholder)

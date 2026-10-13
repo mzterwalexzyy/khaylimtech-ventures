@@ -6,13 +6,14 @@
 (function () {
   'use strict';
 
-  // Primary Super Admin (Hardcoded fallback so access is always guaranteed)
-  const SUPER_ADMIN = "kareemtoheeba10@gmail.com";
-
-  // List of active admin emails (initialized with Super Admin)
-  window.KHAYLIM_ADMINS = [
-    SUPER_ADMIN.toLowerCase()
+  // Primary Super Admins (Hardcoded so access is immediately guaranteed)
+  const DEFAULT_ADMINS = [
+    "kareemtoheeba10@gmail.com",
+    "khaylimtech@gmail.com"
   ];
+
+  // List of active admin emails (initialized with Super Admins)
+  window.KHAYLIM_ADMINS = DEFAULT_ADMINS.map(e => e.toLowerCase());
 
   // Helper: Check if an email is an authorized admin
   window.isAdminEmail = function (email) {
@@ -41,8 +42,8 @@
           const data = doc.data();
           const extraAdmins = Array.isArray(data.emails) ? data.emails : [];
           
-          // Merge unique emails, always keeping the super admin
-          const merged = new Set([SUPER_ADMIN.toLowerCase()]);
+          // Merge unique emails, always keeping the default admins
+          const merged = new Set(DEFAULT_ADMINS.map(e => e.toLowerCase()));
           extraAdmins.forEach(e => {
             if (e && typeof e === 'string') merged.add(e.trim().toLowerCase());
           });
@@ -50,9 +51,9 @@
         } else {
           // Initialize doc if it doesn't exist
           db.collection('settings').doc('admins').set({
-            emails: [SUPER_ADMIN.toLowerCase()],
+            emails: DEFAULT_ADMINS.map(e => e.toLowerCase()),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedBy: SUPER_ADMIN
+            updatedBy: DEFAULT_ADMINS[0]
           }, { merge: true }).catch(err => console.warn('Init admins doc notice:', err));
         }
 

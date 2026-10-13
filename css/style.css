@@ -844,7 +844,10 @@ body { padding-top: 70px; }
 
 .badge-new { background: var(--gold); color: #000; }
 .badge-hot { background: var(--orange); color: #fff; }
-.badge-out { background: #666; color: #fff; }
+.badge-out, .badge-sold { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; font-weight: 800; }
+.badge-uk-used { background: linear-gradient(135deg, #1e40af, #3b82f6); color: #fff; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 2px 8px rgba(30,64,175,0.35); }
+.badge-nigerian-used { background: linear-gradient(135deg, #065f46, #10b981); color: #fff; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 2px 8px rgba(6,95,70,0.35); }
+.badge-brand-new { background: linear-gradient(135deg, #c9a227, #e0b838); color: #0d0d12; font-weight: 800; }
 
 .product-wishlist {
   position: absolute;
@@ -1066,9 +1069,21 @@ body { padding-top: 70px; }
   margin-bottom: 10px;
   font-size: 0.82rem;
   color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-.footer-contact-item i { color: var(--gold); margin-top: 2px; flex-shrink: 0; }
+a.footer-contact-item {
+  cursor: pointer;
+}
+
+a.footer-contact-item:hover {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+.footer-contact-item i { color: var(--gold); margin-top: 2px; flex-shrink: 0; transition: transform 0.2s ease; }
+a.footer-contact-item:hover i { transform: scale(1.15); }
 
 .footer-col h4 {
   font-size: 0.85rem;
