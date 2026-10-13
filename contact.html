@@ -178,18 +178,58 @@
       <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
     </div>
   </div>
-  <nav class="mobile-nav">
-    <a href="/"><i class="fa-solid fa-house"></i> Home</a>
-    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Categories</div>
-    <a href="/phones"><i class="fa-solid fa-mobile-screen-button"></i> Phones</a>
-    <a href="/laptops"><i class="fa-solid fa-laptop"></i> Laptops</a>
-    <a href="/gaming"><i class="fa-solid fa-gamepad"></i> Gaming Consoles</a>
-    <a href="/accessories"><i class="fa-solid fa-headphones"></i> Accessories</a>
-    <a href="/products" style="font-weight:700;color:var(--gold-light)"><i class="fa-solid fa-layer-group"></i> All Products</a>
-    <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;padding:12px 14px 4px">Company</div>
-    <a href="/how-to-order"><i class="fa-solid fa-truck-fast"></i> How to Order</a>
-    <a href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a>
-    <a href="/contact" class="active"><i class="fa-solid fa-envelope"></i> Contact</a>
+  <!-- Mobile Nav Drawer -->
+  <nav class="mobile-nav" aria-label="Mobile Navigation">
+    <div id="mobile-nav-user-slot" class="mobile-nav-user-slot"></div>
+
+    <div class="mobile-nav-quick-row">
+      <a href="/" class="mobile-nav-quick-link"><i class="fa-solid fa-house"></i> <span>Home</span></a>
+      <a href="/products" class="mobile-nav-quick-link highlight"><i class="fa-solid fa-layer-group"></i> <span>All Products</span></a>
+    </div>
+
+    <div class="mobile-nav-group">
+      <div class="mobile-nav-section-title">
+        <span>Hardware &amp; Devices</span>
+        <span class="mobile-nav-section-badge">4 Categories</span>
+      </div>
+      <div class="mobile-nav-cat-grid">
+        <a href="/phones" class="mobile-cat-tile">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>Phones</span>
+        </a>
+        <a href="/laptops" class="mobile-cat-tile">
+          <i class="fa-solid fa-laptop"></i>
+          <span>Laptops</span>
+        </a>
+        <a href="/gaming" class="mobile-cat-tile">
+          <i class="fa-solid fa-gamepad"></i>
+          <span>Gaming</span>
+        </a>
+        <a href="/accessories" class="mobile-cat-tile">
+          <i class="fa-solid fa-headphones"></i>
+          <span>Accessories</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mobile-nav-group">
+      <div class="mobile-nav-section-title">
+        <span>Store &amp; Support</span>
+      </div>
+      <div class="mobile-nav-info-grid">
+        <a href="/how-to-order" class="mobile-info-tile"><i class="fa-solid fa-truck-fast"></i> <span>How to Order</span></a>
+        <a href="/about" class="mobile-info-tile"><i class="fa-solid fa-circle-info"></i> <span>About Us</span></a>
+        <a href="/contact" class="mobile-info-tile active"><i class="fa-solid fa-envelope"></i> <span>Contact</span></a>
+        <a href="/faq" class="mobile-info-tile"><i class="fa-solid fa-circle-question"></i> <span>FAQs</span></a>
+      </div>
+    </div>
+
+    <div class="mobile-nav-footer-cta">
+      <a href="https://wa.me/2348083873316?text=Hello%20KhaylimTech!%20I%20want%20to%20speak%20with%20support." target="_blank" rel="noopener" class="mobile-nav-wa-chip">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>Chat &amp; Order on WhatsApp</span>
+      </a>
+    </div>
   </nav>
 </nav>
 

@@ -1943,14 +1943,6 @@
             <h1 class="view-title" id="form-title-text">Add Product</h1>
             <p class="view-subtitle">Enter device specifications, attach photos, and publish to the live catalog.</p>
           </div>
-          <div class="view-actions">
-            <button type="button" class="btn-ghost" onclick="switchView('products')">
-              Discard Changes
-            </button>
-            <button type="button" class="btn-gold" id="btn-save-gadget-top" onclick="triggerFormSubmit()">
-              <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish
-            </button>
-          </div>
         </div>
 
         <form id="gadget-editor-form">
@@ -3542,11 +3534,8 @@ service cloud.firestore {
     document.getElementById('gadget-editor-form').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const topSaveBtn = document.getElementById('btn-save-gadget-top');
       const btmSaveBtn = document.getElementById('btn-save-gadget-bottom');
-      [topSaveBtn, btmSaveBtn].forEach(b => {
-        if (b) { b.disabled = true; b.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
-      });
+      if (btmSaveBtn) { btmSaveBtn.disabled = true; btmSaveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
 
       const id = document.getElementById('form-gadget-id').value.trim() || generateProductId();
       const name = document.getElementById('form-name').value.trim();
@@ -3610,9 +3599,7 @@ service cloud.firestore {
           switchView('rules');
         }
       } finally {
-        [topSaveBtn, btmSaveBtn].forEach(b => {
-          if (b) { b.disabled = false; b.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish'; }
-        });
+        if (btmSaveBtn) { btmSaveBtn.disabled = false; btmSaveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish'; }
       }
     });
 

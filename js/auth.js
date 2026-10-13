@@ -49,6 +49,30 @@
       color: var(--text, #111);
       position: relative;
     }
+    @media (max-width: 640px) {
+      .nav-auth-user {
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        border-radius: 50% !important;
+        justify-content: center !important;
+        gap: 0 !important;
+        border: 1.5px solid var(--gold) !important;
+        background: rgba(201, 162, 39, 0.12) !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+      }
+      .nav-auth-user span,
+      .nav-auth-user i.fa-chevron-down {
+        display: none !important;
+      }
+      .nav-auth-user .nav-user-avatar {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 0.8rem !important;
+        margin: 0 !important;
+      }
+    }
     .nav-user-avatar {
       width: 28px;
       height: 28px;
@@ -825,7 +849,81 @@
       });
     }
 
-    // Add to mobile drawer
+    // Mount mobile drawer user slot
+    updateMobileNavUser(window.currentUser || null);
+  }
+
+  // Modern Mobile Drawer User Slot Renderer
+  function updateMobileNavUser(user) {
+    const slot = document.getElementById('mobile-nav-user-slot');
+    const mobileNav = document.querySelector('.mobile-nav');
+
+    if (slot) {
+      if (user) {
+        const displayName = user.displayName || user.email.split('@')[0];
+        const firstName = displayName.split(' ')[0];
+        const initial = firstName.charAt(0).toUpperCase();
+        const isAdmin = (window.isUserAdmin && window.isUserAdmin(user)) ||
+          (user.email && user.email.toLowerCase() === 'kareemtoheeba10@gmail.com');
+
+        const avatarHtml = user.photoURL
+          ? `<img src="${user.photoURL}" alt="${displayName}" class="nav-user-avatar">`
+          : `<div class="nav-user-avatar">${initial}</div>`;
+
+        const roleHtml = isAdmin
+          ? `<i class="fa-solid fa-crown" style="color:var(--gold);"></i> Admin`
+          : `<i class="fa-solid fa-circle-check"></i> Customer`;
+
+        const adminBtnHtml = isAdmin
+          ? `<a href="/admin" class="btn-mobile-admin-pill"><i class="fa-solid fa-shield-halved"></i> Admin</a>`
+          : ``;
+
+        slot.innerHTML = `
+          <div class="mobile-user-card">
+            <div class="mobile-user-card-info">
+              ${avatarHtml}
+              <div class="mobile-user-meta">
+                <div class="mobile-user-name">${displayName}</div>
+                <div class="mobile-user-role">${roleHtml}</div>
+              </div>
+            </div>
+            <div class="mobile-user-actions">
+              ${adminBtnHtml}
+              <button type="button" class="btn-mobile-signout" id="btn-mobile-signout-slot" title="Sign Out">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('btn-mobile-signout-slot')?.addEventListener('click', async (e) => {
+          e.preventDefault();
+          try {
+            await firebase.auth().signOut();
+          } catch (err) {
+            console.error('Sign out error:', err);
+          }
+        });
+      } else {
+        slot.innerHTML = `
+          <button type="button" class="btn-mobile-auth-trigger" id="btn-mobile-auth-trigger">
+            <i class="fa-regular fa-circle-user"></i>
+            <span>Sign In / Create Account</span>
+          </button>
+        `;
+        document.getElementById('btn-mobile-auth-trigger')?.addEventListener('click', (e) => {
+          e.preventDefault();
+          const mob = document.querySelector('.mobile-nav');
+          const ham = document.querySelector('.hamburger');
+          if (mob) mob.classList.remove('open');
+          if (ham) ham.classList.remove('is-open');
+          openAuthModal('signin');
+        });
+      }
+      return;
+    }
+
+    // Fallback if page has legacy mobile-nav without #mobile-nav-user-slot
     if (mobileNav && !document.getElementById('mobile-auth-link')) {
       const mobAuth = document.createElement('a');
       mobAuth.id = 'mobile-auth-link';
@@ -864,6 +962,8 @@
       const userBadge = document.getElementById('menu-user-badge');
       const mobileNav = document.querySelector('.mobile-nav');
 
+      updateMobileNavUser(user);
+
       if (user) {
         const displayName = user.displayName || user.email.split('@')[0];
         const initial = displayName.charAt(0).toUpperCase();
@@ -900,18 +1000,20 @@
             : `<i class="fa-solid fa-circle-check"></i> Verified Customer`;
         }
 
-        // Mobile admin link insertion
-        let mobileAdminLink = document.getElementById('mobile-admin-link');
-        if (isAdmin && mobileNav && !mobileAdminLink) {
-          mobileAdminLink = document.createElement('a');
-          mobileAdminLink.id = 'mobile-admin-link';
-          mobileAdminLink.href = '/admin';
-          mobileAdminLink.style.color = 'var(--gold)';
-          mobileAdminLink.style.fontWeight = '700';
-          mobileAdminLink.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Admin Portal`;
-          mobileNav.insertBefore(mobileAdminLink, mobileNav.children[1] || null);
-        } else if (!isAdmin && mobileAdminLink) {
-          mobileAdminLink.remove();
+        // Mobile admin link fallback (only if no modern #mobile-nav-user-slot)
+        if (!document.getElementById('mobile-nav-user-slot')) {
+          let mobileAdminLink = document.getElementById('mobile-admin-link');
+          if (isAdmin && mobileNav && !mobileAdminLink) {
+            mobileAdminLink = document.createElement('a');
+            mobileAdminLink.id = 'mobile-admin-link';
+            mobileAdminLink.href = '/admin';
+            mobileAdminLink.style.color = 'var(--gold)';
+            mobileAdminLink.style.fontWeight = '700';
+            mobileAdminLink.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Admin Portal`;
+            mobileNav.insertBefore(mobileAdminLink, mobileNav.children[1] || null);
+          } else if (!isAdmin && mobileAdminLink) {
+            mobileAdminLink.remove();
+          }
         }
       } else {
         if (navAuthBtn) {

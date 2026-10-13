@@ -308,7 +308,8 @@
     gap: 6px !important;
     flex-shrink: 0 !important;
   }
-  .nav-auth-btn {
+  .nav-auth-btn,
+  .nav-auth-user {
     width: 36px !important;
     height: 36px !important;
     padding: 0 !important;
@@ -318,12 +319,24 @@
     justify-content: center !important;
     gap: 0 !important;
     flex-shrink: 0 !important;
+    overflow: hidden !important;
+    border: 1.5px solid var(--gold) !important;
+    background: rgba(201, 162, 39, 0.12) !important;
   }
-  .nav-auth-btn span {
+  .nav-auth-btn span,
+  .nav-auth-user span,
+  .nav-auth-user i.fa-chevron-down {
     display: none !important;
   }
   .nav-auth-btn i {
     font-size: 1rem !important;
+    margin: 0 !important;
+    color: var(--gold) !important;
+  }
+  .nav-auth-user .nav-user-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.8rem !important;
     margin: 0 !important;
   }
   .nav-btn, .hamburger {
@@ -389,11 +402,22 @@
   .deal-action-side {
     width: 100% !important;
     display: flex !important;
-    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: 14px !important;
   }
-  .deal-btn-cta {
+  .deal-btn-claim,
+  .deal-btn-whatsapp,
+  .btn-editorial-gold,
+  .btn-editorial-ghost {
     width: 100% !important;
+    height: 48px !important;
+    padding: 0 16px !important;
     justify-content: center !important;
+    font-size: 0.88rem !important;
+    border-radius: 12px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
   }
 
   /* Store Proof Grid Mobile */
