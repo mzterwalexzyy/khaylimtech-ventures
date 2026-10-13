@@ -256,6 +256,22 @@ async function runTests() {
   const appJs = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf-8');
   assert(appJs.includes('initLivePurchaseToast'), 'app.js implements initLivePurchaseToast function');
 
+  // 10. Admin Specifications Builder & Mobile Directory Cards
+  console.log('\n10. Verifying Admin Dynamic Specs Builder & Mobile Cards...');
+  const adminHtml = fs.readFileSync(path.join(ROOT, 'admin.html'), 'utf-8');
+  assert(adminHtml.includes('id="specs-builder-wrap"'), 'admin.html has #specs-builder-wrap');
+  assert(adminHtml.includes('id="specs-builder-grid"'), 'admin.html has #specs-builder-grid');
+  assert(adminHtml.includes('id="drafted-desc-preview"'), 'admin.html has live #drafted-desc-preview');
+  assert(adminHtml.includes("key: 'processor'"), 'Laptops specs include processor');
+  assert(adminHtml.includes("key: 'graphics'"), 'Laptops specs include GPU');
+  assert(adminHtml.includes("key: 'battery'"), 'Laptops specs include battery & cycle');
+  assert(adminHtml.includes('window.saveNewSpecOption'), 'Custom spec options can be added dynamically');
+  assert(adminHtml.includes('window.updateDraftedDescription'), 'Description is auto-drafted from selected specs');
+  assert(adminHtml.includes('id="admin-gadgets-cards-container"'), 'admin.html has mobile cards grid');
+  assert(adminHtml.includes('window.setDirectoryViewMode'), 'Directory view switcher is implemented');
+  assert(adminHtml.includes('overflow-x: auto'), 'table-container supports horizontal swipe/drag');
+  assert(adminHtml.includes('min-width: 660px'), 'admin-table maintains minimum width for mobile');
+
   // SUMMARY
   console.log('\n=============================================');
   console.log(`  Tests Completed: ${totalTests}`);

@@ -549,11 +549,13 @@
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: var(--radius-lg);
-      overflow: hidden;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       box-shadow: var(--shadow-card);
     }
     .admin-table {
       width: 100%;
+      min-width: 660px;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.86rem;
@@ -756,6 +758,374 @@
     .btn-action-sm.delete:hover {
       border-color: #ef4444;
       color: #ef4444;
+    }
+
+    /* Directory View Mode Bar (Mobile Switcher & Hints) */
+    .directory-view-mode-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .mobile-swipe-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid #e2e8f0;
+    }
+    .view-mode-toggle-group {
+      display: inline-flex;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .btn-view-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748b;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-view-mode.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Mobile Gadget Cards */
+    .admin-gadgets-cards-grid {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .gadget-mobile-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .gadget-card-top {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .gadget-card-thumb {
+      width: 58px;
+      height: 58px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+    .gadget-card-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .gadget-card-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+    .gadget-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+    .gadget-card-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+    .gadget-card-price {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .gadget-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+      position: relative;
+    }
+    .btn-card-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-family: inherit;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      flex: 1;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn-card-action:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .btn-card-action.edit {
+      background: #f8fafc;
+      color: #1e293b;
+    }
+    .dropdown-action-wrap {
+      position: relative;
+    }
+    .btn-card-action.more {
+      flex: 0 0 auto;
+      padding: 0 12px;
+    }
+    .card-action-menu {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      right: 0;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      padding: 6px;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 100;
+      min-width: 155px;
+    }
+    .card-action-menu.show {
+      display: flex;
+    }
+    .card-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #334155;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      width: 100%;
+      text-align: left;
+    }
+    .card-menu-item:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    .card-menu-item.danger {
+      color: #ef4444;
+    }
+    .card-menu-item.danger:hover {
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    /* ========================================================
+       Dynamic Hardware Specifications Builder
+       ======================================================== */
+    .specs-builder-wrap {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px;
+      margin-top: 14px;
+    }
+    .specs-builder-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .specs-builder-title {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .specs-builder-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--gold-subtle);
+      color: var(--gold);
+    }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+    }
+    .spec-item-box {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .spec-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .spec-item-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .btn-add-spec-option {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 0;
+    }
+    .btn-add-spec-option:hover {
+      text-decoration: underline;
+    }
+    .spec-custom-input-row {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .spec-custom-input-row.show {
+      display: flex;
+    }
+    .spec-custom-input {
+      flex: 1;
+      height: 32px;
+      padding: 0 8px;
+      font-size: 0.78rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+    }
+    .spec-custom-input:focus {
+      border-color: var(--gold);
+    }
+    .btn-spec-custom-save {
+      height: 32px;
+      padding: 0 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      background: var(--gold);
+      color: #0f172a;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-spec-custom-cancel {
+      height: 32px;
+      padding: 0 8px;
+      font-size: 0.75rem;
+      border-radius: 6px;
+      background: #e2e8f0;
+      color: #475569;
+      border: none;
+      cursor: pointer;
+    }
+    .drafted-desc-preview-wrap {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+    }
+    .drafted-desc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .drafted-desc-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .btn-draft-desc-action {
+      background: none;
+      border: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gold);
+      cursor: pointer;
+      padding: 0;
+    }
+    .btn-draft-desc-action:hover {
+      text-decoration: underline;
+    }
+    .drafted-desc-text {
+      font-family: inherit;
+      font-size: 0.8rem;
+      color: #1e293b;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      background: #f8fafc;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      max-height: 180px;
+      overflow-y: auto;
     }
 
     /* ========================================================
@@ -1522,6 +1892,24 @@
           </div>
         </div>
 
+        <!-- Directory View Mode Switcher & Mobile Hints -->
+        <div class="directory-view-mode-bar">
+          <span class="mobile-swipe-hint"><i class="fa-solid fa-arrows-left-right"></i> Drag table left/right or toggle Cards</span>
+          <div class="view-mode-toggle-group">
+            <button type="button" class="btn-view-mode" id="btn-view-cards" onclick="setDirectoryViewMode('cards')">
+              <i class="fa-solid fa-table-cells-large"></i> Cards
+            </button>
+            <button type="button" class="btn-view-mode active" id="btn-view-table" onclick="setDirectoryViewMode('table')">
+              <i class="fa-solid fa-table-list"></i> Table
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Gadgets Cards Grid -->
+        <div class="admin-gadgets-cards-grid" id="admin-gadgets-cards-container">
+          <!-- Populated dynamically -->
+        </div>
+
         <!-- Table Container -->
         <div class="table-container">
           <table class="admin-table">
@@ -1570,27 +1958,96 @@
 
           <div class="form-layout-grid">
 
-            <!-- LEFT COLUMN: GENERAL INFO, PRICING & CLASSIFICATION -->
+            <!-- LEFT COLUMN: GENERAL INFO, SPECS & PRICING -->
             <div class="form-col-left">
 
-              <!-- General Information -->
+              <!-- General Information & Classification -->
               <div class="form-card">
                 <div class="form-card-header">
                   <div>
                     <h3 class="form-card-title">General Information</h3>
-                    <div class="form-card-sub">Core hardware identity and description</div>
+                    <div class="form-card-sub">Core hardware identity, category, and condition</div>
                   </div>
                 </div>
 
                 <div class="input-field-group">
                   <label class="field-label">Gadget Name / Model *</label>
-                  <input type="text" id="form-name" class="form-control-input" placeholder="e.g. Apple iPhone 16 Pro Max (256GB Desert Titanium)" required>
+                  <input type="text" id="form-name" class="form-control-input" placeholder="e.g. Apple MacBook Pro 14 (M3 Pro 18GB 512GB) or iPhone 16 Pro Max" required>
                 </div>
 
-                <div class="input-field-group">
-                  <label class="field-label">Description &amp; Specifications</label>
-                  <textarea id="form-desc" class="form-control-textarea" placeholder="Factory sealed in box, verifiable serial/IMEI, includes 1-year warranty, same-day delivery across Ibadan..."></textarea>
+                <div class="form-row-duo">
+                  <div class="input-field-group">
+                    <label class="field-label">Category *</label>
+                    <select id="form-category" class="form-control-select" required>
+                      <option value="phones">Phones</option>
+                      <option value="laptops">Laptops</option>
+                      <option value="gaming">Gaming Consoles</option>
+                      <option value="accessories">Accessories</option>
+                    </select>
+                  </div>
+
+                  <div class="input-field-group">
+                    <label class="field-label">Condition / Badge Tag</label>
+                    <select id="form-badge" class="form-control-select">
+                      <option value="UK Used">🇬🇧 UK Used</option>
+                      <option value="Nigerian Used">🇳🇬 Nigerian Used</option>
+                      <option value="Brand New">✨ Brand New</option>
+                      <option value="new">NEW (Fresh Arrival)</option>
+                      <option value="popular">POPULAR (Bestseller)</option>
+                      <option value="hot-deal">HOT DEAL (Sale)</option>
+                      <option value="oem">OFFICIAL OEM</option>
+                      <option value="SOLD">🚫 SOLD / Out of Stock</option>
+                      <option value="">None</option>
+                    </select>
+                  </div>
                 </div>
+
+                <!-- Dynamic Specifications Builder -->
+                <div class="specs-builder-wrap" id="specs-builder-wrap">
+                  <div class="specs-builder-header">
+                    <div class="specs-builder-title">
+                      <i class="fa-solid fa-sliders" style="color:var(--gold)"></i>
+                      <span>Hardware Specifications</span>
+                      <span class="specs-builder-badge" id="specs-category-badge">PHONES</span>
+                    </div>
+                    <div style="font-size:0.75rem;color:var(--text-muted)">
+                      Pick specs below or tap <strong>+ Add Option</strong> for custom specs
+                    </div>
+                  </div>
+
+                  <!-- Dynamic Grid Container -->
+                  <div class="specs-grid" id="specs-builder-grid">
+                    <!-- Populated dynamically based on category -->
+                  </div>
+
+                  <!-- Live Drafted Description Preview -->
+                  <div class="drafted-desc-preview-wrap">
+                    <div class="drafted-desc-header">
+                      <span class="drafted-desc-label">
+                        <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold)"></i> Auto-Drafted Description
+                      </span>
+                      <div style="display:flex;gap:12px;align-items:center;">
+                        <button type="button" class="btn-draft-desc-action" id="btn-toggle-raw-desc" onclick="toggleRawDescEdit()">
+                          <i class="fa-solid fa-pen"></i> <span id="label-toggle-raw-desc">Edit Text Directly</span>
+                        </button>
+                        <button type="button" class="btn-draft-desc-action" onclick="updateDraftedDescription(true)">
+                          <i class="fa-solid fa-rotate"></i> Re-draft
+                        </button>
+                      </div>
+                    </div>
+                    <pre class="drafted-desc-text" id="drafted-desc-preview">Select specs above to generate product description...</pre>
+                  </div>
+
+                  <!-- Direct Textarea (collapsible) -->
+                  <div class="input-field-group" id="raw-desc-container" style="display:none;margin-top:14px;padding-top:12px;border-top:1px dashed #cbd5e1;">
+                    <label class="field-label" style="display:flex;justify-content:space-between;">
+                      <span>Description &amp; Specifications (Saved to Store)</span>
+                      <span style="font-weight:normal;text-transform:none;color:var(--text-muted);font-size:0.7rem;">Synced with specs above</span>
+                    </label>
+                    <textarea id="form-desc" class="form-control-textarea" placeholder="Specifications will be drafted here automatically..."></textarea>
+                  </div>
+                </div>
+
               </div>
 
               <!-- Pricing & Inventory -->
@@ -1619,43 +2076,6 @@
                     <span class="switch-slider"></span>
                     <span id="label-stock-text">Currently In Stock &amp; Ready for Delivery</span>
                   </label>
-                </div>
-              </div>
-
-              <!-- Category & Condition Tags -->
-              <div class="form-card">
-                <div class="form-card-header">
-                  <div>
-                    <h3 class="form-card-title">Classification &amp; Condition</h3>
-                    <div class="form-card-sub">Category section and condition badges</div>
-                  </div>
-                </div>
-
-                <div class="form-row-duo">
-                  <div class="input-field-group">
-                    <label class="field-label">Category *</label>
-                    <select id="form-category" class="form-control-select" required>
-                      <option value="phones">Phones</option>
-                      <option value="laptops">Laptops</option>
-                      <option value="gaming">Gaming Consoles</option>
-                      <option value="accessories">Accessories</option>
-                    </select>
-                  </div>
-
-                  <div class="input-field-group">
-                    <label class="field-label">Condition / Badge Tag</label>
-                    <select id="form-badge" class="form-control-select">
-                      <option value="UK Used">🇬🇧 UK Used</option>
-                      <option value="Nigerian Used">🇳🇬 Nigerian Used</option>
-                      <option value="Brand New">✨ Brand New</option>
-                      <option value="new">NEW (Fresh Arrival)</option>
-                      <option value="popular">POPULAR (Bestseller)</option>
-                      <option value="hot-deal">HOT DEAL (Sale)</option>
-                      <option value="oem">OFFICIAL OEM</option>
-                      <option value="SOLD">🚫 SOLD / Out of Stock</option>
-                      <option value="">None</option>
-                    </select>
-                  </div>
                 </div>
               </div>
 
@@ -2194,6 +2614,112 @@ service cloud.firestore {
       if (sidebarAdminCount) sidebarAdminCount.textContent = adminCount;
     }
 
+    // Directory View Mode (Cards on Mobile, Table on Desktop)
+    let currentDirectoryViewMode = (window.innerWidth <= 768) ? 'cards' : 'table';
+
+    window.setDirectoryViewMode = function(mode) {
+      currentDirectoryViewMode = mode;
+      const cardsGrid = document.getElementById('admin-gadgets-cards-container');
+      const tableWrap = document.querySelector('.table-container');
+      const btnCards = document.getElementById('btn-view-cards');
+      const btnTable = document.getElementById('btn-view-table');
+
+      if (mode === 'cards') {
+        if (cardsGrid) cardsGrid.style.display = 'flex';
+        if (tableWrap) tableWrap.style.display = 'none';
+        btnCards?.classList.add('active');
+        btnTable?.classList.remove('active');
+      } else {
+        if (cardsGrid) cardsGrid.style.display = 'none';
+        if (tableWrap) tableWrap.style.display = 'block';
+        btnCards?.classList.remove('active');
+        btnTable?.classList.add('active');
+      }
+    };
+
+    function renderGadgetsCards(filtered) {
+      const container = document.getElementById('admin-gadgets-cards-container');
+      if (!container) return;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:40px 16px;background:#ffffff;border:1px solid var(--border-color);border-radius:var(--radius-lg);color:var(--text-muted)">
+            <div style="font-size:2rem;margin-bottom:8px;color:#94a3b8"><i class="fa-solid fa-box-open"></i></div>
+            <strong style="font-size:1rem;color:#0f172a">No gadgets matched your filter</strong>
+            <p style="margin-top:4px;font-size:0.8rem">Try adjusting your filters or search query.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(g => {
+        const fmtPrice = '₦' + Number(g.price).toLocaleString('en-NG');
+        const fmtOld = g.oldPrice ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;margin-left:4px">₦${Number(g.oldPrice).toLocaleString('en-NG')}</span>` : '';
+        
+        let badgeHtml = '';
+        if (g.badge) {
+          const bLower = g.badge.toLowerCase().trim();
+          if (bLower.includes('uk used')) {
+            badgeHtml = `<span class="badge-pill uk-used">🇬🇧 UK Used</span>`;
+          } else if (bLower.includes('nigerian')) {
+            badgeHtml = `<span class="badge-pill ng-used">🇳🇬 Nigerian Used</span>`;
+          } else if (bLower.includes('brand new') || bLower === 'new') {
+            badgeHtml = `<span class="badge-pill brand-new">✨ Brand New</span>`;
+          } else if (bLower === 'sold' || !g.inStock) {
+            badgeHtml = `<span class="badge-pill sold">🚫 SOLD</span>`;
+          } else {
+            badgeHtml = `<span class="badge-pill neutral">${g.badge}</span>`;
+          }
+        } else if (!g.inStock) {
+          badgeHtml = `<span class="badge-pill sold">🚫 SOLD</span>`;
+        }
+
+        const isSold = !g.inStock || (g.badge && g.badge.toLowerCase() === 'sold');
+        const statusHtml = !isSold 
+          ? `<span class="status-pill in-stock"><i class="fa-solid fa-circle-check"></i> In Stock</span>`
+          : `<span class="status-pill out-stock"><i class="fa-solid fa-circle-xmark"></i> Sold Out</span>`;
+
+        const quickSoldBtn = !isSold
+          ? `<button type="button" class="btn-card-action" style="color:#dc2626;background:var(--rose-bg);border-color:var(--rose-border);" onclick="markGadgetSold('${g.id}')"><i class="fa-solid fa-tag"></i> Mark Sold</button>`
+          : `<button type="button" class="btn-card-action" style="color:#059669;background:var(--emerald-bg);border-color:var(--emerald-border);" onclick="markGadgetInStock('${g.id}')"><i class="fa-solid fa-arrow-rotate-left"></i> Restock</button>`;
+
+        const photoCountBadge = g.images && g.images.length > 1 
+          ? `<span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);background:#f1f5f9;padding:1px 5px;border-radius:4px;margin-left:4px;"><i class="fa-solid fa-images"></i> ${g.images.length}</span>` 
+          : '';
+
+        return `
+          <div class="gadget-mobile-card">
+            <div class="gadget-card-top">
+              <img src="${g.image}" alt="${g.name}" class="gadget-card-thumb" onerror="this.src='https://placehold.co/80x80/1a1a24/c9a227?text=Gadget'">
+              <div class="gadget-card-info">
+                <div class="gadget-card-title">${g.name} ${photoCountBadge}</div>
+                <div class="gadget-card-meta">
+                  <span class="cat-pill">${g.category}</span>
+                  ${badgeHtml}
+                </div>
+                <div class="gadget-card-price-row">
+                  <div class="gadget-card-price">${fmtPrice} ${fmtOld}</div>
+                  ${statusHtml}
+                </div>
+              </div>
+            </div>
+            <div class="gadget-card-actions">
+              ${quickSoldBtn}
+              <button type="button" class="btn-card-action edit" onclick="openEditProductForm('${g.id}')">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+              <a href="/product/${g.id}" target="_blank" class="btn-card-action" title="View in Store">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> Store
+              </a>
+              <button type="button" class="btn-card-action delete" style="color:#ef4444;flex:0 0 auto;padding:0 12px" title="Delete gadget" onclick="openDeleteModal('${g.id}', '${escapeQuotes(g.name)}')">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     // Render Table
     function renderGadgetsTable() {
       const tbody = document.getElementById('admin-gadgets-tbody');
@@ -2221,6 +2747,10 @@ service cloud.firestore {
 
       const counter = document.getElementById('table-results-counter');
       if (counter) counter.textContent = `Showing ${filtered.length} of ${liveGadgets.length} gadgets`;
+
+      // Render Mobile Cards View
+      renderGadgetsCards(filtered);
+      setDirectoryViewMode(currentDirectoryViewMode);
 
       if (filtered.length === 0) {
         tbody.innerHTML = `
@@ -2497,11 +3027,445 @@ service cloud.firestore {
       }
     }
 
-    // Connect form inputs to Live Preview
+    // ========================================================
+    //  Dynamic Hardware Specifications Builder & Auto-Drafting
+    // ========================================================
+    const SPEC_DEFINITIONS = {
+      phones: [
+        {
+          key: 'storage',
+          label: 'Storage Capacity',
+          icon: 'fa-hard-drive',
+          defaults: ['64GB', '128GB', '256GB', '512GB', '1TB']
+        },
+        {
+          key: 'ram',
+          label: 'RAM (Memory)',
+          icon: 'fa-microchip',
+          defaults: ['4GB RAM', '6GB RAM', '8GB RAM', '12GB RAM', '16GB RAM']
+        },
+        {
+          key: 'battery',
+          label: 'Battery Health / Capacity',
+          icon: 'fa-battery-three-quarters',
+          defaults: ['100% Battery Health', '95%+ Battery Health', '90%+ Battery Health', '85%+ Battery Health', '5000 mAh All-Day Battery']
+        },
+        {
+          key: 'color',
+          label: 'Color / Finish',
+          icon: 'fa-palette',
+          defaults: ['Natural Titanium', 'Black Titanium', 'White Titanium', 'Desert Titanium', 'Midnight', 'Space Gray', 'Deep Purple', 'Phantom Black']
+        },
+        {
+          key: 'sim',
+          label: 'Network / SIM Type',
+          icon: 'fa-sim-card',
+          defaults: ['Factory Unlocked (Physical SIM + eSIM)', 'Factory Unlocked (Dual eSIM)', 'Factory Unlocked (Dual Nano-SIM)', '5G Enabled']
+        },
+        {
+          key: 'display',
+          label: 'Display / Screen',
+          icon: 'fa-mobile-screen',
+          defaults: ['6.1" Super Retina XDR OLED 120Hz', '6.7" Super Retina XDR OLED 120Hz', '6.3" Dynamic Island Super Retina', '6.8" Dynamic AMOLED 2X 120Hz', '6.7" FHD+ AMOLED']
+        },
+        {
+          key: 'warranty',
+          label: 'Inclusions & Warranty',
+          icon: 'fa-shield-halved',
+          defaults: ['Free Fast Charger + Screen Guard + 1-Year Warranty', 'Box-Packed with USB-C Cable + Warranty', 'Store Certified + 6-Month Warranty']
+        }
+      ],
+      laptops: [
+        {
+          key: 'processor',
+          label: 'Processor (CPU)',
+          icon: 'fa-microchip',
+          defaults: [
+            'Apple M3 Pro (12-Core CPU, 18-Core GPU)',
+            'Apple M3 Max (14-Core CPU, 30-Core GPU)',
+            'Apple M3 (8-Core CPU, 10-Core GPU)',
+            'Apple M2 Pro (10-Core CPU, 16-Core GPU)',
+            'Apple M2 (8-Core CPU, 10-Core GPU)',
+            'Apple M1 Pro (10-Core CPU, 16-Core GPU)',
+            'Apple M1 (8-Core CPU)',
+            'Intel Core i7 13th Gen (14-Cores)',
+            'Intel Core i9 13th/14th Gen',
+            'Intel Core i5 12th/13th Gen',
+            'AMD Ryzen 7 7840HS',
+            'AMD Ryzen 9 7940HS'
+          ]
+        },
+        {
+          key: 'ram',
+          label: 'RAM (Memory)',
+          icon: 'fa-memory',
+          defaults: ['8GB Unified Memory', '16GB Unified Memory', '18GB Unified Memory', '32GB Unified Memory', '36GB Unified Memory', '64GB Unified Memory', '16GB DDR5 RAM', '32GB DDR5 RAM']
+        },
+        {
+          key: 'storage',
+          label: 'Storage (SSD)',
+          icon: 'fa-hard-drive',
+          defaults: ['256GB NVMe SSD', '512GB NVMe SSD', '1TB NVMe SSD', '2TB NVMe SSD', '4TB NVMe SSD']
+        },
+        {
+          key: 'display',
+          label: 'Display / Screen Size',
+          icon: 'fa-laptop',
+          defaults: [
+            '14.2" Liquid Retina XDR (120Hz ProMotion)',
+            '16.2" Liquid Retina XDR (120Hz ProMotion)',
+            '13.6" Liquid Retina True Tone',
+            '15.3" Liquid Retina True Tone',
+            '13.3" Retina True Tone Display',
+            '15.6" FHD IPS Anti-Glare 144Hz',
+            '16.0" QHD+ OLED 165Hz Display'
+          ]
+        },
+        {
+          key: 'graphics',
+          label: 'Graphics (GPU)',
+          icon: 'fa-gamepad',
+          defaults: [
+            'Apple Integrated GPU',
+            'NVIDIA GeForce RTX 4060 (8GB GDDR6)',
+            'NVIDIA GeForce RTX 4070 (8GB GDDR6)',
+            'NVIDIA GeForce RTX 3050 (4GB/6GB)',
+            'Intel Iris Xe Graphics',
+            'AMD Radeon Graphics'
+          ]
+        },
+        {
+          key: 'battery',
+          label: 'Battery & Cycle Count',
+          icon: 'fa-battery-three-quarters',
+          defaults: [
+            '100% Health (Normal Cycle Count < 30)',
+            '95%+ Health (Pristine Original Battery)',
+            '90%+ Health (Normal Battery Status)',
+            'All-Day Battery Life (Up to 18 Hours)',
+            'Brand New Replacement Battery (Cycle 1)'
+          ]
+        },
+        {
+          key: 'keyboard',
+          label: 'Keyboard & Security',
+          icon: 'fa-keyboard',
+          defaults: [
+            'Backlit Magic Keyboard with Touch ID',
+            'RGB Backlit Gaming Keyboard',
+            'Standard US QWERTY Backlit Keyboard'
+          ]
+        },
+        {
+          key: 'os',
+          label: 'Operating System (OS)',
+          icon: 'fa-brands fa-apple',
+          defaults: [
+            'macOS Sequoia / Sonoma (Latest Updated)',
+            'Windows 11 Pro 64-bit Genuine',
+            'Windows 11 Home 64-bit',
+            'Dual-Boot Ready (Windows + Linux)'
+          ]
+        },
+        {
+          key: 'warranty',
+          label: 'Inclusions & Warranty',
+          icon: 'fa-shield-halved',
+          defaults: [
+            'Original MagSafe Fast Charger + 1-Year Store Warranty',
+            'Original 65W/100W USB-C Fast Charger + Free Laptop Sleeve',
+            'Original Box + Charger + Free Mouse & Pouch',
+            'Store Certified 6-Month Warranty'
+          ]
+        }
+      ],
+      gaming: [
+        {
+          key: 'storage',
+          label: 'Storage Capacity',
+          icon: 'fa-hard-drive',
+          defaults: ['825GB Custom Ultra-Fast SSD', '1TB Custom SSD', '512GB High-Speed SSD', '2TB NVMe Expanded SSD']
+        },
+        {
+          key: 'edition',
+          label: 'Console Edition',
+          icon: 'fa-gamepad',
+          defaults: ['Standard Disc Edition', 'Digital Edition', 'Slim Disc Edition', 'Slim Digital Edition', 'OLED Special Edition']
+        },
+        {
+          key: 'controllers',
+          label: 'Controllers Included',
+          icon: 'fa-gamepad',
+          defaults: ['1x Original Wireless Controller', '2x Original Wireless Controllers', 'Pro / Elite Controller Included']
+        },
+        {
+          key: 'resolution',
+          label: 'Resolution & Performance',
+          icon: 'fa-tv',
+          defaults: ['4K 120Hz / 8K HDR Support', '4K 60FPS Ray Tracing', 'Full HD 120FPS']
+        },
+        {
+          key: 'inclusions',
+          label: 'Inclusions & Games',
+          icon: 'fa-gift',
+          defaults: ['Includes Power Cord, HDMI 2.1 & 2 Free Games', 'Box-Packed with Full Cables', 'Includes Charging Dock + 1 Game']
+        },
+        {
+          key: 'warranty',
+          label: 'Store Warranty',
+          icon: 'fa-shield-halved',
+          defaults: ['1-Year Store Warranty + Free Testing', '6-Month Store Warranty', '30-Day Replacement Guarantee']
+        }
+      ],
+      accessories: [
+        {
+          key: 'compatibility',
+          label: 'Device Compatibility',
+          icon: 'fa-link',
+          defaults: ['Universal (iPhone & Android)', 'iOS & Mac Devices Only', 'Universal USB-C / Fast Charge', 'Apple Watch Compatible']
+        },
+        {
+          key: 'connectivity',
+          label: 'Connectivity',
+          icon: 'fa-wifi',
+          defaults: ['Bluetooth 5.3 + Active Noise Cancellation', 'Bluetooth 5.2 / Low Latency', 'GPS + Cellular', 'GPS Only', 'Wired Type-C']
+        },
+        {
+          key: 'battery',
+          label: 'Battery & Charging',
+          icon: 'fa-battery-three-quarters',
+          defaults: ['Up to 30 Hours with MagSafe Case', 'Up to 24 Hours Total Playtime', '65W GaN Fast Charging', '100W Dual Port Fast Charge']
+        },
+        {
+          key: 'color',
+          label: 'Color / Finish',
+          icon: 'fa-palette',
+          defaults: ['White', 'Space Gray', 'Midnight', 'Black', 'Titanium Case with Alpine Loop']
+        },
+        {
+          key: 'package',
+          label: 'Package & Inclusions',
+          icon: 'fa-box',
+          defaults: ['Brand New Sealed in Box', 'Open-Box Pristine with Cable', 'Original Accessories Included']
+        }
+      ]
+    };
+
+    function getCustomSpecOptions(category, specKey) {
+      try {
+        const key = `khaylim_custom_specs_${category}_${specKey}`;
+        return JSON.parse(localStorage.getItem(key) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveCustomSpecOption(category, specKey, optionValue) {
+      try {
+        const key = `khaylim_custom_specs_${category}_${specKey}`;
+        const list = getCustomSpecOptions(category, specKey);
+        if (!list.includes(optionValue)) {
+          list.push(optionValue);
+          localStorage.setItem(key, JSON.stringify(list));
+        }
+      } catch (e) {}
+    }
+
+    function renderSpecsBuilder(category, preselected = {}) {
+      const container = document.getElementById('specs-builder-grid');
+      const badge = document.getElementById('specs-category-badge');
+      if (!container) return;
+
+      const cat = category || 'phones';
+      if (badge) badge.textContent = cat.toUpperCase();
+
+      const specsList = SPEC_DEFINITIONS[cat] || SPEC_DEFINITIONS.phones;
+
+      container.innerHTML = specsList.map(item => {
+        const customOpts = getCustomSpecOptions(cat, item.key);
+        const allOpts = Array.from(new Set([...item.defaults, ...customOpts]));
+        const selectedVal = preselected[item.key] || '';
+
+        const optionsHtml = allOpts.map(opt => {
+          const isSelected = selectedVal && (selectedVal.trim() === opt.trim() || opt.toLowerCase().includes(selectedVal.toLowerCase()));
+          return `<option value="${escapeQuotes(opt)}" ${isSelected ? 'selected' : ''}>${opt}</option>`;
+        }).join('');
+
+        return `
+          <div class="spec-item-box" data-spec-key="${item.key}">
+            <div class="spec-item-header">
+              <label class="spec-item-label">
+                <i class="fa-solid ${item.icon}"></i> ${item.label}
+              </label>
+              <button type="button" class="btn-add-spec-option" onclick="toggleCustomSpecInput('${item.key}', true)">
+                <i class="fa-solid fa-plus"></i> Add Option
+              </button>
+            </div>
+            <select class="form-control-select spec-picker-select" id="spec-select-${item.key}" data-spec-key="${item.key}" data-spec-label="${item.label}" onchange="updateDraftedDescription()">
+              <option value="">— Select ${item.label} (Default) —</option>
+              ${optionsHtml}
+            </select>
+            <div class="spec-custom-input-row" id="spec-custom-row-${item.key}">
+              <input type="text" class="spec-custom-input" id="spec-custom-input-${item.key}" placeholder="Add custom option (e.g. 4TB SSD)...">
+              <button type="button" class="btn-spec-custom-save" onclick="saveNewSpecOption('${item.key}')">Add</button>
+              <button type="button" class="btn-spec-custom-cancel" onclick="toggleCustomSpecInput('${item.key}', false)">&times;</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateDraftedDescription();
+    }
+
+    window.toggleCustomSpecInput = function(specKey, show) {
+      const row = document.getElementById(`spec-custom-row-${specKey}`);
+      if (!row) return;
+      const isVisible = typeof show === 'boolean' ? show : row.classList.contains('show');
+      if (isVisible) {
+        row.classList.add('show');
+        const input = document.getElementById(`spec-custom-input-${specKey}`);
+        input?.focus();
+      } else {
+        row.classList.remove('show');
+      }
+    };
+
+    window.saveNewSpecOption = function(specKey) {
+      const cat = document.getElementById('form-category').value || 'phones';
+      const input = document.getElementById(`spec-custom-input-${specKey}`);
+      const select = document.getElementById(`spec-select-${specKey}`);
+      const val = (input?.value || '').trim();
+
+      if (!val) {
+        alert('Please enter a spec option value.');
+        return;
+      }
+
+      saveCustomSpecOption(cat, specKey, val);
+
+      // Check if option already exists in select
+      let exists = false;
+      for (let opt of select.options) {
+        if (opt.value.toLowerCase() === val.toLowerCase()) {
+          opt.selected = true;
+          exists = true;
+          break;
+        }
+      }
+
+      if (!exists) {
+        const newOpt = document.createElement('option');
+        newOpt.value = val;
+        newOpt.textContent = val;
+        newOpt.selected = true;
+        select.appendChild(newOpt);
+      }
+
+      input.value = '';
+      toggleCustomSpecInput(specKey, false);
+      updateDraftedDescription(true);
+      showAdminToast(`Added "${val}" to ${specKey.toUpperCase()}!`);
+    };
+
+    window.updateDraftedDescription = function(forceOverWrite = false) {
+      const name = document.getElementById('form-name')?.value.trim() || 'Gadget';
+      const category = document.getElementById('form-category')?.value || 'phones';
+      const badge = document.getElementById('form-badge')?.value || '';
+      const descPreview = document.getElementById('drafted-desc-preview');
+      const formDesc = document.getElementById('form-desc');
+
+      const selects = Array.from(document.querySelectorAll('#specs-builder-grid .spec-picker-select'));
+      const activeSpecs = [];
+
+      selects.forEach(sel => {
+        const val = sel.value.trim();
+        const lbl = sel.dataset.specLabel || sel.dataset.specKey;
+        if (val) {
+          activeSpecs.push({ label: lbl, value: val });
+        }
+      });
+
+      let conditionLine = badge ? `• Condition: ${badge}` : '';
+
+      let specsBulletList = activeSpecs.map(s => `• ${s.label}: ${s.value}`).join('\n');
+      if (conditionLine) {
+        specsBulletList = conditionLine + (specsBulletList ? '\n' + specsBulletList : '');
+      }
+
+      if (!specsBulletList) {
+        specsBulletList = '• 100% genuine guaranteed with testing warranty.';
+      }
+
+      const drafted = `Key Specifications & Highlights:\n${specsBulletList}\n\n✔ Verified 100% authentic & thoroughly bench-tested.\n✔ Available for immediate store pickup or same-day delivery across Ibadan & nationwide.`;
+
+      if (descPreview) descPreview.textContent = drafted;
+
+      // Only auto-update raw textarea if user hasn't typed a completely custom one or force is true
+      if (formDesc && (forceOverWrite || !formDesc.value.trim() || formDesc.dataset.autoDrafted === 'true')) {
+        formDesc.value = drafted;
+        formDesc.dataset.autoDrafted = 'true';
+      }
+    };
+
+    window.toggleRawDescEdit = function() {
+      const box = document.getElementById('raw-desc-container');
+      const label = document.getElementById('label-toggle-raw-desc');
+      if (!box) return;
+
+      const isHidden = box.style.display === 'none';
+      if (isHidden) {
+        box.style.display = 'block';
+        if (label) label.textContent = 'Hide Direct Edit';
+        document.getElementById('form-desc')?.focus();
+      } else {
+        box.style.display = 'none';
+        if (label) label.textContent = 'Edit Text Directly';
+      }
+    };
+
+    // Spec detection helper for existing gadgets
+    function detectSpecsFromGadget(gadget) {
+      const text = `${gadget.name || ''} ${gadget.description || ''}`.toLowerCase();
+      const detected = {};
+      const cat = gadget.category || 'phones';
+      const specsList = SPEC_DEFINITIONS[cat] || SPEC_DEFINITIONS.phones;
+
+      specsList.forEach(spec => {
+        const custom = getCustomSpecOptions(cat, spec.key);
+        const candidates = [...spec.defaults, ...custom];
+        for (const candidate of candidates) {
+          const needle = candidate.toLowerCase();
+          if (text.includes(needle)) {
+            detected[spec.key] = candidate;
+            break;
+          }
+          const tokens = needle.match(/\b\d+(gb|tb|mah)\b/gi);
+          if (tokens && tokens.some(t => text.includes(t.toLowerCase()))) {
+            detected[spec.key] = candidate;
+            break;
+          }
+        }
+      });
+      return detected;
+    }
+
+    // Connect form inputs to Live Preview & Specs Auto-Drafting
     ['form-name', 'form-category', 'form-price', 'form-badge'].forEach(id => {
-      document.getElementById(id)?.addEventListener('input', updateLivePreview);
-      document.getElementById(id)?.addEventListener('change', updateLivePreview);
+      document.getElementById(id)?.addEventListener('input', () => {
+        updateLivePreview();
+        updateDraftedDescription();
+      });
+      document.getElementById(id)?.addEventListener('change', () => {
+        updateLivePreview();
+        updateDraftedDescription();
+      });
     });
+
+    document.getElementById('form-category')?.addEventListener('change', (e) => {
+      renderSpecsBuilder(e.target.value);
+      updateDraftedDescription(true);
+    });
+
     document.getElementById('form-instock')?.addEventListener('change', (e) => {
       document.getElementById('label-stock-text').textContent = e.target.checked 
         ? 'Currently In Stock & Ready for Delivery' 
@@ -2520,6 +3484,17 @@ service cloud.firestore {
       document.getElementById('label-stock-text').textContent = 'Currently In Stock & Ready for Delivery';
       currentGadgetImages = [];
       renderMediaGallery();
+
+      const cat = document.getElementById('form-category').value || 'phones';
+      renderSpecsBuilder(cat);
+      const formDesc = document.getElementById('form-desc');
+      if (formDesc) {
+        formDesc.value = '';
+        formDesc.dataset.autoDrafted = 'true';
+      }
+      document.getElementById('raw-desc-container').style.display = 'none';
+      document.getElementById('label-toggle-raw-desc').textContent = 'Edit Text Directly';
+
       switchView('product-form');
     };
 
@@ -2538,7 +3513,18 @@ service cloud.firestore {
       document.getElementById('label-stock-text').textContent = gadget.inStock !== false 
         ? 'Currently In Stock & Ready for Delivery' 
         : 'Out of Stock / Sold Out';
-      document.getElementById('form-desc').value = gadget.description || '';
+
+      const detected = detectSpecsFromGadget(gadget);
+      renderSpecsBuilder(gadget.category, detected);
+
+      const formDesc = document.getElementById('form-desc');
+      formDesc.value = gadget.description || '';
+      formDesc.dataset.autoDrafted = 'false';
+      const preview = document.getElementById('drafted-desc-preview');
+      if (preview) preview.textContent = gadget.description || 'No description entered.';
+
+      document.getElementById('raw-desc-container').style.display = 'none';
+      document.getElementById('label-toggle-raw-desc').textContent = 'Edit Text Directly';
 
       currentGadgetImages = Array.isArray(gadget.images) && gadget.images.length > 0 
         ? [...gadget.images] 
