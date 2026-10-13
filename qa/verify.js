@@ -49,7 +49,9 @@ async function runTests() {
     ['/contact', 'Contact page'],
     ['/faq', 'FAQ page'],
     ['/how-to-order', 'How To Order page'],
-    ['/admin', 'Admin Portal']
+    ['/admin', 'Admin Portal'],
+    ['/privacy', 'Privacy Policy page'],
+    ['/terms', 'Terms of Service page']
   ];
 
   for (const [route, label] of routes) {

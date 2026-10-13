@@ -61,6 +61,10 @@ const server = http.createServer((req, res) => {
     targetFile = '/how-to-order.html';
   } else if (pathname === '/faq') {
     targetFile = '/faq.html';
+  } else if (pathname === '/privacy') {
+    targetFile = '/privacy.html';
+  } else if (pathname === '/terms') {
+    targetFile = '/terms.html';
   } else if (pathname.startsWith('/product/')) {
     targetFile = '/product-detail.html';
   }
@@ -75,8 +79,14 @@ const server = http.createServer((req, res) => {
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
-      res.end('<h1>404 Not Found</h1><p>The requested URL was not found on this server.</p>');
+      const notFoundPath = path.join(ROOT, '404.html');
+      if (fs.existsSync(notFoundPath)) {
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
+        fs.createReadStream(notFoundPath).pipe(res);
+      } else {
+        res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
+        res.end('<h1>404 Not Found</h1><p>The requested URL was not found on this server.</p>');
+      }
       return;
     }
 
