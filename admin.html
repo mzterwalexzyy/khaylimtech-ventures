@@ -3,999 +3,1654 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal — KhaylimTech Ventures</title>
+  <title>Admin Portal — KhaylimTech</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/responsive.css">
-  <link rel="stylesheet" href="/css/animations.css">
-  <link rel="stylesheet" href="/css/professional.css">
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    /* Admin Portal Custom Theme & Utilities */
-    .admin-body {
-      background: var(--bg, #f8f9fa);
-      color: var(--text, #111);
+    /* ========================================================
+       KhaylimTech Admin Design System (Kusale Inspired)
+       Clean, modern, highly navigable SaaS dashboard
+       ======================================================== */
+    :root {
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --bg-page: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-subtle: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-focus: #c9a227;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-subtle: #94a3b8;
+      --gold: #c9a227;
+      --gold-hover: #b38e1b;
+      --gold-subtle: rgba(201, 162, 39, 0.12);
+      --gold-border: rgba(201, 162, 39, 0.35);
+      --emerald: #10b981;
+      --emerald-bg: rgba(16, 185, 129, 0.12);
+      --emerald-border: rgba(16, 185, 129, 0.3);
+      --rose: #ef4444;
+      --rose-bg: rgba(239, 68, 68, 0.12);
+      --rose-border: rgba(239, 68, 68, 0.3);
+      --indigo: #3b82f6;
+      --indigo-bg: rgba(59, 130, 246, 0.12);
+      --indigo-border: rgba(59, 130, 246, 0.3);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      --sidebar-width: 250px;
+      --topbar-height: 70px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-    [data-theme="dark"] .admin-body {
-      background: #0b0c10;
-    }
-    .admin-navbar {
-      background: rgba(13, 13, 20, 0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(201, 162, 39, 0.25);
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .admin-brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-    .admin-brand img {
-      width: 38px;
-      height: 38px;
-      object-fit: contain;
-      border-radius: 8px;
-    }
-    .admin-brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-    .admin-brand-title {
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--gold, #c9a227);
-      letter-spacing: -0.01em;
-    }
-    .admin-brand-sub {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.55);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .admin-nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .btn-admin-store {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      border-radius: 50px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transition: all 0.2s ease;
-    }
-    .btn-admin-store:hover {
-      background: rgba(201, 162, 39, 0.2);
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-    .admin-user-pill {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 5px 12px 5px 6px;
-      border-radius: 50px;
-      background: rgba(201, 162, 39, 0.12);
-      border: 1px solid rgba(201, 162, 39, 0.35);
-      color: #fff;
-      font-size: 0.82rem;
-    }
-    .admin-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #c9a227, #e8c85a);
-      color: #0d0d12;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 0.75rem;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Access Gate / Login Screen */
+    /* Access Gate (Login Screen) */
     .admin-gate-wrap {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 20%, rgba(201, 162, 39, 0.08) 0%, #f8fafc 60%);
     }
     .admin-gate-card {
       width: 100%;
-      max-width: 480px;
-      background: var(--bg-card, #ffffff);
-      border: 1px solid var(--border, rgba(0,0,0,0.1));
+      max-width: 440px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
       border-radius: 24px;
       padding: 40px 32px;
       text-align: center;
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
-    }
-    [data-theme="dark"] .admin-gate-card {
-      background: #14141c;
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.06);
     }
     .admin-gate-icon {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: rgba(201, 162, 39, 0.12);
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: var(--gold-subtle);
       color: var(--gold);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-bottom: 20px;
-      border: 1px solid rgba(201, 162, 39, 0.3);
+      border: 1px solid var(--gold-border);
     }
 
-    /* Admin Container & Stats */
-    .admin-main {
-      flex: 1;
-      padding: 32px 0 60px;
+    /* App Shell Layout */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
     }
-    .admin-metrics-grid {
+
+    /* Left Sidebar */
+    .admin-sidebar {
+      width: var(--sidebar-width);
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      transition: transform 0.25s ease;
+    }
+
+    .sidebar-brand {
+      height: var(--topbar-height);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border-color);
+      text-decoration: none;
+    }
+    .sidebar-brand img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .sidebar-brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-brand-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+    .sidebar-brand-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+    }
+    .sidebar-section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      padding: 12px 14px 6px;
+      letter-spacing: 0.05em;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .nav-btn i {
+      font-size: 1rem;
+      width: 20px;
+      text-align: center;
+      color: var(--text-subtle);
+      transition: color 0.15s;
+    }
+    .nav-btn:hover {
+      background: #f8fafc;
+      color: var(--text-main);
+    }
+    .nav-btn:hover i {
+      color: var(--text-main);
+    }
+    .nav-btn.active {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .nav-btn.active i {
+      color: var(--gold);
+    }
+    .nav-btn.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+      background: var(--gold);
+    }
+    .nav-badge-pill {
+      margin-left: auto;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .sidebar-footer {
+      padding: 18px 16px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: #fafafa;
+    }
+    .btn-sidebar-store {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      color: #334155;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border-color);
+      transition: all 0.15s;
+    }
+    .btn-sidebar-store:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: #ffffff;
+    }
+
+    /* Main Content Area */
+    .admin-main-wrap {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--bg-page);
+    }
+
+    /* Top Bar */
+    .admin-topbar {
+      height: var(--topbar-height);
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex: 1;
+      max-width: 520px;
+    }
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      width: 38px;
+      height: 38px;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .topbar-search-wrap {
+      position: relative;
+      width: 100%;
+    }
+    .topbar-search-wrap i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-subtle);
+      font-size: 0.85rem;
+    }
+    .topbar-search-input {
+      width: 100%;
+      height: 40px;
+      padding: 0 40px 0 38px;
+      border-radius: var(--radius-md);
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .topbar-search-input:focus {
+      background: #ffffff;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12);
+    }
+    .search-key-hint {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-subtle);
+      background: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .admin-profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 6px;
+      border-radius: var(--radius-full);
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+    }
+    .admin-profile-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #c9a227, #eab308);
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.75rem;
+    }
+    .admin-profile-email {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1e293b;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Page View Body */
+    .admin-view-body {
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* Breadcrumbs & Header */
+    .view-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .view-breadcrumb span.active {
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .view-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .view-title {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #0f172a;
+    }
+    .view-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+    .view-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Metric Cards */
+    .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
-    .admin-metric-card {
-      background: var(--bg-card, #ffffff);
-      border: 1px solid var(--border, rgba(0,0,0,0.08));
-      border-radius: 18px;
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
       padding: 20px 22px;
       display: flex;
       align-items: center;
       gap: 16px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.15s ease;
     }
-    [data-theme="dark"] .admin-metric-card {
-      background: #14141c;
-      border-color: rgba(255, 255, 255, 0.08);
+    .metric-card:hover {
+      transform: translateY(-2px);
     }
-    .admin-metric-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: rgba(201, 162, 39, 0.12);
-      color: var(--gold);
+    .metric-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.25rem;
       flex-shrink: 0;
     }
-    .admin-metric-value {
-      font-size: 1.6rem;
+    .metric-icon-wrap.gold { background: var(--gold-subtle); color: var(--gold); }
+    .metric-icon-wrap.emerald { background: var(--emerald-bg); color: var(--emerald); }
+    .metric-icon-wrap.rose { background: var(--rose-bg); color: var(--rose); }
+    .metric-icon-wrap.indigo { background: var(--indigo-bg); color: var(--indigo); }
+    .metric-val {
+      font-size: 1.65rem;
       font-weight: 800;
-      color: var(--text-heading);
+      color: #0f172a;
       line-height: 1.1;
     }
-    .admin-metric-label {
+    .metric-lbl {
       font-size: 0.78rem;
-      color: var(--text-muted);
       font-weight: 600;
+      color: var(--text-muted);
       margin-top: 2px;
     }
 
-    /* Controls Bar */
-    .admin-toolbar {
-      background: var(--bg-card, #ffffff);
-      border: 1px solid var(--border, rgba(0,0,0,0.08));
-      border-radius: 18px;
+    /* Table Toolbar */
+    .table-toolbar {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
       padding: 16px 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
       flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
     }
-    [data-theme="dark"] .admin-toolbar {
-      background: #14141c;
-      border-color: rgba(255, 255, 255, 0.08);
-    }
-    .admin-search-wrap {
-      position: relative;
-      flex: 1;
-      min-width: 240px;
-    }
-    .admin-search-wrap i {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-    .admin-search-input {
-      width: 100%;
-      height: 42px;
-      padding: 0 14px 0 38px;
-      border-radius: 10px;
-      background: var(--bg-secondary, #f0f0f4);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.85rem;
-      outline: none;
-    }
-    [data-theme="dark"] .admin-search-input {
-      background: #1e1e28;
-    }
-    .admin-filter-select {
-      height: 42px;
+    .filter-select {
+      height: 40px;
       padding: 0 14px;
-      border-radius: 10px;
-      background: var(--bg-secondary, #f0f0f4);
-      border: 1px solid var(--border);
-      color: var(--text);
+      border-radius: var(--radius-md);
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      color: #334155;
       font-size: 0.85rem;
+      font-family: inherit;
       outline: none;
       cursor: pointer;
+      transition: all 0.2s;
     }
-    [data-theme="dark"] .admin-filter-select {
-      background: #1e1e28;
+    .filter-select:focus {
+      border-color: var(--gold);
+      background: #ffffff;
     }
-    .btn-gold-primary {
+
+    /* Buttons */
+    .btn-gold {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       height: 42px;
       padding: 0 20px;
-      border-radius: 50px;
-      background: linear-gradient(135deg, #c9a227, #e0b838);
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #c9a227, #dfb738);
       color: #0d0d12;
       font-size: 0.85rem;
       font-weight: 700;
+      font-family: inherit;
       border: none;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(201, 162, 39, 0.25);
+      box-shadow: 0 2px 8px rgba(201, 162, 39, 0.25);
+      transition: all 0.15s ease;
+      white-space: nowrap;
     }
-    .btn-gold-primary:hover {
-      background: #e0b838;
+    .btn-gold:hover {
+      background: #dfb738;
       transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(201, 162, 39, 0.35);
     }
-    .btn-ghost-secondary {
+    .btn-ghost {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       height: 42px;
       padding: 0 16px;
-      border-radius: 50px;
-      background: transparent;
-      color: var(--text);
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      color: #334155;
       font-size: 0.85rem;
       font-weight: 600;
-      border: 1px solid var(--border);
+      font-family: inherit;
+      border: 1px solid var(--border-color);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease;
+      white-space: nowrap;
     }
-    .btn-ghost-secondary:hover {
+    .btn-ghost:hover {
       border-color: var(--gold);
       color: var(--gold);
+      background: #f8fafc;
     }
 
-    /* Products Table & Grid */
-    .admin-table-wrap {
-      background: var(--bg-card, #ffffff);
-      border: 1px solid var(--border, rgba(0,0,0,0.08));
-      border-radius: 20px;
+    /* Products Data Table */
+    .table-container {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-    }
-    [data-theme="dark"] .admin-table-wrap {
-      background: #14141c;
-      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-card);
     }
     .admin-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.85rem;
+      font-size: 0.86rem;
     }
     .admin-table th {
-      background: var(--bg-secondary, #f5f5f8);
+      background: #f8fafc;
       padding: 14px 18px;
       font-weight: 700;
-      color: var(--text-muted);
+      color: #64748b;
       text-transform: uppercase;
       font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      border-bottom: 1px solid var(--border);
-    }
-    [data-theme="dark"] .admin-table th {
-      background: #1a1a24;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-color);
     }
     .admin-table td {
       padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-color);
       vertical-align: middle;
-      color: var(--text);
+      color: #1e293b;
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
     }
     .admin-table tr:hover {
-      background: rgba(201, 162, 39, 0.03);
+      background: #fbfcfe;
     }
-    .gadget-thumb {
+
+    .table-gadget-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .table-gadget-thumb {
       width: 48px;
       height: 48px;
       border-radius: 10px;
-      object-fit: contain;
-      background: var(--bg-secondary, #f0f0f4);
-      border: 1px solid var(--border);
+      object-fit: cover;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
       flex-shrink: 0;
     }
-    .gadget-cell-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .gadget-title-text {
+    .table-gadget-title {
       font-weight: 700;
-      color: var(--text-heading);
+      color: #0f172a;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      max-width: 280px;
     }
-    .gadget-id-text {
+    .table-gadget-id {
       font-size: 0.72rem;
       color: var(--text-muted);
       font-family: monospace;
+      margin-top: 2px;
     }
-    .category-badge {
+
+    .cat-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       padding: 4px 10px;
-      border-radius: 20px;
+      border-radius: var(--radius-full);
       font-size: 0.72rem;
       font-weight: 700;
       text-transform: capitalize;
-      background: var(--bg-secondary, #f0f0f4);
-      color: var(--text);
-      border: 1px solid var(--border);
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #e2e8f0;
     }
-    .stock-toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 50px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s ease;
-    }
-    .stock-toggle-btn.in-stock {
-      background: rgba(16, 185, 129, 0.15);
-      color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-    }
-    .stock-toggle-btn.out-stock {
-      background: rgba(239, 68, 68, 0.15);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.3);
-    }
-    .action-btn-group {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-sold-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      border-radius: 50px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      background: rgba(239, 68, 68, 0.12);
-      color: #ef4444;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn-sold-pill:hover {
-      background: #ef4444;
-      color: #ffffff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-    }
-    .btn-relist-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      border-radius: 50px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      background: rgba(16, 185, 129, 0.12);
-      color: #10b981;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn-relist-pill:hover {
-      background: #10b981;
-      color: #ffffff;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-    }
-    .admin-badge-pill {
+
+    /* Badges & Condition Pills */
+    .badge-pill {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       font-size: 0.7rem;
       font-weight: 800;
-      padding: 4px 9px;
-      border-radius: 20px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
-    .admin-badge-pill.uk-used {
-      background: rgba(59, 130, 246, 0.15);
-      color: #3b82f6;
-      border: 1px solid rgba(59, 130, 246, 0.35);
+    .badge-pill.uk-used {
+      background: var(--indigo-bg);
+      color: #2563eb;
+      border: 1px solid var(--indigo-border);
     }
-    .admin-badge-pill.ng-used {
-      background: rgba(16, 185, 129, 0.15);
-      color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.35);
+    .badge-pill.ng-used {
+      background: var(--emerald-bg);
+      color: #059669;
+      border: 1px solid var(--emerald-border);
     }
-    .admin-badge-pill.sold {
-      background: rgba(239, 68, 68, 0.15);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.35);
+    .badge-pill.brand-new {
+      background: var(--gold-subtle);
+      color: #b45309;
+      border: 1px solid var(--gold-border);
     }
-    .admin-badge-pill.brand-new, .admin-badge-pill.new {
-      background: rgba(201, 162, 39, 0.15);
-      color: var(--gold);
-      border: 1px solid rgba(201, 162, 39, 0.35);
+    .badge-pill.sold {
+      background: var(--rose-bg);
+      color: #dc2626;
+      border: 1px solid var(--rose-border);
     }
-    .admin-badge-pill.popular, .admin-badge-pill.hot {
-      background: rgba(249, 115, 22, 0.15);
-      color: #f97316;
-      border: 1px solid rgba(249, 115, 22, 0.35);
+    .badge-pill.popular {
+      background: rgba(249, 115, 22, 0.12);
+      color: #ea580c;
+      border: 1px solid rgba(249, 115, 22, 0.3);
     }
-    .admin-badge-pill.custom {
-      background: var(--bg-secondary);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
+    .badge-pill.neutral {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
     }
-    .rules-alert-banner {
-      background: rgba(201, 162, 39, 0.08);
-      border: 1px solid rgba(201, 162, 39, 0.35);
-      border-radius: 14px;
-      padding: 12px 18px;
-      margin-bottom: 20px;
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+    }
+    .status-pill.in-stock {
+      background: var(--emerald-bg);
+      color: #059669;
+      border: 1px solid var(--emerald-border);
+    }
+    .status-pill.out-stock {
+      background: var(--rose-bg);
+      color: #dc2626;
+      border: 1px solid var(--rose-border);
+    }
+
+    .btn-quick-sold {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      border: 1px solid var(--rose-border);
+      background: var(--rose-bg);
+      color: #dc2626;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-quick-sold:hover {
+      background: #dc2626;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .btn-quick-relist {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 700;
+      border: 1px solid var(--emerald-border);
+      background: var(--emerald-bg);
+      color: #059669;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-quick-relist:hover {
+      background: #059669;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .table-actions-group {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      gap: 6px;
+      justify-content: flex-end;
     }
-    .btn-action-icon {
+    .btn-action-sm {
       width: 32px;
       height: 32px;
       border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      color: #475569;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text);
       cursor: pointer;
-      transition: all 0.2s ease;
       font-size: 0.8rem;
+      transition: all 0.15s;
+      text-decoration: none;
     }
-    .btn-action-icon:hover {
+    .btn-action-sm:hover {
       border-color: var(--gold);
       color: var(--gold);
       transform: translateY(-1px);
     }
-    .btn-action-icon.delete:hover {
+    .btn-action-sm.delete:hover {
       border-color: #ef4444;
       color: #ef4444;
     }
 
-    /* Modal Framework */
-    .admin-modal-overlay {
+    /* ========================================================
+       Kusale-Style 2-Column Product Form View
+       ======================================================== */
+    .form-layout-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .form-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+    }
+    .form-card-header {
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .form-card-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .input-field-group:last-child {
+      margin-bottom: 0;
+    }
+    .field-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #334155;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-control-input, .form-control-select, .form-control-textarea {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      color: #0f172a;
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .form-control-input:focus, .form-control-select:focus, .form-control-textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+    }
+    .form-control-textarea {
+      height: 110px;
+      padding: 12px 14px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .form-row-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Product Media / Multi-Image Upload (Kusale Reference) */
+    .media-thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .media-thumb-item {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      box-shadow: var(--shadow-sm);
+    }
+    .media-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .media-thumb-primary-tag {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.6rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .media-thumb-remove-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.9);
+      color: #ffffff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .media-thumb-remove-btn:hover {
+      transform: scale(1.15);
+    }
+
+    /* Dropzone */
+    .media-dropzone {
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: #f8fafc;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .media-dropzone:hover, .media-dropzone.dragover {
+      border-color: var(--gold);
+      background: #fefce8;
+    }
+    .media-dropzone-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .media-dropzone-text {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+    .media-dropzone-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* Toggle Switch */
+    .switch-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1e293b;
+      padding: 6px 0;
+    }
+    .switch-input {
+      display: none;
+    }
+    .switch-slider {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: #cbd5e1;
+      border-radius: 24px;
+      transition: background 0.2s;
+    }
+    .switch-slider::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ffffff;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .switch-input:checked + .switch-slider {
+      background: var(--gold);
+    }
+    .switch-input:checked + .switch-slider::after {
+      transform: translateX(20px);
+    }
+
+    /* Card Live Preview Widget */
+    .live-preview-box {
+      background: #f8fafc;
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-top: 14px;
+    }
+    .preview-card-mock {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .preview-card-img-wrap {
+      position: relative;
+      height: 140px;
+      background: #f1f5f9;
+      overflow: hidden;
+    }
+    .preview-card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .preview-card-content {
+      padding: 12px;
+    }
+
+    /* Modal Popups (Delete & Rules) */
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 10000;
       padding: 20px;
-      animation: authFadeIn 0.2s ease-out;
     }
-    .admin-modal-overlay.show {
+    .modal-backdrop.show {
       display: flex;
     }
-    .admin-modal-box {
+    .modal-window {
       width: 100%;
-      max-width: 620px;
-      background: var(--bg-card, #ffffff);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 30px;
+      max-width: 580px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
-    }
-    [data-theme="dark"] .admin-modal-box {
-      background: #14141c;
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-    .admin-modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .admin-modal-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-heading);
-    }
-    .admin-form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .admin-form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    .admin-form-group.full {
-      grid-column: 1 / -1;
-    }
-    .admin-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .admin-input, .admin-select, .admin-textarea {
-      width: 100%;
-      height: 42px;
-      padding: 0 14px;
-      border-radius: 10px;
-      background: var(--bg-secondary, #f0f0f4);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.85rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    [data-theme="dark"] .admin-input, [data-theme="dark"] .admin-select, [data-theme="dark"] .admin-textarea {
-      background: #1e1e28;
-    }
-    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
-      border-color: var(--gold);
-    }
-    .admin-textarea {
-      height: 90px;
-      padding: 10px 14px;
-      resize: vertical;
     }
 
-    /* Admin Badge & Admins List */
-    .admin-item-row {
-      display: flex;
+    /* Toast */
+    .admin-toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid var(--gold);
+      padding: 12px 20px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: none;
       align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      border-radius: 12px;
-      background: var(--bg-secondary, #f0f0f4);
-      border: 1px solid var(--border);
-      margin-bottom: 10px;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 99999;
+      animation: fadeIn 0.2s ease;
     }
-    [data-theme="dark"] .admin-item-row {
-      background: #1a1a24;
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 1024px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+      }
+      .admin-sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 0 0 40px rgba(0,0,0,0.3);
+      }
+      .admin-main-wrap {
+        margin-left: 0;
+      }
+      .mobile-menu-toggle {
+        display: inline-flex;
+      }
+      .form-layout-grid {
+        grid-template-columns: 1fr;
+      }
+      .admin-topbar {
+        padding: 0 20px;
+      }
+      .admin-view-body {
+        padding: 20px;
+      }
     }
   </style>
 </head>
-<body class="admin-body">
+<body>
 
-  <!-- TOP NAVBAR -->
-  <header class="admin-navbar">
-    <a href="/" class="admin-brand">
-      <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
-      <div class="admin-brand-text">
-        <span class="admin-brand-title">KhaylimTech</span>
-        <span class="admin-brand-sub">Admin Portal</span>
-      </div>
-    </a>
-    <div class="admin-nav-actions">
-      <a href="/" class="btn-admin-store">
-        <i class="fa-solid fa-arrow-left"></i> View Live Store
-      </a>
-      <div id="admin-user-header" style="display:none;">
-        <div class="admin-user-pill">
-          <div class="admin-avatar" id="admin-header-avatar">K</div>
-          <span id="admin-header-email" style="font-weight:700;">kareemtoheeba10@gmail.com</span>
-          <button type="button" id="btn-admin-signout" title="Sign Out" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;padding:0 4px;font-size:0.85rem">
-            <i class="fa-solid fa-right-from-bracket"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- ACCESS GATE: NOT LOGGED IN OR UNAUTHORIZED -->
+  <!-- ACCESS GATE: NOT SIGNED IN OR UNAUTHORIZED -->
   <section class="admin-gate-wrap" id="admin-gate" style="display:none;">
     <div class="admin-gate-card">
-      <div class="admin-gate-icon" id="gate-icon">
+      <div class="admin-gate-icon">
         <i class="fa-solid fa-shield-halved"></i>
       </div>
-      <h2 style="font-size:1.5rem;font-weight:800;color:var(--text-heading);margin-bottom:10px" id="gate-title">
+      <h2 style="font-size:1.45rem;font-weight:800;color:#0f172a;margin-bottom:8px" id="gate-title">
         Administrator Access
       </h2>
-      <p style="font-size:0.88rem;color:var(--text-muted);line-height:1.6;margin-bottom:28px" id="gate-desc">
-        Please sign in with your authorized KhaylimTech administrator account to manage products and store settings.
+      <p style="font-size:0.88rem;color:#64748b;line-height:1.6;margin-bottom:24px" id="gate-desc">
+        Please sign in with your authorized KhaylimTech administrator account to manage store catalog.
       </p>
 
-      <!-- Sign In Actions -->
       <div id="gate-signin-actions" style="display:flex;flex-direction:column;gap:12px;">
-        <button type="button" class="btn-gold-primary" id="gate-btn-google" style="justify-content:center;height:46px;">
+        <button type="button" class="btn-gold" id="gate-btn-google" style="justify-content:center;height:46px;">
           <i class="fa-brands fa-google"></i> Sign In with Google
         </button>
-        <button type="button" class="btn-ghost-secondary" id="gate-btn-email" style="justify-content:center;height:46px;">
-          <i class="fa-regular fa-envelope"></i> Sign In with Email &amp; Password
+        <button type="button" class="btn-ghost" id="gate-btn-email" style="justify-content:center;height:46px;">
+          <i class="fa-regular fa-envelope"></i> Sign In with Email
         </button>
       </div>
 
-      <!-- Access Denied Info -->
       <div id="gate-denied-actions" style="display:none;flex-direction:column;gap:12px;">
         <div style="padding:14px;border-radius:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#ef4444;font-size:0.84rem;margin-bottom:8px">
           <i class="fa-solid fa-triangle-exclamation" style="margin-right:6px"></i>
           <span id="gate-denied-email">Your account is not an authorized administrator.</span>
         </div>
-        <button type="button" class="btn-gold-primary" id="gate-btn-switch" style="justify-content:center;height:46px;">
+        <button type="button" class="btn-gold" id="gate-btn-switch" style="justify-content:center;height:46px;">
           <i class="fa-solid fa-arrow-right-from-bracket"></i> Switch Account
         </button>
-        <a href="/" class="btn-ghost-secondary" style="justify-content:center;height:46px;text-decoration:none;">
+        <a href="/" class="btn-ghost" style="justify-content:center;height:46px;text-decoration:none;">
           <i class="fa-solid fa-house"></i> Return to Store
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ADMIN DASHBOARD (UNLOCKED FOR AUTHORIZED ADMINS) -->
-  <main class="admin-main" id="admin-dashboard" style="display:none;">
-    <div class="container">
+  <!-- UNLOCKED ADMIN DASHBOARD -->
+  <div class="admin-layout" id="admin-dashboard" style="display:none;">
 
-      <!-- Metrics Row -->
-      <div class="admin-metrics-grid">
-        <div class="admin-metric-card">
-          <div class="admin-metric-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
-          <div>
-            <div class="admin-metric-value" id="stat-total-gadgets">0</div>
-            <div class="admin-metric-label">Total Gadgets</div>
-          </div>
+    <!-- LEFT SIDEBAR -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <a href="/" class="sidebar-brand">
+        <img src="/assets/Lightmode_logo.png" alt="KhaylimTech Logo">
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-title">KhaylimTech</span>
+          <span class="sidebar-brand-badge">Admin Center</span>
         </div>
-        <div class="admin-metric-card">
-          <div class="admin-metric-icon" style="color:#10b981;background:rgba(16,185,129,0.12)"><i class="fa-solid fa-circle-check"></i></div>
-          <div>
-            <div class="admin-metric-value" id="stat-instock-gadgets">0</div>
-            <div class="admin-metric-label">In Stock</div>
-          </div>
-        </div>
-        <div class="admin-metric-card">
-          <div class="admin-metric-icon" style="color:#ef4444;background:rgba(239,68,68,0.12)"><i class="fa-solid fa-box-archive"></i></div>
-          <div>
-            <div class="admin-metric-value" id="stat-outstock-gadgets">0</div>
-            <div class="admin-metric-label">Out of Stock</div>
-          </div>
-        </div>
-        <div class="admin-metric-card">
-          <div class="admin-metric-icon" style="color:var(--gold);"><i class="fa-solid fa-user-shield"></i></div>
-          <div>
-            <div class="admin-metric-value" id="stat-admins-count">1</div>
-            <div class="admin-metric-label">Store Admins</div>
-          </div>
-        </div>
+      </a>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-title">Navigation</div>
+        
+        <button type="button" class="nav-btn active" id="nav-btn-products" onclick="switchView('products')">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>Products</span>
+          <span class="nav-badge-pill" id="sidebar-count-gadgets">0</span>
+        </button>
+
+        <button type="button" class="nav-btn" id="nav-btn-add" onclick="openNewProductForm()">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span>Add Product</span>
+        </button>
+
+        <button type="button" class="nav-btn" id="nav-btn-admins" onclick="switchView('admins')">
+          <i class="fa-solid fa-user-shield"></i>
+          <span>Store Admins</span>
+          <span class="nav-badge-pill" id="sidebar-count-admins">2</span>
+        </button>
+
+        <button type="button" class="nav-btn" id="nav-btn-rules" onclick="switchView('rules')">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Firestore Rules</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" class="btn-sidebar-store">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Store
+        </a>
+        <button type="button" id="btn-sidebar-signout" class="btn-ghost" style="height:36px;font-size:0.8rem;justify-content:center;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
       </div>
+    </aside>
 
-      <!-- Action Toolbar -->
-      <div class="admin-toolbar">
-        <div class="admin-search-wrap">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="admin-search" class="admin-search-input" placeholder="Search gadgets by title, model, or ID...">
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <select id="admin-category-filter" class="admin-filter-select">
-            <option value="all">All Categories</option>
-            <option value="phones">Phones</option>
-            <option value="laptops">Laptops</option>
-            <option value="gaming">Gaming Consoles</option>
-            <option value="accessories">Accessories</option>
-          </select>
-          <select id="admin-stock-filter" class="admin-filter-select">
-            <option value="all">All Stock Status</option>
-            <option value="instock">In Stock Only</option>
-            <option value="outstock">Out of Stock</option>
-          </select>
-          <button type="button" class="btn-ghost-secondary" id="btn-open-rules-guide" title="Cloud Firestore Security Rules & Permissions Fix">
-            <i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Rules Setup
-          </button>
-          <button type="button" class="btn-ghost-secondary" id="btn-open-admins">
-            <i class="fa-solid fa-users-gear"></i> Manage Admins
-          </button>
-          <button type="button" class="btn-ghost-secondary" id="btn-sync-seed" title="Copy local seed inventory to Firestore if empty">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Sync Seed
-          </button>
-          <button type="button" class="btn-gold-primary" id="btn-open-new-gadget">
-            <i class="fa-solid fa-plus"></i> Post New Gadget
-          </button>
-        </div>
-      </div>
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main-wrap">
 
-      <!-- Gadgets Table -->
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th style="width:70px">Item</th>
-              <th>Gadget Details</th>
-              <th>Category</th>
-              <th>Price (₦)</th>
-              <th>Status</th>
-              <th>Badge</th>
-              <th style="text-align:right">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="admin-gadgets-tbody">
-            <tr>
-              <td colspan="7" style="text-align:center;padding:40px;color:var(--text-muted)">
-                <i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;margin-bottom:8px"></i><br>
-                Loading live catalog from Cloud Firestore...
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- MODAL 1: POST / EDIT GADGET -->
-  <div class="admin-modal-overlay" id="modal-gadget">
-    <div class="admin-modal-box">
-      <div class="admin-modal-header">
-        <h3 class="admin-modal-title" id="gadget-modal-title">Post New Gadget</h3>
-        <button type="button" class="btn-action-icon" id="btn-close-gadget-modal">&times;</button>
-      </div>
-      <form id="gadget-form">
-        <input type="hidden" id="form-gadget-id">
-        <div class="admin-form-grid">
-          
-          <div class="admin-form-group full">
-            <label class="admin-label">Gadget Name / Model</label>
-            <input type="text" id="form-name" class="admin-input" placeholder="e.g. Apple iPhone 16 Pro Max (256GB Desert Titanium)" required>
+      <!-- TOPBAR -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button type="button" class="mobile-menu-toggle" id="sidebar-toggle" title="Toggle Sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="topbar-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="admin-global-search" class="topbar-search-input" placeholder="Search gadgets by title, model, or ID...">
+            <span class="search-key-hint">Ctrl K</span>
           </div>
+        </div>
 
-          <div class="admin-form-group">
-            <label class="admin-label">Category</label>
-            <select id="form-category" class="admin-select" required>
+        <div class="topbar-right">
+          <div class="admin-profile-pill">
+            <div class="admin-profile-avatar" id="topbar-avatar">K</div>
+            <span class="admin-profile-email" id="topbar-email">kareemtoheeba10@gmail.com</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW 1: PRODUCTS DIRECTORY -->
+      <main class="admin-view-body" id="view-products">
+        <div class="view-breadcrumb">
+          <span>Dashboard</span>
+          <i class="fa-solid fa-chevron-right" style="font-size:0.65rem"></i>
+          <span class="active">Product List</span>
+        </div>
+
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Products Directory</h1>
+            <p class="view-subtitle">Manage live inventory, device condition tags, pricing, and availability.</p>
+          </div>
+          <div class="view-actions">
+            <button type="button" class="btn-ghost" id="btn-sync-seed" title="Upload local catalog to Firestore if empty">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Sync Seed
+            </button>
+            <button type="button" class="btn-gold" onclick="openNewProductForm()">
+              <i class="fa-solid fa-plus"></i> Add Product
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon-wrap gold"><i class="fa-solid fa-mobile-screen-button"></i></div>
+            <div>
+              <div class="metric-val" id="stat-total-gadgets">0</div>
+              <div class="metric-lbl">Total Gadgets</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-wrap emerald"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+              <div class="metric-val" id="stat-instock-gadgets">0</div>
+              <div class="metric-lbl">In Stock</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-wrap rose"><i class="fa-solid fa-box-archive"></i></div>
+            <div>
+              <div class="metric-val" id="stat-outstock-gadgets">0</div>
+              <div class="metric-lbl">Out of Stock / Sold</div>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon-wrap indigo"><i class="fa-solid fa-user-shield"></i></div>
+            <div>
+              <div class="metric-val" id="stat-admins-count">2</div>
+              <div class="metric-lbl">Store Admins</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter Toolbar -->
+        <div class="table-toolbar">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <select id="filter-category" class="filter-select">
+              <option value="all">All Categories</option>
               <option value="phones">Phones</option>
               <option value="laptops">Laptops</option>
               <option value="gaming">Gaming Consoles</option>
               <option value="accessories">Accessories</option>
             </select>
-          </div>
 
-          <div class="admin-form-group">
-            <label class="admin-label">Badge Tag</label>
-            <select id="form-badge" class="admin-select">
+            <select id="filter-stock" class="filter-select">
+              <option value="all">All Stock Status</option>
+              <option value="instock">In Stock Only</option>
+              <option value="outstock">Sold / Out of Stock</option>
+            </select>
+
+            <select id="filter-badge" class="filter-select">
+              <option value="all">All Condition Tags</option>
               <option value="UK Used">🇬🇧 UK Used</option>
               <option value="Nigerian Used">🇳🇬 Nigerian Used</option>
               <option value="Brand New">✨ Brand New</option>
-              <option value="new">NEW (Fresh Arrival)</option>
-              <option value="popular">POPULAR (Bestseller)</option>
-              <option value="hot-deal">HOT DEAL (Sale)</option>
-              <option value="oem">OFFICIAL OEM</option>
-              <option value="SOLD">🚫 SOLD / Out of Stock</option>
-              <option value="">None</option>
+              <option value="SOLD">🚫 Sold</option>
             </select>
           </div>
 
-          <div class="admin-form-group">
-            <label class="admin-label">Price (₦ Naira)</label>
-            <input type="number" id="form-price" class="admin-input" placeholder="e.g. 1450000" min="0" required>
+          <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);" id="table-results-counter">
+            Showing all items
           </div>
+        </div>
 
-          <div class="admin-form-group">
-            <label class="admin-label">Original Price (₦ Optional Strike-through)</label>
-            <input type="number" id="form-oldprice" class="admin-input" placeholder="e.g. 1600000" min="0">
+        <!-- Table Container -->
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width:70px">Item</th>
+                <th>Gadget Details</th>
+                <th>Category</th>
+                <th>Price (₦)</th>
+                <th>Status</th>
+                <th>Condition Tag</th>
+                <th style="text-align:right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-gadgets-tbody">
+              <tr>
+                <td colspan="7" style="text-align:center;padding:48px 20px;color:var(--text-muted)">
+                  <i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem;margin-bottom:8px"></i><br>
+                  Loading live inventory from Cloud Firestore...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+
+      <!-- VIEW 2: ADD / EDIT PRODUCT FORM (KUSALE 2-COLUMN VIEW) -->
+      <main class="admin-view-body" id="view-product-form" style="display:none;">
+        <div class="view-breadcrumb">
+          <span style="cursor:pointer;" onclick="switchView('products')">Dashboard</span>
+          <i class="fa-solid fa-chevron-right" style="font-size:0.65rem"></i>
+          <span style="cursor:pointer;" onclick="switchView('products')">Product List</span>
+          <i class="fa-solid fa-chevron-right" style="font-size:0.65rem"></i>
+          <span class="active" id="form-breadcrumb-action">Add Product</span>
+        </div>
+
+        <div class="view-header">
+          <div>
+            <h1 class="view-title" id="form-title-text">Add Product</h1>
+            <p class="view-subtitle">Enter device specifications, attach photos, and publish to the live catalog.</p>
           </div>
+          <div class="view-actions">
+            <button type="button" class="btn-ghost" onclick="switchView('products')">
+              Discard Changes
+            </button>
+            <button type="button" class="btn-gold" id="btn-save-gadget-top" onclick="triggerFormSubmit()">
+              <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish
+            </button>
+          </div>
+        </div>
 
-          <div class="admin-form-group full">
-            <label class="admin-label">Primary Image URL</label>
-            <div style="display:flex;gap:10px">
-              <input type="url" id="form-image" class="admin-input" placeholder="https://... (Direct image link or Cloudinary)" required>
-              <img id="form-image-preview" src="https://placehold.co/80x80/1a1a24/c9a227?text=Preview" alt="Preview" style="width:42px;height:42px;border-radius:8px;object-fit:cover;border:1px solid var(--border)">
+        <form id="gadget-editor-form">
+          <input type="hidden" id="form-gadget-id">
+
+          <div class="form-layout-grid">
+
+            <!-- LEFT COLUMN: GENERAL INFO, PRICING & CLASSIFICATION -->
+            <div class="form-col-left">
+
+              <!-- General Information -->
+              <div class="form-card">
+                <div class="form-card-header">
+                  <div>
+                    <h3 class="form-card-title">General Information</h3>
+                    <div class="form-card-sub">Core hardware identity and description</div>
+                  </div>
+                </div>
+
+                <div class="input-field-group">
+                  <label class="field-label">Gadget Name / Model *</label>
+                  <input type="text" id="form-name" class="form-control-input" placeholder="e.g. Apple iPhone 16 Pro Max (256GB Desert Titanium)" required>
+                </div>
+
+                <div class="input-field-group">
+                  <label class="field-label">Description &amp; Specifications</label>
+                  <textarea id="form-desc" class="form-control-textarea" placeholder="Factory sealed in box, verifiable serial/IMEI, includes 1-year warranty, same-day delivery across Ibadan..."></textarea>
+                </div>
+              </div>
+
+              <!-- Pricing & Inventory -->
+              <div class="form-card">
+                <div class="form-card-header">
+                  <div>
+                    <h3 class="form-card-title">Pricing &amp; Availability</h3>
+                    <div class="form-card-sub">Set sale price and stock availability</div>
+                  </div>
+                </div>
+
+                <div class="form-row-duo">
+                  <div class="input-field-group">
+                    <label class="field-label">Base Price (₦ Naira) *</label>
+                    <input type="number" id="form-price" class="form-control-input" placeholder="e.g. 1450000" min="0" required>
+                  </div>
+                  <div class="input-field-group">
+                    <label class="field-label">Original Price (₦ Optional Strike-through)</label>
+                    <input type="number" id="form-oldprice" class="form-control-input" placeholder="e.g. 1600000" min="0">
+                  </div>
+                </div>
+
+                <div class="input-field-group" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border-color);">
+                  <label class="switch-label">
+                    <input type="checkbox" id="form-instock" class="switch-input" checked>
+                    <span class="switch-slider"></span>
+                    <span id="label-stock-text">Currently In Stock &amp; Ready for Delivery</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Category & Condition Tags -->
+              <div class="form-card">
+                <div class="form-card-header">
+                  <div>
+                    <h3 class="form-card-title">Classification &amp; Condition</h3>
+                    <div class="form-card-sub">Category section and condition badges</div>
+                  </div>
+                </div>
+
+                <div class="form-row-duo">
+                  <div class="input-field-group">
+                    <label class="field-label">Category *</label>
+                    <select id="form-category" class="form-control-select" required>
+                      <option value="phones">Phones</option>
+                      <option value="laptops">Laptops</option>
+                      <option value="gaming">Gaming Consoles</option>
+                      <option value="accessories">Accessories</option>
+                    </select>
+                  </div>
+
+                  <div class="input-field-group">
+                    <label class="field-label">Condition / Badge Tag</label>
+                    <select id="form-badge" class="form-control-select">
+                      <option value="UK Used">🇬🇧 UK Used</option>
+                      <option value="Nigerian Used">🇳🇬 Nigerian Used</option>
+                      <option value="Brand New">✨ Brand New</option>
+                      <option value="new">NEW (Fresh Arrival)</option>
+                      <option value="popular">POPULAR (Bestseller)</option>
+                      <option value="hot-deal">HOT DEAL (Sale)</option>
+                      <option value="oem">OFFICIAL OEM</option>
+                      <option value="SOLD">🚫 SOLD / Out of Stock</option>
+                      <option value="">None</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
             </div>
-            <span style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">Paste direct JPG/PNG link or upload to Cloudinary/Imgur.</span>
-          </div>
 
-          <div class="admin-form-group full">
-            <label class="admin-label">Availability</label>
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.85rem">
-              <input type="checkbox" id="form-instock" checked style="accent-color:var(--gold);width:16px;height:16px">
-              <span>Currently In Stock &amp; Ready for Delivery</span>
-            </label>
-          </div>
+            <!-- RIGHT COLUMN: PRODUCT MEDIA (MULTIPLE PHOTOS) & PREVIEW -->
+            <div class="form-col-right">
 
-          <div class="admin-form-group full">
-            <label class="admin-label">Description &amp; Specifications</label>
-            <textarea id="form-desc" class="admin-textarea" placeholder="Factory sealed in box, verifiable serial/IMEI, includes 1-year warranty, same-day delivery across Ibadan..."></textarea>
-          </div>
+              <!-- Product Media Card -->
+              <div class="form-card">
+                <div class="form-card-header">
+                  <div>
+                    <h3 class="form-card-title">Product Media</h3>
+                    <div class="form-card-sub">Attach multiple device photos from device or link</div>
+                  </div>
+                </div>
 
+                <!-- Attached Photos Preview Grid -->
+                <div class="media-thumbs-grid" id="media-thumbs-container">
+                  <!-- Populated dynamically -->
+                </div>
+
+                <!-- File Attachment Dropzone -->
+                <input type="file" id="media-file-input" accept="image/*" multiple style="display:none">
+                <div class="media-dropzone" id="media-dropzone" onclick="document.getElementById('media-file-input').click()">
+                  <div class="media-dropzone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                  <div class="media-dropzone-text">Click to Attach Photos from Device</div>
+                  <div class="media-dropzone-sub">Upload 1 or more images (JPG, PNG, WebP)</div>
+                </div>
+
+                <!-- Add via URL Alternative -->
+                <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border-color);">
+                  <label class="field-label" style="margin-bottom:8px;display:block">Or Add Photo by Web URL</label>
+                  <div style="display:flex;gap:8px">
+                    <input type="url" id="media-url-input" class="form-control-input" placeholder="https://... (Cloudinary, Imgur, or direct link)">
+                    <button type="button" class="btn-ghost" id="btn-add-url-photo" style="white-space:nowrap;padding:0 14px">
+                      <i class="fa-solid fa-plus"></i> Add Link
+                    </button>
+                  </div>
+                  <div style="font-size:0.72rem;color:var(--text-muted);margin-top:6px">
+                    Tip: The first photo is automatically used as the primary catalog cover image.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Card Preview -->
+              <div class="form-card">
+                <div class="form-card-header">
+                  <div>
+                    <h3 class="form-card-title">Storefront Preview</h3>
+                    <div class="form-card-sub">Real-time preview of the catalog listing</div>
+                  </div>
+                </div>
+
+                <div class="live-preview-box">
+                  <div class="preview-card-mock">
+                    <div class="preview-card-img-wrap">
+                      <img id="preview-mock-img" src="https://placehold.co/400x300/1a1a24/c9a227?text=No+Photo" alt="Preview">
+                      <span id="preview-mock-badge" class="badge-pill brand-new" style="position:absolute;top:8px;left:8px;">NEW</span>
+                    </div>
+                    <div class="preview-card-content">
+                      <div id="preview-mock-cat" style="font-size:0.7rem;font-weight:700;color:var(--gold);text-transform:uppercase;">PHONES</div>
+                      <div id="preview-mock-title" style="font-weight:700;font-size:0.88rem;color:#0f172a;margin:4px 0;">Product Title</div>
+                      <div id="preview-mock-price" style="font-weight:800;font-size:0.95rem;color:#0f172a;">₦0</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:20px;">
+                  <button type="button" class="btn-ghost" style="flex:1" onclick="switchView('products')">
+                    Discard
+                  </button>
+                  <button type="submit" class="btn-gold" id="btn-save-gadget-bottom" style="flex:1.4">
+                    <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+      </main>
+
+      <!-- VIEW 3: STORE ADMINISTRATORS -->
+      <main class="admin-view-body" id="view-admins" style="display:none;">
+        <div class="view-breadcrumb">
+          <span style="cursor:pointer;" onclick="switchView('products')">Dashboard</span>
+          <i class="fa-solid fa-chevron-right" style="font-size:0.65rem"></i>
+          <span class="active">Store Admins</span>
         </div>
 
-        <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
-          <button type="button" class="btn-ghost-secondary" id="btn-cancel-gadget">Cancel</button>
-          <button type="submit" class="btn-gold-primary" id="btn-save-gadget">
-            <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish
-          </button>
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Store Administrators</h1>
+            <p class="view-subtitle">Accounts authorized to add, edit, mark sold, and remove store gadgets.</p>
+          </div>
         </div>
-      </form>
+
+        <div style="max-width:680px">
+          <!-- Active Admins Card -->
+          <div class="form-card">
+            <div class="form-card-header">
+              <div>
+                <h3 class="form-card-title">Active Administrators</h3>
+                <div class="form-card-sub">Authorized team members with full console privileges</div>
+              </div>
+            </div>
+
+            <div id="admins-list-container">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Add Admin Card -->
+          <div class="form-card">
+            <div class="form-card-header">
+              <div>
+                <h3 class="form-card-title">Add Administrator</h3>
+                <div class="form-card-sub">Grant full admin privileges to another Google account</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px">
+              <input type="email" id="input-new-admin-email" class="form-control-input" placeholder="e.g. partner@gmail.com" style="flex:1">
+              <button type="button" class="btn-gold" id="btn-add-admin" style="white-space:nowrap">
+                <i class="fa-solid fa-user-plus"></i> Grant Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- VIEW 4: FIRESTORE SECURITY RULES -->
+      <main class="admin-view-body" id="view-rules" style="display:none;">
+        <div class="view-breadcrumb">
+          <span style="cursor:pointer;" onclick="switchView('products')">Dashboard</span>
+          <i class="fa-solid fa-chevron-right" style="font-size:0.65rem"></i>
+          <span class="active">Firestore Security Rules</span>
+        </div>
+
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Cloud Firestore Security Rules</h1>
+            <p class="view-subtitle">Configure database permissions so authorized admins can write without permission errors.</p>
+          </div>
+          <div class="view-actions">
+            <a href="https://console.firebase.google.com/project/khaylimtech-9ed75/firestore/rules" target="_blank" rel="noopener noreferrer" class="btn-gold" style="text-decoration:none;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Firebase Console
+            </a>
+          </div>
+        </div>
+
+        <div style="max-width:760px">
+          <div class="form-card">
+            <div class="form-card-header">
+              <div>
+                <h3 class="form-card-title">Production Firestore Ruleset</h3>
+                <div class="form-card-sub">Copy and paste these rules into your Firebase Console Rules tab</div>
+              </div>
+            </div>
+
+            <p style="font-size:0.86rem;color:#475569;line-height:1.6;margin-bottom:14px">
+              If you see <code style="background:rgba(239,68,68,0.1);color:#ef4444;padding:2px 6px;border-radius:4px;font-size:0.82rem">Missing or insufficient permissions</code>, it means default Firestore test mode expired. Paste this ruleset and click <strong>Publish</strong>:
+            </p>
+
+            <div style="position:relative;background:#0f172a;border:1px solid #1e293b;border-radius:12px;padding:16px;font-family:monospace;font-size:0.8rem;color:#e2e8f0;line-height:1.6;overflow-x:auto;">
+              <pre id="rules-code-snippet" style="margin:0;white-space:pre-wrap;">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Products: public read for store customers, authenticated write
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    // Admin settings: public read, authenticated write
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    // Users: authenticated profile access
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}</pre>
+              <button type="button" id="btn-copy-rules-page" style="position:absolute;top:12px;right:12px;padding:6px 14px;border-radius:6px;background:var(--gold);color:#0f172a;border:none;font-size:0.75rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
+                <i class="fa-regular fa-copy"></i> Copy Rules
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
     </div>
   </div>
 
-  <!-- MODAL 2: DELETE CONFIRMATION -->
-  <div class="admin-modal-overlay" id="modal-delete">
-    <div class="admin-modal-box" style="max-width:440px;text-align:center">
-      <div style="width:56px;height:56px;border-radius:50%;background:rgba(239,68,68,0.12);color:#ef4444;display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:14px">
+  <!-- MODAL: DELETE CONFIRMATION -->
+  <div class="modal-backdrop" id="modal-delete">
+    <div class="modal-window" style="max-width:440px;text-align:center">
+      <div style="width:56px;height:56px;border-radius:50%;background:var(--rose-bg);color:#ef4444;display:inline-flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:14px">
         <i class="fa-solid fa-trash-can"></i>
       </div>
-      <h3 style="font-size:1.3rem;font-weight:800;color:var(--text-heading);margin-bottom:8px">Delete Gadget?</h3>
+      <h3 style="font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:8px">Delete Gadget?</h3>
       <p style="font-size:0.86rem;color:var(--text-muted);line-height:1.6;margin-bottom:24px">
-        Are you sure you want to remove <strong id="delete-gadget-name" style="color:var(--text-heading)">this gadget</strong>? It will immediately disappear from the live store.
+        Are you sure you want to remove <strong id="delete-gadget-name" style="color:#0f172a">this gadget</strong>? It will immediately disappear from the live store catalog.
       </p>
       <input type="hidden" id="delete-gadget-id">
       <div style="display:flex;gap:10px;justify-content:center">
-        <button type="button" class="btn-ghost-secondary" id="btn-cancel-delete" style="flex:1">Cancel</button>
-        <button type="button" class="btn-gold-primary" id="btn-confirm-delete" style="background:#ef4444;color:#fff;flex:1">
+        <button type="button" class="btn-ghost" id="btn-cancel-delete" style="flex:1">Cancel</button>
+        <button type="button" class="btn-gold" id="btn-confirm-delete" style="background:#ef4444;color:#fff;flex:1">
           <i class="fa-solid fa-trash"></i> Delete
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 3: MANAGE ADMINISTRATORS (TWO ADMIN SUPPORT) -->
-  <div class="admin-modal-overlay" id="modal-admins">
-    <div class="admin-modal-box" style="max-width:540px">
-      <div class="admin-modal-header">
-        <div>
-          <h3 class="admin-modal-title">Store Administrators</h3>
-          <span style="font-size:0.75rem;color:var(--text-muted)">Manage accounts authorized to post, edit, and delete gadgets.</span>
-        </div>
-        <button type="button" class="btn-action-icon" id="btn-close-admins-modal">&times;</button>
-      </div>
-
-      <div style="margin-bottom:20px;">
-        <label class="admin-label" style="margin-bottom:8px;display:block">Active Administrators</label>
-        <div id="admins-list-container">
-          <!-- Populated dynamically -->
-        </div>
-      </div>
-
-      <div style="background:var(--bg-secondary,#f5f5f8);padding:16px;border-radius:14px;border:1px solid var(--border)">
-        <h4 style="font-size:0.88rem;font-weight:700;color:var(--text-heading);margin-bottom:6px">
-          <i class="fa-solid fa-user-plus text-gold" style="margin-right:4px"></i> Add Second Admin
-        </h4>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px">
-          Grant full administrative control to a second team member email address.
-        </p>
-        <div style="display:flex;gap:8px">
-          <input type="email" id="input-new-admin-email" class="admin-input" placeholder="e.g. partner@gmail.com" style="flex:1">
-          <button type="button" class="btn-gold-primary" id="btn-add-admin" style="white-space:nowrap">
-            Add Admin
-          </button>
-        </div>
-      </div>
-
-      <div style="margin-top:20px;text-align:right">
-        <button type="button" class="btn-ghost-secondary" id="btn-done-admins">Done</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 4: FIRESTORE RULES & PERMISSION SETUP -->
-  <div class="admin-modal-overlay" id="modal-rules-guide">
-    <div class="admin-modal-box" style="max-width:620px">
-      <div class="admin-modal-header">
-        <div style="display:flex;align-items:center;gap:10px">
-          <div style="width:38px;height:38px;border-radius:10px;background:rgba(201,162,39,0.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.1rem">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-          <div>
-            <h3 class="admin-modal-title" style="margin:0;font-size:1.15rem">Cloud Firestore Security Rules</h3>
-            <span style="font-size:0.75rem;color:var(--text-muted)">Grant permanent read/write access for store gadgets &amp; admins</span>
-          </div>
-        </div>
-        <button type="button" class="btn-action-icon" id="btn-close-rules-modal">&times;</button>
-      </div>
-
-      <div style="margin-bottom:18px;">
-        <p style="font-size:0.84rem;color:var(--text);line-height:1.6;margin-bottom:12px">
-          If you encounter <code style="background:rgba(239,68,68,0.12);color:#ef4444;padding:2px 6px;border-radius:4px;font-size:0.8rem">Missing or insufficient permissions</code>, Google Cloud Firestore security rules are currently in test-mode expired or locked mode.
-        </p>
-        <p style="font-size:0.84rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">
-          Paste the following production rules into your <strong>Firebase Console &rarr; Firestore Database &rarr; Rules</strong> tab:
-        </p>
-
-        <div style="position:relative;background:#0d0d14;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:14px;font-family:monospace;font-size:0.76rem;color:#e2e8f0;line-height:1.5;overflow-x:auto;">
-          <pre id="firestore-rules-snippet" style="margin:0;white-space:pre-wrap;">rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /products/{productId} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-    match /settings/{docId} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-    match /users/{userId} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}</pre>
-          <button type="button" id="btn-copy-rules" style="position:absolute;top:10px;right:10px;padding:6px 12px;border-radius:6px;background:var(--gold);color:#0d0d12;border:none;font-size:0.72rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px">
-            <i class="fa-regular fa-copy"></i> Copy Rules
-          </button>
-        </div>
-      </div>
-
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid var(--border)">
-        <a href="https://console.firebase.google.com/project/khaylimtech-9ed75/firestore/rules" target="_blank" rel="noopener noreferrer" class="btn-gold-primary" style="text-decoration:none;font-size:0.82rem;padding:0 18px;height:40px">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Firebase Console Rules
-        </a>
-        <button type="button" class="btn-ghost-secondary" id="btn-done-rules" style="height:40px">Close</button>
-      </div>
-    </div>
-  </div>
-
   <!-- TOAST NOTIFICATIONS -->
-  <div id="admin-toast" style="position:fixed;bottom:24px;right:24px;background:#0d0d12;color:#fff;border:1px solid var(--gold);padding:12px 20px;border-radius:50px;font-size:0.85rem;font-weight:600;display:none;align-items:center;gap:8px;box-shadow:0 12px 32px rgba(0,0,0,0.4);z-index:99999;"></div>
+  <div id="admin-toast" class="admin-toast-box"></div>
 
   <!-- SCRIPTS -->
   <script src="/js/data.js"></script>
-  <!-- Firebase Compat SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
@@ -1005,10 +1660,11 @@ service cloud.firestore {
 
   <script>
     // ========================================================
-    //  KhaylimTech Admin Portal Controller
+    //  KhaylimTech Admin Controller (Kusale Architecture)
     // ========================================================
     let currentAdminUser = null;
     let liveGadgets = [];
+    let currentGadgetImages = []; // Stores array of multiple photos (URLs or data URIs)
 
     function showAdminToast(msg, isSuccess = true) {
       const toast = document.getElementById('admin-toast');
@@ -1018,50 +1674,63 @@ service cloud.firestore {
       setTimeout(() => { toast.style.display = 'none'; }, 3500);
     }
 
-    // Check Auth State
+    // View Routing
+    window.switchView = function(viewName) {
+      const views = ['products', 'product-form', 'admins', 'rules'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.style.display = (v === viewName) ? 'block' : 'none';
+      });
+
+      // Update sidebar nav buttons
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      const activeNavBtn = document.getElementById(`nav-btn-${viewName}`);
+      if (activeNavBtn) activeNavBtn.classList.add('active');
+
+      // Scroll view to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Close mobile drawer if open
+      document.getElementById('admin-sidebar')?.classList.remove('mobile-open');
+    };
+
+    // Evaluate Auth State
     function evaluateAdminState(user) {
       currentAdminUser = user;
       const gate = document.getElementById('admin-gate');
       const dashboard = document.getElementById('admin-dashboard');
-      const headerUser = document.getElementById('admin-user-header');
       const gateSignIn = document.getElementById('gate-signin-actions');
       const gateDenied = document.getElementById('gate-denied-actions');
       const gateDesc = document.getElementById('gate-desc');
       const gateDeniedEmail = document.getElementById('gate-denied-email');
 
       if (!user) {
-        // Not signed in
         if (dashboard) dashboard.style.display = 'none';
-        if (headerUser) headerUser.style.display = 'none';
         if (gate) {
           gate.style.display = 'flex';
           gateSignIn.style.display = 'flex';
           gateDenied.style.display = 'none';
-          gateDesc.textContent = "Please sign in with your authorized KhaylimTech administrator account to manage gadgets.";
+          gateDesc.textContent = "Please sign in with your authorized KhaylimTech administrator account to manage store catalog.";
         }
         return;
       }
 
-      // User signed in — check if email is admin
       const email = user.email ? user.email.toLowerCase() : '';
-      const isAuthorized = window.isUserAdmin ? window.isUserAdmin(user) : (email === 'kareemtoheeba10@gmail.com');
+      const isAuthorized = window.isUserAdmin ? window.isUserAdmin(user) : 
+        (email === 'kareemtoheeba10@gmail.com' || email === 'khaylimtech@gmail.com');
 
       if (isAuthorized) {
-        // Authorized Admin!
         if (gate) gate.style.display = 'none';
-        if (dashboard) dashboard.style.display = 'block';
-        if (headerUser) {
-          headerUser.style.display = 'block';
-          document.getElementById('admin-header-email').textContent = email;
-          const initial = (user.displayName || email).charAt(0).toUpperCase();
-          document.getElementById('admin-header-avatar').textContent = initial;
-        }
+        if (dashboard) dashboard.style.display = 'flex';
+        
+        document.getElementById('topbar-email').textContent = email;
+        const initial = (user.displayName || email).charAt(0).toUpperCase();
+        document.getElementById('topbar-avatar').textContent = initial;
+
         bindLiveProducts();
         renderAdminsList();
       } else {
-        // Signed in, but unauthorized email
         if (dashboard) dashboard.style.display = 'none';
-        if (headerUser) headerUser.style.display = 'none';
         if (gate) {
           gate.style.display = 'flex';
           gateSignIn.style.display = 'none';
@@ -1072,7 +1741,7 @@ service cloud.firestore {
       }
     }
 
-    // Real-time Firestore Gadgets Listener
+    // Firestore Live Listener
     function bindLiveProducts() {
       if (!window.db) {
         setTimeout(bindLiveProducts, 200);
@@ -1082,6 +1751,9 @@ service cloud.firestore {
       window.db.collection('products').onSnapshot((snapshot) => {
         liveGadgets = snapshot.docs.map(doc => {
           const d = doc.data();
+          const imgs = Array.isArray(d.images) && d.images.length > 0 
+            ? d.images 
+            : (d.image ? [d.image] : ['https://placehold.co/400x400/1a1a24/c9a227?text=No+Image']);
           return {
             id: doc.id,
             name: d.name || 'Untitled Gadget',
@@ -1089,48 +1761,62 @@ service cloud.firestore {
             price: Number(d.price) || 0,
             oldPrice: d.oldPrice ? Number(d.oldPrice) : null,
             description: d.description || '',
-            image: d.image || 'https://placehold.co/400x400/1a1a24/c9a227?text=No+Image',
+            image: imgs[0],
+            images: imgs,
             badge: d.badge || '',
             inStock: d.inStock !== false
           };
         });
 
-        // If Firestore is empty, fall back to sample PRODUCTS for display
+        // Fallback to PRODUCTS sample data if Firestore is empty
         if (liveGadgets.length === 0 && window.PRODUCTS && window.PRODUCTS.length > 0) {
-          liveGadgets = window.PRODUCTS.map(p => ({ ...p }));
+          liveGadgets = window.PRODUCTS.map(p => ({
+            ...p,
+            images: p.images || [p.image]
+          }));
         }
 
         renderMetrics();
         renderGadgetsTable();
       }, (err) => {
-        console.warn('Firestore error in admin:', err);
-        if (window.PRODUCTS) {
-          liveGadgets = window.PRODUCTS.map(p => ({ ...p }));
+        console.warn('Firestore live listener notice:', err);
+        if (window.PRODUCTS && liveGadgets.length === 0) {
+          liveGadgets = window.PRODUCTS.map(p => ({
+            ...p,
+            images: p.images || [p.image]
+          }));
           renderMetrics();
           renderGadgetsTable();
         }
       });
     }
 
-    // Render Metrics
+    // Metrics
     function renderMetrics() {
       const total = liveGadgets.length;
       const inStock = liveGadgets.filter(g => g.inStock).length;
       const outStock = total - inStock;
-      const adminCount = window.KHAYLIM_ADMINS ? window.KHAYLIM_ADMINS.length : 1;
+      const adminCount = window.KHAYLIM_ADMINS ? window.KHAYLIM_ADMINS.length : 2;
 
       document.getElementById('stat-total-gadgets').textContent = total;
       document.getElementById('stat-instock-gadgets').textContent = inStock;
       document.getElementById('stat-outstock-gadgets').textContent = outStock;
       document.getElementById('stat-admins-count').textContent = adminCount;
+
+      const sidebarGadgetCount = document.getElementById('sidebar-count-gadgets');
+      if (sidebarGadgetCount) sidebarGadgetCount.textContent = total;
+
+      const sidebarAdminCount = document.getElementById('sidebar-count-admins');
+      if (sidebarAdminCount) sidebarAdminCount.textContent = adminCount;
     }
 
-    // Render Gadgets Table
+    // Render Table
     function renderGadgetsTable() {
       const tbody = document.getElementById('admin-gadgets-tbody');
-      const search = (document.getElementById('admin-search').value || '').toLowerCase().trim();
-      const catFilter = document.getElementById('admin-category-filter').value;
-      const stockFilter = document.getElementById('admin-stock-filter').value;
+      const search = (document.getElementById('admin-global-search').value || '').toLowerCase().trim();
+      const catFilter = document.getElementById('filter-category').value;
+      const stockFilter = document.getElementById('filter-stock').value;
+      const badgeFilter = document.getElementById('filter-badge').value;
 
       let filtered = liveGadgets.filter(g => {
         const matchesSearch = !search || g.name.toLowerCase().includes(search) || g.id.toLowerCase().includes(search);
@@ -1138,16 +1824,27 @@ service cloud.firestore {
         let matchesStock = true;
         if (stockFilter === 'instock') matchesStock = g.inStock === true;
         if (stockFilter === 'outstock') matchesStock = g.inStock === false;
-        return matchesSearch && matchesCat && matchesStock;
+
+        let matchesBadge = true;
+        if (badgeFilter !== 'all') {
+          const gBadge = (g.badge || '').toLowerCase();
+          const target = badgeFilter.toLowerCase();
+          matchesBadge = gBadge.includes(target) || (target === 'sold' && !g.inStock);
+        }
+
+        return matchesSearch && matchesCat && matchesStock && matchesBadge;
       });
+
+      const counter = document.getElementById('table-results-counter');
+      if (counter) counter.textContent = `Showing ${filtered.length} of ${liveGadgets.length} gadgets`;
 
       if (filtered.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="7" style="text-align:center;padding:48px 20px;color:var(--text-muted)">
-              <div style="font-size:2rem;margin-bottom:10px"><i class="fa-solid fa-box-open"></i></div>
-              <strong style="font-size:1.05rem;color:var(--text-heading)">No gadgets found</strong>
-              <p style="margin-top:4px;font-size:0.84rem">Try adjusting your filters or click "+ Post New Gadget" above.</p>
+            <td colspan="7" style="text-align:center;padding:56px 20px;color:var(--text-muted)">
+              <div style="font-size:2.2rem;margin-bottom:10px;color:#94a3b8"><i class="fa-solid fa-box-open"></i></div>
+              <strong style="font-size:1.05rem;color:#0f172a">No gadgets matched your filter</strong>
+              <p style="margin-top:4px;font-size:0.84rem">Try adjusting your filters or search query.</p>
             </td>
           </tr>
         `;
@@ -1158,68 +1855,70 @@ service cloud.firestore {
         const fmtPrice = '₦' + Number(g.price).toLocaleString('en-NG');
         const fmtOld = g.oldPrice ? `<span style="text-decoration:line-through;color:var(--text-muted);font-size:0.75rem;margin-left:4px">₦${Number(g.oldPrice).toLocaleString('en-NG')}</span>` : '';
         
-        let badgeLabel = '—';
+        let badgeHtml = '—';
         if (g.badge) {
           const bLower = g.badge.toLowerCase().trim();
           if (bLower === 'uk used' || bLower === 'uk-used') {
-            badgeLabel = `<span class="admin-badge-pill uk-used">🇬🇧 UK Used</span>`;
+            badgeHtml = `<span class="badge-pill uk-used">🇬🇧 UK Used</span>`;
           } else if (bLower === 'nigerian used' || bLower === 'nigerian-used' || bLower === 'naija used') {
-            badgeLabel = `<span class="admin-badge-pill ng-used">🇳🇬 Nigerian Used</span>`;
+            badgeHtml = `<span class="badge-pill ng-used">🇳🇬 Nigerian Used</span>`;
           } else if (bLower === 'brand new' || bLower === 'new') {
-            badgeLabel = `<span class="admin-badge-pill brand-new">✨ Brand New</span>`;
+            badgeHtml = `<span class="badge-pill brand-new">✨ Brand New</span>`;
           } else if (bLower === 'sold' || !g.inStock) {
-            badgeLabel = `<span class="admin-badge-pill sold">🚫 SOLD</span>`;
+            badgeHtml = `<span class="badge-pill sold">🚫 SOLD</span>`;
           } else if (bLower === 'popular' || bLower === 'hot') {
-            badgeLabel = `<span class="admin-badge-pill popular">🔥 Popular</span>`;
+            badgeHtml = `<span class="badge-pill popular">🔥 Popular</span>`;
           } else {
-            badgeLabel = `<span class="admin-badge-pill custom">${g.badge}</span>`;
+            badgeHtml = `<span class="badge-pill neutral">${g.badge}</span>`;
           }
         } else if (!g.inStock) {
-          badgeLabel = `<span class="admin-badge-pill sold">🚫 SOLD</span>`;
+          badgeHtml = `<span class="badge-pill sold">🚫 SOLD</span>`;
         }
 
         const isSold = !g.inStock || (g.badge && g.badge.toLowerCase() === 'sold');
-        const stockClass = !isSold ? 'in-stock' : 'out-stock';
-        const stockText = !isSold ? '<i class="fa-solid fa-check"></i> In Stock' : '<i class="fa-solid fa-xmark"></i> Sold Out';
-        const soldActionBtn = !isSold
-          ? `<button type="button" class="btn-sold-pill" title="Mark this gadget as Sold" onclick="markGadgetSold('${g.id}')"><i class="fa-solid fa-tag"></i> Sold</button>`
-          : `<button type="button" class="btn-relist-pill" title="Restock gadget as In Stock" onclick="markGadgetInStock('${g.id}')"><i class="fa-solid fa-arrow-rotate-left"></i> Restock</button>`;
+        const statusHtml = !isSold 
+          ? `<span class="status-pill in-stock"><i class="fa-solid fa-circle-check"></i> In Stock</span>`
+          : `<span class="status-pill out-stock"><i class="fa-solid fa-circle-xmark"></i> Sold Out</span>`;
+
+        const quickSoldBtn = !isSold
+          ? `<button type="button" class="btn-quick-sold" title="Mark gadget as Sold" onclick="markGadgetSold('${g.id}')"><i class="fa-solid fa-tag"></i> Sold</button>`
+          : `<button type="button" class="btn-quick-relist" title="Restock gadget as In Stock" onclick="markGadgetInStock('${g.id}')"><i class="fa-solid fa-arrow-rotate-left"></i> Restock</button>`;
+
+        const photoCountBadge = g.images && g.images.length > 1 
+          ? `<span style="font-size:0.65rem;font-weight:700;color:var(--text-muted);background:#f1f5f9;padding:1px 5px;border-radius:4px;margin-left:6px;"><i class="fa-solid fa-images"></i> ${g.images.length}</span>` 
+          : '';
 
         return `
           <tr>
             <td>
-              <img src="${g.image}" alt="${g.name}" class="gadget-thumb" onerror="this.src='https://placehold.co/80x80/1a1a24/c9a227?text=Gadget'">
+              <img src="${g.image}" alt="${g.name}" class="table-gadget-thumb" onerror="this.src='https://placehold.co/80x80/1a1a24/c9a227?text=Gadget'">
             </td>
             <td>
-              <div class="gadget-cell-meta">
+              <div class="table-gadget-meta">
                 <div>
-                  <div class="gadget-title-text" title="${g.name}">${g.name}</div>
-                  <div class="gadget-id-text">ID: ${g.id}</div>
+                  <div class="table-gadget-title" title="${g.name}">${g.name} ${photoCountBadge}</div>
+                  <div class="table-gadget-id">ID: ${g.id}</div>
                 </div>
               </div>
             </td>
             <td>
-              <span class="category-badge">${g.category}</span>
+              <span class="cat-pill">${g.category}</span>
             </td>
             <td>
-              <strong>${fmtPrice}</strong> ${fmtOld}
+              <strong style="color:#0f172a">${fmtPrice}</strong> ${fmtOld}
             </td>
-            <td>
-              <button type="button" class="stock-toggle-btn ${stockClass}" onclick="toggleGadgetStock('${g.id}', ${isSold})">
-                ${stockText}
-              </button>
-            </td>
-            <td>${badgeLabel}</td>
+            <td>${statusHtml}</td>
+            <td>${badgeHtml}</td>
             <td style="text-align:right">
-              <div class="action-btn-group" style="justify-content:flex-end">
-                ${soldActionBtn}
-                <a href="/product/${g.id}" target="_blank" class="btn-action-icon" title="View in store">
+              <div class="table-actions-group">
+                ${quickSoldBtn}
+                <a href="/product/${g.id}" target="_blank" class="btn-action-sm" title="View in store">
                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
-                <button type="button" class="btn-action-icon" title="Edit gadget" onclick="openEditModal('${g.id}')">
+                <button type="button" class="btn-action-sm" title="Edit gadget" onclick="openEditProductForm('${g.id}')">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <button type="button" class="btn-action-icon delete" title="Delete gadget" onclick="openDeleteModal('${g.id}', '${escapeQuotes(g.name)}')">
+                <button type="button" class="btn-action-sm delete" title="Delete gadget" onclick="openDeleteModal('${g.id}', '${escapeQuotes(g.name)}')">
                   <i class="fa-solid fa-trash-can"></i>
                 </button>
               </div>
@@ -1233,12 +1932,330 @@ service cloud.firestore {
       return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
 
-    function showPermissionRulesNotice() {
-      const modal = document.getElementById('modal-rules-guide');
-      if (modal) modal.classList.add('show');
+    // ========================================================
+    //  Multi-Image Attachment & Media Gallery Handler
+    // ========================================================
+    function renderMediaGallery() {
+      const container = document.getElementById('media-thumbs-container');
+      if (!container) return;
+
+      if (currentGadgetImages.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:12px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;font-size:0.78rem;color:#64748b">
+            <i class="fa-solid fa-image" style="margin-right:6px"></i> No photos attached yet. Attach files below or add a URL link.
+          </div>
+        `;
+        updateLivePreview();
+        return;
+      }
+
+      container.innerHTML = currentGadgetImages.map((src, idx) => `
+        <div class="media-thumb-item" title="${idx === 0 ? 'Primary Photo' : 'Click to make Primary'}" onclick="setPrimaryPhoto(${idx})">
+          <img src="${src}" alt="Photo ${idx + 1}" onerror="this.src='https://placehold.co/100x100/1a1a24/c9a227?text=Error'">
+          ${idx === 0 ? '<span class="media-thumb-primary-tag">Primary</span>' : ''}
+          <button type="button" class="media-thumb-remove-btn" title="Remove photo" onclick="event.stopPropagation(); removePhoto(${idx})">
+            &times;
+          </button>
+        </div>
+      `).join('');
+
+      updateLivePreview();
     }
 
-    // Mark as Sold (Sets inStock: false and updates badge)
+    window.setPrimaryPhoto = function(idx) {
+      if (idx <= 0 || idx >= currentGadgetImages.length) return;
+      const target = currentGadgetImages.splice(idx, 1)[0];
+      currentGadgetImages.unshift(target);
+      renderMediaGallery();
+      showAdminToast('Primary photo updated.');
+    };
+
+    window.removePhoto = function(idx) {
+      currentGadgetImages.splice(idx, 1);
+      renderMediaGallery();
+      showAdminToast('Photo removed.');
+    };
+
+    // Client-Side Canvas Image Compression for Uploads
+    function compressImageFile(file, maxDimension = 1200, quality = 0.82) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > maxDimension) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              }
+            } else {
+              if (height > maxDimension) {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = () => resolve(e.target.result);
+          img.src = e.target.result;
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Handle File Input Selection
+    document.getElementById('media-file-input').addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+
+      showAdminToast(`Processing ${files.length} attached photo${files.length === 1 ? '' : 's'}...`);
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) continue;
+        const compressedDataUrl = await compressImageFile(file);
+        if (compressedDataUrl) {
+          currentGadgetImages.push(compressedDataUrl);
+        }
+      }
+      renderMediaGallery();
+      e.target.value = ''; // Reset input
+    });
+
+    // Handle Drag & Drop on Dropzone
+    const dropzone = document.getElementById('media-dropzone');
+    ['dragenter', 'dragover'].forEach(name => {
+      dropzone.addEventListener(name, (e) => {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(name => {
+      dropzone.addEventListener(name, (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+      });
+    });
+    dropzone.addEventListener('drop', async (e) => {
+      const files = Array.from(e.dataTransfer.files || []);
+      if (!files.length) return;
+      showAdminToast(`Processing ${files.length} attached photo${files.length === 1 ? '' : 's'}...`);
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) continue;
+        const compressedDataUrl = await compressImageFile(file);
+        if (compressedDataUrl) {
+          currentGadgetImages.push(compressedDataUrl);
+        }
+      }
+      renderMediaGallery();
+    });
+
+    // Add Photo via URL
+    document.getElementById('btn-add-url-photo').addEventListener('click', () => {
+      const input = document.getElementById('media-url-input');
+      const url = (input.value || '').trim();
+      if (!url) {
+        alert('Please enter a valid image web URL.');
+        return;
+      }
+      currentGadgetImages.push(url);
+      input.value = '';
+      renderMediaGallery();
+      showAdminToast('Photo link added!');
+    });
+
+    // Live Storefront Card Preview Updater
+    function updateLivePreview() {
+      const title = document.getElementById('form-name').value.trim() || 'Product Title';
+      const cat = document.getElementById('form-category').value.toUpperCase();
+      const price = Number(document.getElementById('form-price').value) || 0;
+      const badge = document.getElementById('form-badge').value;
+      const inStock = document.getElementById('form-instock').checked;
+
+      const previewImg = document.getElementById('preview-mock-img');
+      const previewBadge = document.getElementById('preview-mock-badge');
+      const previewCat = document.getElementById('preview-mock-cat');
+      const previewTitle = document.getElementById('preview-mock-title');
+      const previewPrice = document.getElementById('preview-mock-price');
+
+      previewTitle.textContent = title;
+      previewCat.textContent = cat;
+      previewPrice.textContent = '₦' + price.toLocaleString('en-NG');
+
+      if (currentGadgetImages.length > 0) {
+        previewImg.src = currentGadgetImages[0];
+      } else {
+        previewImg.src = 'https://placehold.co/400x300/1a1a24/c9a227?text=No+Photo';
+      }
+
+      if (!inStock || badge.toLowerCase() === 'sold') {
+        previewBadge.className = 'badge-pill sold';
+        previewBadge.textContent = 'SOLD OUT';
+        previewBadge.style.display = 'inline-flex';
+      } else if (badge) {
+        const bLower = badge.toLowerCase();
+        let cls = 'neutral';
+        if (bLower.includes('uk used')) cls = 'uk-used';
+        else if (bLower.includes('nigerian')) cls = 'ng-used';
+        else if (bLower.includes('brand new') || bLower === 'new') cls = 'brand-new';
+        else if (bLower.includes('popular') || bLower.includes('hot')) cls = 'popular';
+        previewBadge.className = `badge-pill ${cls}`;
+        previewBadge.textContent = badge;
+        previewBadge.style.display = 'inline-flex';
+      } else {
+        previewBadge.style.display = 'none';
+      }
+    }
+
+    // Connect form inputs to Live Preview
+    ['form-name', 'form-category', 'form-price', 'form-badge'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', updateLivePreview);
+      document.getElementById(id)?.addEventListener('change', updateLivePreview);
+    });
+    document.getElementById('form-instock')?.addEventListener('change', (e) => {
+      document.getElementById('label-stock-text').textContent = e.target.checked 
+        ? 'Currently In Stock & Ready for Delivery' 
+        : 'Out of Stock / Sold Out';
+      updateLivePreview();
+    });
+
+    // ========================================================
+    //  Open Add / Edit Product Views
+    // ========================================================
+    window.openNewProductForm = function() {
+      document.getElementById('form-title-text').textContent = 'Add Product';
+      document.getElementById('form-breadcrumb-action').textContent = 'Add Product';
+      document.getElementById('gadget-editor-form').reset();
+      document.getElementById('form-gadget-id').value = '';
+      document.getElementById('form-instock').checked = true;
+      document.getElementById('label-stock-text').textContent = 'Currently In Stock & Ready for Delivery';
+      currentGadgetImages = [];
+      renderMediaGallery();
+      switchView('product-form');
+    };
+
+    window.openEditProductForm = function(id) {
+      const gadget = liveGadgets.find(g => g.id === id);
+      if (!gadget) return;
+
+      document.getElementById('form-title-text').textContent = `Edit: ${gadget.name}`;
+      document.getElementById('form-breadcrumb-action').textContent = 'Edit Product';
+      document.getElementById('form-gadget-id').value = gadget.id;
+      document.getElementById('form-name').value = gadget.name;
+      document.getElementById('form-category').value = gadget.category;
+      document.getElementById('form-price').value = gadget.price;
+      document.getElementById('form-oldprice').value = gadget.oldPrice || '';
+      document.getElementById('form-badge').value = gadget.badge || '';
+      document.getElementById('form-instock').checked = gadget.inStock !== false;
+      document.getElementById('label-stock-text').textContent = gadget.inStock !== false 
+        ? 'Currently In Stock & Ready for Delivery' 
+        : 'Out of Stock / Sold Out';
+      document.getElementById('form-desc').value = gadget.description || '';
+
+      currentGadgetImages = Array.isArray(gadget.images) && gadget.images.length > 0 
+        ? [...gadget.images] 
+        : (gadget.image ? [gadget.image] : []);
+
+      renderMediaGallery();
+      switchView('product-form');
+    };
+
+    window.triggerFormSubmit = function() {
+      document.getElementById('gadget-editor-form').requestSubmit();
+    };
+
+    // Save Gadget (Create or Update)
+    document.getElementById('gadget-editor-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const topSaveBtn = document.getElementById('btn-save-gadget-top');
+      const btmSaveBtn = document.getElementById('btn-save-gadget-bottom');
+      [topSaveBtn, btmSaveBtn].forEach(b => {
+        if (b) { b.disabled = true; b.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...'; }
+      });
+
+      const id = document.getElementById('form-gadget-id').value.trim() || generateProductId();
+      const name = document.getElementById('form-name').value.trim();
+      const category = document.getElementById('form-category').value;
+      const price = Number(document.getElementById('form-price').value);
+      const oldPriceVal = document.getElementById('form-oldprice').value;
+      const oldPrice = oldPriceVal ? Number(oldPriceVal) : null;
+      const badge = document.getElementById('form-badge').value;
+      const inStock = document.getElementById('form-instock').checked;
+      const description = document.getElementById('form-desc').value.trim();
+
+      // Ensure at least one image exists
+      const finalImages = currentGadgetImages.length > 0 
+        ? currentGadgetImages 
+        : ['https://placehold.co/500x500/1a1a24/c9a227?text=No+Photo'];
+      const primaryImage = finalImages[0];
+
+      const gadgetPayload = {
+        name,
+        category,
+        price,
+        oldPrice,
+        badge,
+        image: primaryImage,
+        images: finalImages,
+        inStock,
+        description,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedBy: currentAdminUser ? currentAdminUser.email : 'admin'
+      };
+
+      try {
+        if (window.db) {
+          await window.db.collection('products').doc(id).set(gadgetPayload, { merge: true });
+        }
+        
+        // Update local array
+        const idx = liveGadgets.findIndex(item => item.id === id);
+        const localObj = { id, ...gadgetPayload };
+        if (idx > -1) liveGadgets[idx] = localObj;
+        else liveGadgets.unshift(localObj);
+
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast(`"${name}" saved & published successfully!`);
+        switchView('products');
+      } catch (err) {
+        console.warn('Firestore cloud save notice:', err);
+        // Local fallback
+        const idx = liveGadgets.findIndex(item => item.id === id);
+        const localObj = { id, ...gadgetPayload };
+        if (idx > -1) liveGadgets[idx] = localObj;
+        else liveGadgets.unshift(localObj);
+
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast(`"${name}" saved locally!`);
+        switchView('products');
+
+        if (err.message && err.message.includes('permission')) {
+          switchView('rules');
+        }
+      } finally {
+        [topSaveBtn, btmSaveBtn].forEach(b => {
+          if (b) { b.disabled = false; b.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish'; }
+        });
+      }
+    });
+
+    function generateProductId() {
+      const cat = document.getElementById('form-category').value || 'item';
+      const prefixMap = { phones: 'ph', laptops: 'lp', gaming: 'gm', accessories: 'ac' };
+      const prefix = prefixMap[cat] || 'kh';
+      return `${prefix}_${Date.now().toString(36)}`;
+    }
+
+    // 1-Click Mark as Sold / Restock Handlers
     window.markGadgetSold = async function(id) {
       const g = liveGadgets.find(item => item.id === id);
       const name = g ? g.name : 'Gadget';
@@ -1250,29 +2267,19 @@ service cloud.firestore {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
           }, { merge: true });
         }
-        if (g) {
-          g.inStock = false;
-          g.badge = 'SOLD';
-        }
+        if (g) { g.inStock = false; g.badge = 'SOLD'; }
         renderMetrics();
         renderGadgetsTable();
         showAdminToast(`"${name}" marked as SOLD.`);
       } catch (err) {
-        console.warn('Sold status cloud save notice:', err);
-        if (g) {
-          g.inStock = false;
-          g.badge = 'SOLD';
-          renderMetrics();
-          renderGadgetsTable();
-        }
-        showAdminToast(`"${name}" marked as SOLD locally.`, true);
-        if (err.message && err.message.includes('permission')) {
-          showPermissionRulesNotice();
-        }
+        console.warn('Sold cloud save notice:', err);
+        if (g) { g.inStock = false; g.badge = 'SOLD'; }
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast(`"${name}" marked as SOLD locally.`);
       }
     };
 
-    // Mark as In Stock (Sets inStock: true)
     window.markGadgetInStock = async function(id) {
       const g = liveGadgets.find(item => item.id === id);
       const name = g ? g.name : 'Gadget';
@@ -1285,163 +2292,61 @@ service cloud.firestore {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
           }, { merge: true });
         }
-        if (g) {
-          g.inStock = true;
-          g.badge = prevBadge;
-        }
+        if (g) { g.inStock = true; g.badge = prevBadge; }
         renderMetrics();
         renderGadgetsTable();
         showAdminToast(`"${name}" restocked & available.`);
       } catch (err) {
         console.warn('Restock cloud save notice:', err);
-        if (g) {
-          g.inStock = true;
-          g.badge = prevBadge;
-          renderMetrics();
-          renderGadgetsTable();
-        }
-        showAdminToast(`"${name}" restocked locally.`, true);
-        if (err.message && err.message.includes('permission')) {
-          showPermissionRulesNotice();
-        }
+        if (g) { g.inStock = true; g.badge = prevBadge; }
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast(`"${name}" restocked locally.`);
       }
     };
 
-    // Toggle In Stock / Out of Stock
-    window.toggleGadgetStock = async function(id, newStatus) {
-      if (newStatus) {
-        return window.markGadgetInStock(id);
-      } else {
-        return window.markGadgetSold(id);
-      }
-    };
-
-    // Open Edit Modal
-    window.openEditModal = function(id) {
-      const gadget = liveGadgets.find(g => g.id === id);
-      if (!gadget) return;
-
-      document.getElementById('gadget-modal-title').textContent = 'Edit Gadget';
-      document.getElementById('form-gadget-id').value = gadget.id;
-      document.getElementById('form-name').value = gadget.name;
-      document.getElementById('form-category').value = gadget.category;
-      document.getElementById('form-price').value = gadget.price;
-      document.getElementById('form-oldprice').value = gadget.oldPrice || '';
-      document.getElementById('form-badge').value = gadget.badge || '';
-      document.getElementById('form-image').value = gadget.image;
-      document.getElementById('form-image-preview').src = gadget.image;
-      document.getElementById('form-instock').checked = gadget.inStock !== false;
-      document.getElementById('form-desc').value = gadget.description || '';
-
-      document.getElementById('modal-gadget').classList.add('show');
-    };
-
-    // Open Delete Modal
+    // Delete Gadget Modal
     window.openDeleteModal = function(id, name) {
       document.getElementById('delete-gadget-id').value = id;
       document.getElementById('delete-gadget-name').textContent = name;
       document.getElementById('modal-delete').classList.add('show');
     };
 
-    // Save Gadget (Create or Update)
-    document.getElementById('gadget-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!window.db) {
-        showAdminToast('Firestore database not connected.', false);
-        return;
-      }
-
-      const saveBtn = document.getElementById('btn-save-gadget');
-      saveBtn.disabled = true;
-      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-
-      try {
-        const id = document.getElementById('form-gadget-id').value.trim() || generateProductId();
-        const name = document.getElementById('form-name').value.trim();
-        const category = document.getElementById('form-category').value;
-        const price = Number(document.getElementById('form-price').value);
-        const oldPriceVal = document.getElementById('form-oldprice').value;
-        const oldPrice = oldPriceVal ? Number(oldPriceVal) : null;
-        const badge = document.getElementById('form-badge').value;
-        const image = document.getElementById('form-image').value.trim();
-        const inStock = document.getElementById('form-instock').checked;
-        const description = document.getElementById('form-desc').value.trim();
-
-        const gadgetPayload = {
-          name,
-          category,
-          price,
-          oldPrice,
-          badge,
-          image,
-          images: [image],
-          inStock,
-          description,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          updatedBy: currentAdminUser ? currentAdminUser.email : 'admin'
-        };
-
-        await window.db.collection('products').doc(id).set(gadgetPayload, { merge: true });
-        showAdminToast(`"${name}" saved successfully!`);
-        document.getElementById('modal-gadget').classList.remove('show');
-      } catch (err) {
-        console.warn('Error saving gadget to Firestore:', err);
-        // Fallback: update gadget in local liveGadgets so UI reflects it immediately
-        const idx = liveGadgets.findIndex(item => item.id === id);
-        const localGadget = { id, ...gadgetPayload };
-        if (idx > -1) liveGadgets[idx] = localGadget;
-        else liveGadgets.unshift(localGadget);
-        renderMetrics();
-        renderGadgetsTable();
-        document.getElementById('modal-gadget').classList.remove('show');
-        showAdminToast(`"${name}" saved locally!`);
-        if (err.message && err.message.includes('permission')) {
-          showPermissionRulesNotice();
-        } else {
-          showAdminToast('Notice: ' + err.message, false);
-        }
-      } finally {
-        saveBtn.disabled = false;
-        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish';
-      }
+    document.getElementById('btn-cancel-delete').addEventListener('click', () => {
+      document.getElementById('modal-delete').classList.remove('show');
     });
 
-    function generateProductId() {
-      const cat = document.getElementById('form-category').value || 'item';
-      const prefixMap = { phones: 'ph', laptops: 'lp', gaming: 'gm', accessories: 'ac' };
-      const prefix = prefixMap[cat] || 'kh';
-      return `${prefix}_${Date.now().toString(36)}`;
-    }
-
-    // Confirm Delete
     document.getElementById('btn-confirm-delete').addEventListener('click', async () => {
       const id = document.getElementById('delete-gadget-id').value;
-      if (!id || !window.db) return;
+      if (!id) return;
 
       const delBtn = document.getElementById('btn-confirm-delete');
       delBtn.disabled = true;
       delBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
 
       try {
-        await window.db.collection('products').doc(id).delete();
-        showAdminToast('Gadget removed from store.');
+        if (window.db) {
+          await window.db.collection('products').doc(id).delete();
+        }
+        liveGadgets = liveGadgets.filter(g => g.id !== id);
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast('Gadget removed from store catalog.');
         document.getElementById('modal-delete').classList.remove('show');
       } catch (err) {
-        console.error('Delete error:', err);
-        showAdminToast('Failed to delete gadget: ' + err.message, false);
+        console.warn('Delete cloud notice:', err);
+        liveGadgets = liveGadgets.filter(g => g.id !== id);
+        renderMetrics();
+        renderGadgetsTable();
+        showAdminToast('Gadget removed locally.');
+        document.getElementById('modal-delete').classList.remove('show');
       } finally {
         delBtn.disabled = false;
         delBtn.innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
       }
     });
 
-    // Image preview live sync
-    document.getElementById('form-image').addEventListener('input', (e) => {
-      const val = e.target.value.trim();
-      document.getElementById('form-image-preview').src = val || 'https://placehold.co/80x80/1a1a24/c9a227?text=Preview';
-    });
-
-    // Seed Import / Sync to Firestore
+    // Seed Sync
     document.getElementById('btn-sync-seed').addEventListener('click', async () => {
       if (!window.db || !window.PRODUCTS) return;
       if (!confirm(`This will upload all ${window.PRODUCTS.length} seed products to Cloud Firestore. Continue?`)) return;
@@ -1473,101 +2378,37 @@ service cloud.firestore {
         showAdminToast('All seed products synced to Firestore Cloud!');
       } catch (err) {
         console.error('Seed sync error:', err);
-        showAdminToast('Sync failed: ' + err.message, false);
+        showAdminToast('Sync notice: ' + err.message, false);
       } finally {
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Sync Seed';
       }
     });
 
-    // Modal Control Bindings
-    document.getElementById('btn-open-new-gadget').addEventListener('click', () => {
-      document.getElementById('gadget-modal-title').textContent = 'Post New Gadget';
-      document.getElementById('gadget-form').reset();
-      document.getElementById('form-gadget-id').value = '';
-      document.getElementById('form-instock').checked = true;
-      document.getElementById('form-image-preview').src = 'https://placehold.co/80x80/1a1a24/c9a227?text=Preview';
-      document.getElementById('modal-gadget').classList.add('show');
-    });
-
-    document.getElementById('btn-close-gadget-modal').addEventListener('click', () => {
-      document.getElementById('modal-gadget').classList.remove('show');
-    });
-    document.getElementById('btn-cancel-gadget').addEventListener('click', () => {
-      document.getElementById('modal-gadget').classList.remove('show');
-    });
-
-    document.getElementById('btn-cancel-delete').addEventListener('click', () => {
-      document.getElementById('modal-delete').classList.remove('show');
-    });
-
-    // Search and filter listeners
-    document.getElementById('admin-search').addEventListener('input', renderGadgetsTable);
-    document.getElementById('admin-category-filter').addEventListener('change', renderGadgetsTable);
-    document.getElementById('admin-stock-filter').addEventListener('change', renderGadgetsTable);
-
-    // Gate Sign In Buttons
-    document.getElementById('gate-btn-google').addEventListener('click', () => {
-      if (window.firebase && firebase.auth) {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider);
-      }
-    });
-    document.getElementById('gate-btn-email').addEventListener('click', () => {
-      if (window.KhaylimAuth && window.KhaylimAuth.openSignIn) {
-        window.KhaylimAuth.openSignIn();
-      }
-    });
-    document.getElementById('gate-btn-switch').addEventListener('click', () => {
-      if (window.firebase && firebase.auth) {
-        firebase.auth().signOut().then(() => {
-          if (window.KhaylimAuth && window.KhaylimAuth.openSignIn) {
-            window.KhaylimAuth.openSignIn();
-          }
-        });
-      }
-    });
-    document.getElementById('btn-admin-signout').addEventListener('click', () => {
-      if (confirm('Sign out from KhaylimTech Admin Center?')) {
-        firebase.auth().signOut();
-      }
-    });
-
     // ========================================================
-    //  MANAGE ADMINISTRATORS (TWO ADMINS SUPPORT)
+    //  Admins Management
     // ========================================================
-    document.getElementById('btn-open-admins').addEventListener('click', () => {
-      renderAdminsList();
-      document.getElementById('modal-admins').classList.add('show');
-    });
-    document.getElementById('btn-close-admins-modal').addEventListener('click', () => {
-      document.getElementById('modal-admins').classList.remove('show');
-    });
-    document.getElementById('btn-done-admins').addEventListener('click', () => {
-      document.getElementById('modal-admins').classList.remove('show');
-    });
-
     function renderAdminsList() {
       const container = document.getElementById('admins-list-container');
       if (!container) return;
-      const admins = window.KHAYLIM_ADMINS || ['kareemtoheeba10@gmail.com'];
+      const admins = window.KHAYLIM_ADMINS || ['kareemtoheeba10@gmail.com', 'khaylimtech@gmail.com'];
 
       container.innerHTML = admins.map(email => {
         const isSuper = email.toLowerCase() === 'kareemtoheeba10@gmail.com';
         return `
-          <div class="admin-item-row">
-            <div style="display:flex;align-items:center;gap:10px">
-              <div style="width:32px;height:32px;border-radius:50%;background:rgba(201,162,39,0.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:800">
-                <i class="fa-solid ${isSuper ? 'fa-crown text-gold' : 'fa-shield-halved'}"></i>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:12px;background:#f8fafc;border:1px solid var(--border-color);margin-bottom:10px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:34px;height:34px;border-radius:50%;background:var(--gold-subtle);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.85rem">
+                <i class="fa-solid ${isSuper ? 'fa-crown' : 'fa-shield-halved'}"></i>
               </div>
               <div>
-                <strong style="color:var(--text-heading);font-size:0.88rem">${email}</strong>
-                <div style="font-size:0.7rem;color:var(--text-muted)">${isSuper ? 'Super Administrator (Permanent)' : 'Store Administrator'}</div>
+                <strong style="color:#0f172a;font-size:0.88rem">${email}</strong>
+                <div style="font-size:0.72rem;color:var(--text-muted)">${isSuper ? 'Super Administrator (Permanent)' : 'Store Administrator'}</div>
               </div>
             </div>
             <div>
-              ${isSuper ? '<span style="font-size:0.75rem;font-weight:700;color:var(--gold)">Primary</span>' : `
-                <button type="button" class="btn-action-icon delete" title="Remove admin" onclick="removeAdminEmail('${email}')">
+              ${isSuper ? '<span style="font-size:0.75rem;font-weight:700;color:var(--gold);padding:3px 8px;background:var(--gold-subtle);border-radius:4px">Primary</span>' : `
+                <button type="button" class="btn-action-sm delete" title="Remove admin access" onclick="removeAdminEmail('${email}')">
                   <i class="fa-solid fa-xmark"></i>
                 </button>
               `}
@@ -1577,7 +2418,6 @@ service cloud.firestore {
       }).join('');
     }
 
-    // Add Second Admin Email
     document.getElementById('btn-add-admin').addEventListener('click', async () => {
       const input = document.getElementById('input-new-admin-email');
       const email = input.value.trim().toLowerCase();
@@ -1593,20 +2433,20 @@ service cloud.firestore {
 
       const updated = Array.from(new Set([...window.KHAYLIM_ADMINS, email]));
       try {
-        await window.db.collection('settings').doc('admins').set({
-          emails: updated,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          updatedBy: currentAdminUser ? currentAdminUser.email : 'kareemtoheeba10@gmail.com'
-        }, { merge: true });
-
+        if (window.db) {
+          await window.db.collection('settings').doc('admins').set({
+            emails: updated,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedBy: currentAdminUser ? currentAdminUser.email : 'kareemtoheeba10@gmail.com'
+          }, { merge: true });
+        }
         window.KHAYLIM_ADMINS = updated;
         input.value = '';
         renderAdminsList();
         renderMetrics();
-        showAdminToast(`Admin access granted to ${email}!`);
+        showAdminToast(`Admin privileges granted to ${email}!`);
       } catch (err) {
-        console.warn('Error adding admin to Firestore:', err);
-        // Fallback: grant immediately in local memory and cache
+        console.warn('Admin cloud save notice:', err);
         window.KHAYLIM_ADMINS = updated;
         try {
           const cached = JSON.parse(localStorage.getItem('khaylim_extra_admins') || '[]');
@@ -1616,16 +2456,10 @@ service cloud.firestore {
         input.value = '';
         renderAdminsList();
         renderMetrics();
-        showAdminToast(`Admin access granted to ${email} locally.`);
-        if (err.message && err.message.includes('permission')) {
-          showPermissionRulesNotice();
-        } else {
-          showAdminToast('Notice: ' + err.message, false);
-        }
+        showAdminToast(`Admin privileges granted to ${email} locally.`);
       }
     });
 
-    // Remove Admin Email
     window.removeAdminEmail = async function(email) {
       if (email.toLowerCase() === 'kareemtoheeba10@gmail.com') {
         alert('Cannot remove the primary Super Administrator.');
@@ -1635,34 +2469,31 @@ service cloud.firestore {
 
       const updated = window.KHAYLIM_ADMINS.filter(e => e.toLowerCase() !== email.toLowerCase());
       try {
-        await window.db.collection('settings').doc('admins').set({
-          emails: updated,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          updatedBy: currentAdminUser ? currentAdminUser.email : 'kareemtoheeba10@gmail.com'
-        }, { merge: true });
-
+        if (window.db) {
+          await window.db.collection('settings').doc('admins').set({
+            emails: updated,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedBy: currentAdminUser ? currentAdminUser.email : 'kareemtoheeba10@gmail.com'
+          }, { merge: true });
+        }
         window.KHAYLIM_ADMINS = updated;
         renderAdminsList();
         renderMetrics();
         showAdminToast(`Revoked admin access for ${email}.`);
       } catch (err) {
-        console.error('Error removing admin:', err);
-        showAdminToast('Failed to revoke admin: ' + err.message, false);
+        console.warn('Remove admin cloud notice:', err);
+        window.KHAYLIM_ADMINS = updated;
+        renderAdminsList();
+        renderMetrics();
+        showAdminToast(`Revoked admin access for ${email} locally.`);
       }
     };
 
-    // Firestore Rules Guide Modal Event Listeners
-    document.getElementById('btn-open-rules-guide')?.addEventListener('click', showPermissionRulesNotice);
-    document.getElementById('btn-close-rules-modal')?.addEventListener('click', () => {
-      document.getElementById('modal-rules-guide')?.classList.remove('show');
-    });
-    document.getElementById('btn-done-rules')?.addEventListener('click', () => {
-      document.getElementById('modal-rules-guide')?.classList.remove('show');
-    });
-    document.getElementById('btn-copy-rules')?.addEventListener('click', () => {
-      const code = document.getElementById('firestore-rules-snippet')?.textContent || '';
+    // Copy Rules Button on Rules Page
+    document.getElementById('btn-copy-rules-page')?.addEventListener('click', () => {
+      const code = document.getElementById('rules-code-snippet')?.textContent || '';
       navigator.clipboard.writeText(code).then(() => {
-        const btn = document.getElementById('btn-copy-rules');
+        const btn = document.getElementById('btn-copy-rules-page');
         if (btn) btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
         setTimeout(() => {
           if (btn) btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Rules';
@@ -1670,7 +2501,53 @@ service cloud.firestore {
       });
     });
 
-    // Firebase Auth State Listener
+    // Mobile Sidebar Toggle
+    document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+      document.getElementById('admin-sidebar')?.classList.toggle('mobile-open');
+    });
+
+    // Keyboard Shortcut (Ctrl+K or ⌘K)
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        document.getElementById('admin-global-search')?.focus();
+      }
+    });
+
+    // Table Filter and Search Listeners
+    ['admin-global-search', 'filter-category', 'filter-stock', 'filter-badge'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', renderGadgetsTable);
+      document.getElementById(id)?.addEventListener('change', renderGadgetsTable);
+    });
+
+    // Gate & Sign Out Listeners
+    document.getElementById('gate-btn-google')?.addEventListener('click', () => {
+      if (window.firebase && firebase.auth) {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider);
+      }
+    });
+    document.getElementById('gate-btn-email')?.addEventListener('click', () => {
+      if (window.KhaylimAuth && window.KhaylimAuth.openSignIn) {
+        window.KhaylimAuth.openSignIn();
+      }
+    });
+    document.getElementById('gate-btn-switch')?.addEventListener('click', () => {
+      if (window.firebase && firebase.auth) {
+        firebase.auth().signOut().then(() => {
+          if (window.KhaylimAuth && window.KhaylimAuth.openSignIn) {
+            window.KhaylimAuth.openSignIn();
+          }
+        });
+      }
+    });
+    document.getElementById('btn-sidebar-signout')?.addEventListener('click', () => {
+      if (confirm('Sign out from KhaylimTech Admin Center?')) {
+        firebase.auth().signOut();
+      }
+    });
+
+    // Initialize Auth Listener
     document.addEventListener('DOMContentLoaded', () => {
       function checkAuth() {
         if (window.firebase && firebase.auth) {
