@@ -1129,8 +1129,255 @@
     }
 
     /* ========================================================
-       Kusale-Style 2-Column Product Form View
+    /* ========================================================
+       Multi-Step Product Editor Wizard
        ======================================================== */
+    .product-wizard-container {
+      max-width: 780px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .wizard-stepper {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .stepper-progress-track {
+      position: absolute;
+      top: 36px;
+      left: 15%;
+      right: 15%;
+      height: 3px;
+      background: #e2e8f0;
+      z-index: 1;
+      border-radius: 4px;
+    }
+
+    .stepper-progress-fill {
+      height: 100%;
+      width: 16%;
+      background: linear-gradient(90deg, #c9a227, #dfb738);
+      border-radius: 4px;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stepper-tabs-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stepper-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px 14px;
+      border-radius: 12px;
+      text-align: left;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .stepper-step:hover {
+      background: #f8fafc;
+    }
+
+    .step-num-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      color: #64748b;
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .step-num-badge .check {
+      display: none;
+      font-size: 0.82rem;
+    }
+
+    .stepper-step.active .step-num-badge {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #c9a227, #dfb738);
+      color: #0f172a;
+      box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.2);
+    }
+
+    .stepper-step.completed .step-num-badge {
+      border-color: #10b981;
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .stepper-step.completed .step-num-badge .num {
+      display: none;
+    }
+
+    .stepper-step.completed .step-num-badge .check {
+      display: block;
+    }
+
+    .step-label-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .step-label-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #64748b;
+      transition: color 0.2s;
+    }
+
+    .stepper-step.active .step-label-title {
+      color: #0f172a;
+      font-weight: 800;
+    }
+
+    .stepper-step.completed .step-label-title {
+      color: #10b981;
+    }
+
+    .step-label-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .step-badge-counter {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      background: var(--gold-subtle);
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .wizard-mobile-status {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .mobile-step-pill {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: var(--gold-subtle);
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .mobile-step-current-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .wizard-step-pane {
+      animation: wizardPaneIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes wizardPaneIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .wizard-nav-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-color);
+      flex-wrap: wrap;
+    }
+
+    .btn-quick-save {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 42px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-quick-save:hover {
+      background: #10b981;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px) {
+      .stepper-progress-track {
+        display: none;
+      }
+      .step-label-wrap {
+        display: none;
+      }
+      .stepper-tabs-row {
+        justify-content: space-around;
+      }
+      .stepper-step {
+        padding: 4px;
+      }
+      .wizard-mobile-status {
+        display: flex;
+      }
+      .wizard-nav-footer {
+        flex-direction: column-reverse;
+      }
+      .wizard-nav-footer > button,
+      .wizard-nav-footer > div {
+        width: 100%;
+        justify-content: center;
+      }
+      .wizard-nav-footer > div > button {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+
     .form-layout-grid {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -1936,30 +2183,80 @@
         </div>
       </main>
 
-      <!-- VIEW 2: ADD / EDIT PRODUCT FORM (KUSALE 2-COLUMN VIEW) -->
+      <!-- VIEW 2: ADD / EDIT PRODUCT FORM (MODERN 3-STEP WIZARD) -->
       <main class="admin-view-body" id="view-product-form" style="display:none;">
-        <div class="view-header">
+        <div class="view-header" style="max-width:780px;margin:0 auto 20px;">
           <div>
             <h1 class="view-title" id="form-title-text">Add Product</h1>
-            <p class="view-subtitle">Enter device specifications, attach photos, and publish to the live catalog.</p>
+            <p class="view-subtitle" id="form-subtitle-text">Follow 3 clean steps to list or edit a device in your catalog.</p>
           </div>
+          <button type="button" class="btn-ghost" onclick="switchView('products')">
+            <i class="fa-solid fa-arrow-left"></i> Back to Products
+          </button>
         </div>
 
-        <form id="gadget-editor-form">
-          <input type="hidden" id="form-gadget-id">
+        <div class="product-wizard-container">
 
-          <div class="form-layout-grid">
+          <!-- INTERACTIVE STEPPER TRACKER -->
+          <div class="wizard-stepper" id="wizard-stepper">
+            <div class="stepper-progress-track">
+              <div class="stepper-progress-fill" id="stepper-progress-fill"></div>
+            </div>
 
-            <!-- LEFT COLUMN: GENERAL INFO, SPECS & PRICING -->
-            <div class="form-col-left">
+            <div class="stepper-tabs-row">
+              <button type="button" class="stepper-step active" id="wizard-step-btn-1" onclick="goToWizardStep(1)">
+                <div class="step-num-badge">
+                  <span class="num">1</span>
+                  <i class="fa-solid fa-check check"></i>
+                </div>
+                <div class="step-label-wrap">
+                  <span class="step-label-title">Basics &amp; Price</span>
+                  <span class="step-label-sub">Name, Category, Price</span>
+                </div>
+              </button>
 
-              <!-- General Information & Classification -->
+              <button type="button" class="stepper-step" id="wizard-step-btn-2" onclick="goToWizardStep(2)">
+                <div class="step-num-badge">
+                  <span class="num">2</span>
+                  <i class="fa-solid fa-check check"></i>
+                </div>
+                <div class="step-label-wrap">
+                  <span class="step-label-title">Specifications</span>
+                  <span class="step-label-sub">Hardware &amp; Description</span>
+                </div>
+              </button>
+
+              <button type="button" class="stepper-step" id="wizard-step-btn-3" onclick="goToWizardStep(3)">
+                <div class="step-num-badge">
+                  <span class="num">3</span>
+                  <i class="fa-solid fa-check check"></i>
+                </div>
+                <div class="step-label-wrap">
+                  <span class="step-label-title">Photos &amp; Preview</span>
+                  <span class="step-label-sub">Media &amp; Live Card</span>
+                </div>
+              </button>
+            </div>
+
+            <!-- Mobile compact status -->
+            <div class="wizard-mobile-status">
+              <span class="mobile-step-pill" id="mobile-step-pill">Step 1 of 3</span>
+              <span class="mobile-step-current-name" id="mobile-step-current-name">Basics &amp; Price</span>
+            </div>
+          </div>
+
+          <form id="gadget-editor-form">
+            <input type="hidden" id="form-gadget-id">
+
+            <!-- STEP 1 PANE: BASICS & PRICING -->
+            <div class="wizard-step-pane" id="wizard-step-pane-1">
               <div class="form-card">
                 <div class="form-card-header">
                   <div>
-                    <h3 class="form-card-title">General Information</h3>
-                    <div class="form-card-sub">Core hardware identity, category, and condition</div>
+                    <h3 class="form-card-title">1. Device Identity &amp; Pricing</h3>
+                    <div class="form-card-sub">Core hardware name, category classification, and price details</div>
                   </div>
+                  <span class="step-badge-counter">Step 1 of 3</span>
                 </div>
 
                 <div class="input-field-group">
@@ -1992,6 +2289,53 @@
                       <option value="">None</option>
                     </select>
                   </div>
+                </div>
+
+                <div class="form-row-duo" style="margin-top:10px;">
+                  <div class="input-field-group">
+                    <label class="field-label">Selling Price (₦ Naira) *</label>
+                    <input type="number" id="form-price" class="form-control-input" placeholder="e.g. 1450000" min="0" required>
+                  </div>
+                  <div class="input-field-group">
+                    <label class="field-label">Original Price (₦ Optional Strike-through)</label>
+                    <input type="number" id="form-oldprice" class="form-control-input" placeholder="e.g. 1600000" min="0">
+                  </div>
+                </div>
+
+                <div class="input-field-group" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border-color);">
+                  <label class="switch-label">
+                    <input type="checkbox" id="form-instock" class="switch-input" checked>
+                    <span class="switch-slider"></span>
+                    <span id="label-stock-text">Currently In Stock &amp; Ready for Delivery</span>
+                  </label>
+                </div>
+
+                <!-- Step 1 Footer -->
+                <div class="wizard-nav-footer">
+                  <button type="button" class="btn-ghost" onclick="switchView('products')">
+                    Discard
+                  </button>
+                  <div style="display:flex;gap:10px;align-items:center;">
+                    <button type="button" class="btn-quick-save btn-edit-only" style="display:none;" onclick="quickSaveGadget()">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Changes Now
+                    </button>
+                    <button type="button" class="btn-gold" onclick="nextWizardStep(1)">
+                      <span>Next: Hardware Specs</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 2 PANE: HARDWARE SPECIFICATIONS -->
+            <div class="wizard-step-pane" id="wizard-step-pane-2" style="display:none;">
+              <div class="form-card">
+                <div class="form-card-header">
+                  <div>
+                    <h3 class="form-card-title">2. Hardware Specifications</h3>
+                    <div class="form-card-sub">Select hardware specs to automatically draft clean description</div>
+                  </div>
+                  <span class="step-badge-counter">Step 2 of 3</span>
                 </div>
 
                 <!-- Dynamic Specifications Builder -->
@@ -2040,49 +2384,32 @@
                   </div>
                 </div>
 
-              </div>
-
-              <!-- Pricing & Inventory -->
-              <div class="form-card">
-                <div class="form-card-header">
-                  <div>
-                    <h3 class="form-card-title">Pricing &amp; Availability</h3>
-                    <div class="form-card-sub">Set sale price and stock availability</div>
+                <!-- Step 2 Footer -->
+                <div class="wizard-nav-footer">
+                  <button type="button" class="btn-ghost" onclick="prevWizardStep(2)">
+                    <i class="fa-solid fa-arrow-left"></i> Back: Basics
+                  </button>
+                  <div style="display:flex;gap:10px;align-items:center;">
+                    <button type="button" class="btn-quick-save btn-edit-only" style="display:none;" onclick="quickSaveGadget()">
+                      <i class="fa-solid fa-floppy-disk"></i> Save Changes Now
+                    </button>
+                    <button type="button" class="btn-gold" onclick="nextWizardStep(2)">
+                      <span>Next: Photos &amp; Preview</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                   </div>
-                </div>
-
-                <div class="form-row-duo">
-                  <div class="input-field-group">
-                    <label class="field-label">Base Price (₦ Naira) *</label>
-                    <input type="number" id="form-price" class="form-control-input" placeholder="e.g. 1450000" min="0" required>
-                  </div>
-                  <div class="input-field-group">
-                    <label class="field-label">Original Price (₦ Optional Strike-through)</label>
-                    <input type="number" id="form-oldprice" class="form-control-input" placeholder="e.g. 1600000" min="0">
-                  </div>
-                </div>
-
-                <div class="input-field-group" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border-color);">
-                  <label class="switch-label">
-                    <input type="checkbox" id="form-instock" class="switch-input" checked>
-                    <span class="switch-slider"></span>
-                    <span id="label-stock-text">Currently In Stock &amp; Ready for Delivery</span>
-                  </label>
                 </div>
               </div>
-
             </div>
 
-            <!-- RIGHT COLUMN: PRODUCT MEDIA (MULTIPLE PHOTOS) & PREVIEW -->
-            <div class="form-col-right">
-
-              <!-- Product Media Card -->
+            <!-- STEP 3 PANE: PHOTOS & STOREFRONT PREVIEW -->
+            <div class="wizard-step-pane" id="wizard-step-pane-3" style="display:none;">
               <div class="form-card">
                 <div class="form-card-header">
                   <div>
-                    <h3 class="form-card-title">Product Media</h3>
-                    <div class="form-card-sub">Attach multiple device photos from device or link</div>
+                    <h3 class="form-card-title">3. Product Photos &amp; Live Preview</h3>
+                    <div class="form-card-sub">Attach multiple device photos from device or web URL</div>
                   </div>
+                  <span class="step-badge-counter">Step 3 of 3</span>
                 </div>
 
                 <!-- Attached Photos Preview Grid -->
@@ -2111,45 +2438,39 @@
                     Tip: The first photo is automatically used as the primary catalog cover image.
                   </div>
                 </div>
-              </div>
 
-              <!-- Live Card Preview -->
-              <div class="form-card">
-                <div class="form-card-header">
-                  <div>
-                    <h3 class="form-card-title">Storefront Preview</h3>
-                    <div class="form-card-sub">Real-time preview of the catalog listing</div>
-                  </div>
-                </div>
-
-                <div class="live-preview-box">
-                  <div class="preview-card-mock">
-                    <div class="preview-card-img-wrap">
-                      <img id="preview-mock-img" src="https://placehold.co/400x300/1a1a24/c9a227?text=No+Photo" alt="Preview">
-                      <span id="preview-mock-badge" class="badge-pill brand-new" style="position:absolute;top:8px;left:8px;">NEW</span>
-                    </div>
-                    <div class="preview-card-content">
-                      <div id="preview-mock-cat" style="font-size:0.7rem;font-weight:700;color:var(--gold);text-transform:uppercase;">PHONES</div>
-                      <div id="preview-mock-title" style="font-weight:700;font-size:0.88rem;color:#0f172a;margin:4px 0;">Product Title</div>
-                      <div id="preview-mock-price" style="font-weight:800;font-size:0.95rem;color:#0f172a;">₦0</div>
+                <!-- Live Storefront Card Preview -->
+                <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--border-color);">
+                  <div class="field-label" style="margin-bottom:10px;">Storefront Card Preview</div>
+                  <div class="live-preview-box">
+                    <div class="preview-card-mock">
+                      <div class="preview-card-img-wrap">
+                        <img id="preview-mock-img" src="https://placehold.co/400x300/1a1a24/c9a227?text=No+Photo" alt="Preview">
+                        <span id="preview-mock-badge" class="badge-pill brand-new" style="position:absolute;top:8px;left:8px;">NEW</span>
+                      </div>
+                      <div class="preview-card-content">
+                        <div id="preview-mock-cat" style="font-size:0.7rem;font-weight:700;color:var(--gold);text-transform:uppercase;">PHONES</div>
+                        <div id="preview-mock-title" style="font-weight:700;font-size:0.88rem;color:#0f172a;margin:4px 0;">Product Title</div>
+                        <div id="preview-mock-price" style="font-weight:800;font-size:0.95rem;color:#0f172a;">₦0</div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div style="display:flex;gap:10px;margin-top:20px;">
-                  <button type="button" class="btn-ghost" style="flex:1" onclick="switchView('products')">
-                    Discard
+                <!-- Step 3 Footer -->
+                <div class="wizard-nav-footer">
+                  <button type="button" class="btn-ghost" onclick="prevWizardStep(3)">
+                    <i class="fa-solid fa-arrow-left"></i> Back: Specs
                   </button>
-                  <button type="submit" class="btn-gold" id="btn-save-gadget-bottom" style="flex:1.4">
-                    <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish
+                  <button type="submit" class="btn-gold" id="btn-save-gadget-bottom" style="padding:0 24px;">
+                    <i class="fa-solid fa-floppy-disk"></i> Save &amp; Publish Gadget
                   </button>
                 </div>
               </div>
-
             </div>
 
-          </div>
-        </form>
+          </form>
+        </div>
       </main>
 
       <!-- VIEW 3: STORE ADMINISTRATORS -->
@@ -3466,10 +3787,89 @@ service cloud.firestore {
     });
 
     // ========================================================
+    //  Multi-Step Product Editor Wizard Controller
+    // ========================================================
+    let currentWizardStep = 1;
+
+    window.goToWizardStep = function(step) {
+      // Validate Step 1 before advancing forward from step 1
+      if (step > 1 && currentWizardStep === 1) {
+        const nameInput = document.getElementById('form-name');
+        const priceInput = document.getElementById('form-price');
+        const name = (nameInput?.value || '').trim();
+        const price = (priceInput?.value || '').trim();
+
+        if (!name) {
+          showAdminToast('Please enter the device name / model to proceed.', true);
+          nameInput.focus();
+          return;
+        }
+        if (!price || Number(price) <= 0) {
+          showAdminToast('Please enter a valid base selling price (₦).', true);
+          priceInput.focus();
+          return;
+        }
+      }
+
+      currentWizardStep = step;
+
+      // Update panes visibility
+      [1, 2, 3].forEach(s => {
+        const pane = document.getElementById(`wizard-step-pane-${s}`);
+        if (pane) pane.style.display = (s === step) ? 'block' : 'none';
+      });
+
+      // Update tab buttons
+      const stepNames = ['Basics & Pricing', 'Specifications', 'Photos & Live Preview'];
+      [1, 2, 3].forEach(s => {
+        const btn = document.getElementById(`wizard-step-btn-${s}`);
+        if (btn) {
+          btn.classList.toggle('active', s === step);
+          btn.classList.toggle('completed', s < step);
+        }
+      });
+
+      // Update progress fill
+      const progressFill = document.getElementById('stepper-progress-fill');
+      if (progressFill) {
+        const pct = step === 1 ? '16%' : (step === 2 ? '50%' : '100%');
+        progressFill.style.width = pct;
+      }
+
+      // Update mobile status text
+      const mobPill = document.getElementById('mobile-step-pill');
+      const mobName = document.getElementById('mobile-step-current-name');
+      if (mobPill) mobPill.textContent = `Step ${step} of 3`;
+      if (mobName) mobName.textContent = stepNames[step - 1];
+
+      // Refresh preview if going to step 3
+      if (step === 3) {
+        updateLivePreview();
+      }
+
+      // Scroll smoothly to top of form
+      const formEl = document.getElementById('view-product-form');
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    window.nextWizardStep = function(fromStep) {
+      window.goToWizardStep(fromStep + 1);
+    };
+
+    window.prevWizardStep = function(fromStep) {
+      window.goToWizardStep(Math.max(1, fromStep - 1));
+    };
+
+    window.quickSaveGadget = function() {
+      document.getElementById('gadget-editor-form').requestSubmit();
+    };
+
+    // ========================================================
     //  Open Add / Edit Product Views
     // ========================================================
     window.openNewProductForm = function() {
       document.getElementById('form-title-text').textContent = 'Add Product';
+      document.getElementById('form-subtitle-text').textContent = 'Follow 3 clean steps to list or edit a device in your catalog.';
       document.getElementById('gadget-editor-form').reset();
       document.getElementById('form-gadget-id').value = '';
       document.getElementById('form-instock').checked = true;
@@ -3487,6 +3887,10 @@ service cloud.firestore {
       document.getElementById('raw-desc-container').style.display = 'none';
       document.getElementById('label-toggle-raw-desc').textContent = 'Edit Text Directly';
 
+      // Hide quick save buttons when creating new product
+      document.querySelectorAll('.btn-edit-only').forEach(btn => btn.style.display = 'none');
+
+      goToWizardStep(1);
       switchView('product-form');
     };
 
@@ -3495,6 +3899,7 @@ service cloud.firestore {
       if (!gadget) return;
 
       document.getElementById('form-title-text').textContent = `Edit: ${gadget.name}`;
+      document.getElementById('form-subtitle-text').textContent = 'Update device pricing, specs, or photos, then save your changes.';
       document.getElementById('form-gadget-id').value = gadget.id;
       document.getElementById('form-name').value = gadget.name;
       document.getElementById('form-category').value = gadget.category;
@@ -3523,6 +3928,11 @@ service cloud.firestore {
         : (gadget.image ? [gadget.image] : []);
 
       renderMediaGallery();
+
+      // Show quick save buttons so admin can update in 1 click
+      document.querySelectorAll('.btn-edit-only').forEach(btn => btn.style.display = 'inline-flex');
+
+      goToWizardStep(1);
       switchView('product-form');
     };
 
